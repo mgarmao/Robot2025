@@ -1,11 +1,11 @@
 {
   "drive": {
-    "type": "sparkmax_neo",
+    "type": "sparkmax",
     "id": 7,
     "canbus": null
   },
   "angle": {
-    "type": "sparkmax_neo",
+    "type": "sparkmax",
     "id": 8,
     "canbus": null
   },
