@@ -17,31 +17,22 @@ import frc.robot.Constants;
 
 public class Algae extends SubsystemBase {
     private SparkMaxConfig motorConfig;
-    private SparkMaxConfig motorConfig2;
     private SparkMax motor;
-    private SparkMax motor2;
 
     public Algae() {
         motor = new SparkMax(Constants.AlGAE_MOTOR, MotorType.kBrushless);
-        motor2 = new SparkMax(Constants.AlGAE_MOTOR2, MotorType.kBrushless);    
         motorConfig = new SparkMaxConfig();    
         
         motorConfig
             .idleMode(IdleMode.kBrake);
         
-        motorConfig2
-            .idleMode(IdleMode.kBrake)
-            .inverted(true);
-
         motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        motor2.configure(motorConfig2, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public Command algaeIntake() {
         return runOnce(
             () -> {
                 motor.set(.7);
-                motor2.set(.7);
             });
     }
 
@@ -49,7 +40,6 @@ public class Algae extends SubsystemBase {
         return runOnce(
             () -> {
                 motor.set(-.7);
-                motor2.set(-.7);
             });
     }
 
@@ -57,7 +47,6 @@ public class Algae extends SubsystemBase {
         return runOnce(
             () -> {
                 motor.set(0);
-                motor2.set(0);
             });
     }
 }
