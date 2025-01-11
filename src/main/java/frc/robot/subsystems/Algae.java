@@ -2,13 +2,13 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.servohub.ServoHub.ResetMode;
-import com.revrobotics.spark.SparkMax;
+
+import com.revrobotics.spark.*;
 import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -50,6 +50,14 @@ public class Algae extends SubsystemBase {
             () -> {
                 motor.set(-.7);
                 motor2.set(-.7);
+            });
+    }
+
+    public Command algaeStop() {
+        return runOnce(
+            () -> {
+                motor.set(0);
+                motor2.set(0);
             });
     }
 }

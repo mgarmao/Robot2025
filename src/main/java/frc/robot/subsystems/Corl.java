@@ -53,4 +53,12 @@ public class Corl extends SubsystemBase {
                 motor2.set(-.7);
             });
     }
+
+    public Command corlStop() {
+        return runOnce(
+            () -> {
+                motor.set(0);
+                motor2.set(0);
+            });
+    }
 }
