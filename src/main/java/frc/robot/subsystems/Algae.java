@@ -18,16 +18,25 @@ import frc.robot.Constants;
 
 public class Algae extends SubsystemBase {
     private SparkMaxConfig motorConfig;
-    private SparkMax motor;
+    private SparkMax motor; // grippy
+    private SparkMaxConfig motor2Config;
+    private SparkMax motor2; // wrist
 
     public Algae() {
         motor = new SparkMax(Constants.Motors.AlGAE_MOTOR, MotorType.kBrushless);
         motorConfig = new SparkMaxConfig();    
         
+        motor2 = new SparkMax(Constants.Motors.WRIST_MOTOR, MotorType.kBrushless);
+        motor2Config = new SparkMaxConfig();
+
         motorConfig
             .idleMode(IdleMode.kBrake);
         
+        motor2Config
+            .idleMode(IdleMode.kBrake);
+
         motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        motor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public Command algaeIntake() {
@@ -50,4 +59,9 @@ public class Algae extends SubsystemBase {
                 motor.set(0);
             });
     }
+
+
+    public Command wristUp() {return runOnce(() -> {motor2.set(.6);});} 
+    public Command wristDown() {return runOnce(() -> {motor2.set(-.6);});} // confusing how this line is shorter than line 64 but hey, who cares?
+    public Command wristStop() {return runOnce(() -> {motor2.set(0);});}
 }
