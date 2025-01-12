@@ -2,13 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
+// todo:
+// map subsystems
+
 package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+// import edu.wpi.first.math.geometry.Translation2d;      
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -18,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
+import frc.robot.subsystems.*;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -29,6 +34,9 @@ import swervelib.SwerveInputStream;
  */
 public class RobotContainer
 {
+
+  public static final Corl corl = new Corl();
+  public static final Algae algae = new Algae();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
@@ -159,11 +167,24 @@ public class RobotContainer
       //     drivebase.driveToPose(
       //         new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
       //                         );
+<<<<<<< HEAD
       // driverXbox.y().whileTrue(drivebase.aimAtSpeaker(2));
       // driverXbox.start().whileTrue(Commands.none());
       // driverXbox.back().whileTrue(Commands.none());
       // driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       // driverXbox.rightBumper().onTrue(Commands.none());
+=======
+      driverXbox.y().whileTrue(drivebase.aimAtSpeaker(2));
+      driverXbox.start().whileTrue(Commands.none());
+      driverXbox.back().whileTrue(Commands.none());
+      // driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+      // driverXbox.rightBumper().onTrue(Commands.none());
+
+      driverXbox.leftTrigger().onTrue(corl.corlIntake()).onFalse(corl.corlStop());
+      driverXbox.leftBumper().onTrue(corl.corlOuttake()).onFalse(corl.corlStop());
+      driverXbox.rightTrigger().onTrue(algae.algaeIntake()).onFalse(algae.algaeStop());
+      driverXbox.rightBumper().onTrue(algae.algaeOuttake()).onFalse(algae.algaeStop());
+>>>>>>> d102a197a794091d3118a3a9e2f1b962630a68c9
     }
 
   }
