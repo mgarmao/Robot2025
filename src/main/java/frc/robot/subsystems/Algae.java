@@ -21,7 +21,7 @@ public class Algae extends SubsystemBase {
     private SparkMax motor;
 
     public Algae() {
-        motor = new SparkMax(Constants.AlGAE_MOTOR, MotorType.kBrushless);
+        motor = new SparkMax(Constants.Motors.AlGAE_MOTOR, MotorType.kBrushless);
         motorConfig = new SparkMaxConfig();    
         
         motorConfig

@@ -18,7 +18,7 @@ public class Wrist extends SubsystemBase{
     private SparkMaxConfig config;
 
     public Wrist() {
-        motor = new SparkMax(Constants.WRIST_MOTOR, MotorType.kBrushless);
+        motor = new SparkMax(Constants.Motors.WRIST_MOTOR, MotorType.kBrushless);
         config = new SparkMaxConfig();
 
         config.
