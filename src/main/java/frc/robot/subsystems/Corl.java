@@ -27,7 +27,7 @@ public class Corl extends SubsystemBase {
     private SparkMax motor;
 
     public Corl() {
-        motor = new SparkMax(Constants.CORL_MOTOR, MotorType.kBrushless);
+        motor = new SparkMax(Constants.Motors.CORL_MOTOR, MotorType.kBrushless);
         motorConfig = new SparkMaxConfig();    
         
         motorConfig

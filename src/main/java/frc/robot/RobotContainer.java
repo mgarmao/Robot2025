@@ -162,6 +162,10 @@ public class RobotContainer
     } else
     {
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+
+      driverXbox.leftBumper().onTrue(algae.algaeIntake()).onFalse(algae.stop());
+      driverXbox.leftTrigger().onTrue(algae.algaeOuttake()).onFalse(algae.stop());
+      
       // driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       // driverXbox.b().whileTrue(
       //     drivebase.driveToPose(
