@@ -160,7 +160,6 @@ public class SwerveSubsystem extends SubsystemBase
       swerveDrive.updateOdometry();
       vision.updatePoseEstimation(swerveDrive);
     }
-    System.out.println("Pitch:"+getPitch());
   }
 
   @Override
