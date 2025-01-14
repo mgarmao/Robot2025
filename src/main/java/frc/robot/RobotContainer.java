@@ -2,17 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-
-// todo:
-// map subsystems
-
 package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-// import edu.wpi.first.math.geometry.Translation2d;      
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -22,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
-import frc.robot.subsystems.*;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -34,9 +29,6 @@ import swervelib.SwerveInputStream;
  */
 public class RobotContainer
 {
-
-  public static final Corl corl = new Corl();
-  public static final Algae algae = new Algae();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
@@ -163,26 +155,9 @@ public class RobotContainer
     {
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
-      driverXbox.rightBumper()
-        .onTrue(algae.algaeIntake())
-        .onFalse(algae.stop());
-      driverXbox.rightTrigger()
-        .onTrue(algae.algaeOuttake())
-        .onFalse(algae.stop());
-      driverXbox.y()
-        .onTrue(algae.wristUp())
-        .onFalse(algae.stop());
-      driverXbox.b()
-        .onTrue(algae.wristDown())
-        .onFalse(algae.stop());
-      driverXbox.leftBumper()
-        .onTrue(corl.corlIntake())
-        .onFalse(corl.corlStop());
-      driverXbox.leftTrigger()
-        .onTrue(corl.corlOuttake())
-        .onFalse(corl.corlStop());
-
-
+      driverXbox.leftBumper().onTrue(algae.algaeIntake()).onFalse(algae.stop());
+      driverXbox.leftTrigger().onTrue(algae.algaeOuttake()).onFalse(algae.stop());
+      
       // driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       // driverXbox.b().whileTrue(
       //     drivebase.driveToPose(
