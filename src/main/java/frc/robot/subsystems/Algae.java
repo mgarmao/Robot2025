@@ -12,6 +12,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
@@ -59,6 +60,14 @@ public class Algae extends SubsystemBase {
             () -> {
                 motor.set(-.7);
             });
+    }
+
+    public Command shaurya() {
+        return runOnce(
+            () -> {
+                Commands.print("shauryasosigma72");
+            }
+        );
     }
 
     public Command wristUp() {return runOnce(() -> {motor2.set(.6);});} 
