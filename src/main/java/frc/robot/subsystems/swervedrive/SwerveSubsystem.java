@@ -67,11 +67,11 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * AprilTag field layout.
    */
-  private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
+  private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
   /**
    * Enable vision odometry updates while driving.
    */
-  private final boolean             visionDriveTest     = false;
+  private final boolean             visionDriveTest     = true;
   /**
    * PhotonVision class to keep an accurate odometry.
    */
@@ -149,6 +149,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public void setupPhotonVision()
   {
+    SmartDashboard.putBoolean("photonIsActive", false);
     vision = new Vision(swerveDrive::getPose, swerveDrive.field);
   }
 
@@ -161,8 +162,6 @@ public class SwerveSubsystem extends SubsystemBase
       swerveDrive.updateOdometry();
       vision.updatePoseEstimation(swerveDrive);
     }
-    SmartDashboard.putNumber("yaw",swerveDrive.getYaw().getDegrees());
-
   }
 
   @Override
@@ -261,7 +260,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Rotation2d getSpeakerYaw()
   {
-    int allianceAprilTag = DriverStation.getAlliance().get() == Alliance.Blue ? 7 : 4;
+    int allianceAprilTag = 3;
     // Taken from PhotonUtils.getYawToPose()
     Pose3d        speakerAprilTagPose = aprilTagFieldLayout.getTagPose(allianceAprilTag).get();
     Translation2d relativeTrl         = speakerAprilTagPose.toPose2d().relativeTo(getPose()).getTranslation();
@@ -411,9 +410,10 @@ public class SwerveSubsystem extends SubsystemBase
     return SwerveDriveTest.generateSysIdCommand(
         SwerveDriveTest.setDriveSysIdRoutine(
             new Config(),
-            this, swerveDrive, 12),
+            this, swerveDrive, 12, true),
         3.0, 5.0, 3.0);
   }
+
 
   /**
    * Command to characterize the robot angle motors using SysId
