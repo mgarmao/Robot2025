@@ -5,6 +5,9 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.events.PointTowardsZoneTrigger;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -120,6 +123,9 @@ public class RobotContainer
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+    NamedCommands.registerCommand("Point", drivebase.aimAtSpeaker(2));
+    new PointTowardsZoneTrigger("Point").whileTrue(drivebase.aimAtSpeaker(2));
+
   }
 
   /**

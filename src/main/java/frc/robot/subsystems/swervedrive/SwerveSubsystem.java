@@ -260,7 +260,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Rotation2d getSpeakerYaw()
   {
-    int allianceAprilTag = 3;
+    int allianceAprilTag = 16;
     // Taken from PhotonUtils.getYawToPose()
     Pose3d        speakerAprilTagPose = aprilTagFieldLayout.getTagPose(allianceAprilTag).get();
     Translation2d relativeTrl         = speakerAprilTagPose.toPose2d().relativeTo(getPose()).getTranslation();
