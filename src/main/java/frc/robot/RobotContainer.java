@@ -38,6 +38,7 @@ public class RobotContainer
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
+  
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
@@ -64,8 +65,8 @@ public class RobotContainer
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * -1,
-                                                                () -> driverXbox.getLeftX() * -1)
+                                                                () -> -driverXbox.getLeftY() ,
+                                                                () -> -driverXbox.getLeftX())
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
                                                             .scaleTranslation(0.8)
@@ -74,8 +75,8 @@ public class RobotContainer
   /**
    * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
    */
-  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
-                                                                                             driverXbox::getRightY)
+  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(() -> driverXbox.getRightX() * -1,
+                                                                                            () -> driverXbox.getRightY()*-1)
                                                            .headingWhile(true);
 
 
@@ -126,10 +127,10 @@ public class RobotContainer
   {
     // Configure the trigger bindings
     configureBindings();
+    
     DriverStation.silenceJoystickConnectionWarning(true);
 
     NamedCommands.registerCommand("Point", drivebase.aimAtSpeaker(2));
-    // new EventTrigger("Point").whileTrue(drivebase.aimAtSpeaker(2));
 
     autoChooser = AutoBuilder.buildAutoChooser();
 
