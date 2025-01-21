@@ -336,11 +336,17 @@ public class Vision
     * Front Camera
     */
    FRONT("cam1",
-            new Rotation3d(0, Math.toRadians(-14.5), Math.toRadians(0.0)),
+            new Rotation3d(0, Math.toRadians(14.5), Math.toRadians(0.0)),
             new Translation3d(Units.inchesToMeters(-9.0),
                               Units.inchesToMeters(6.0),
                               Units.inchesToMeters(21.5)),
-            VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+            VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)),
+  REAR("Cam2",
+  new Rotation3d(0, Math.toRadians(8.5), Math.toRadians(180.0)),
+  new Translation3d(Units.inchesToMeters(-9.0),
+                    Units.inchesToMeters(7.0),
+                    Units.inchesToMeters(21.5)),
+  VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
   //  /**
   //   * Right Camera
   //   */
