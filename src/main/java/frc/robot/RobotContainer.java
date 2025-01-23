@@ -23,9 +23,15 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.swervedrive.auto.DriveToProcessor;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.swervedrive.Vision;
+import frc.robot.subsystems.swervedrive.Vision.Cameras;
+
 import java.io.File;
+
+import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 
 /**
@@ -40,8 +46,9 @@ public class RobotContainer
   final         CommandXboxController driverXbox = new CommandXboxController(0);
   
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+  private final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
+
   // Applies deadbands and inverts controls because joysticks
   // are back-right positive while robot
   // controls are front-left positive
@@ -129,8 +136,7 @@ public class RobotContainer
     configureBindings();
     
     DriverStation.silenceJoystickConnectionWarning(true);
-
-    NamedCommands.registerCommand("Point", drivebase.aimAtSpeaker(2));
+    NamedCommands.registerCommand("Point", drivebase.DriveToProcessor());
 
     autoChooser = AutoBuilder.buildAutoChooser();
 

@@ -7,7 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "FromLine"
+            "pathName": "StressTest"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Point"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "home2"
           }
         }
       ]
