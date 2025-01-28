@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.swervedrive.auto.DriveToProcessor;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
@@ -137,6 +136,7 @@ public class RobotContainer
     
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("Point", drivebase.DriveToProcessor());
+    // NamedCommands.registerCommand("ClosingMovement",drivebase.closingMovement(0.5,1,drivebase.getPose().getX()));
 
     autoChooser = AutoBuilder.buildAutoChooser();
 

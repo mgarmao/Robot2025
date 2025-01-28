@@ -32,6 +32,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -809,12 +810,24 @@ public class SwerveSubsystem extends SubsystemBase
                 if(target.getFiducialId()==id){
                   yDistance = thisTarget.getY();    
                   double translationVal = MathUtil.clamp(pidController1.calculate(yDistance, 0.0), -0.5,0.5);
-                  drive(new Translation2d(0.0, translationVal), 0.0, true);
+                  drive(new Translation2d(0.5, translationVal), 0.0, true);
                 }
             }
           }          
-        }).until(() -> pidController1.atSetpoint());
+        }).until(() -> pidController1.atSetpoint()||!Vision.Cameras.FRONT.camera.getLatestResult().hasTargets());
   }    
+
+
+  
+  // public Command closingMovement(double speed, double meters, double startingX) {
+  //   pidController1 = new PIDController(1.0, 0.0, 0.0);
+  //   swerveDrive.
+  //   return run(
+  //       () -> {
+  //         drive(new Translation2d(speed, 0.0), 0.0, false);    
+  //         SmartDashboard.putNumber("DistRemaining", (startingX+meters)-swerveDrive.getPose().getX());
+  //       }).until(() -> (swerveDrive.getPose().getX()+(startingX+meters))<=0 );
+  // }    
 
   /**
    * Gets the swerve drive object.
