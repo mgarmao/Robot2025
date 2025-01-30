@@ -33,6 +33,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,6 +53,7 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import org.json.simple.parser.ParseException;
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -69,6 +71,7 @@ public class SwerveSubsystem extends SubsystemBase
 {
 
   private PIDController pidController1;
+  private PIDController pidController2;
   
     /**
      * Swerve drive object.
@@ -797,7 +800,7 @@ public class SwerveSubsystem extends SubsystemBase
     public Command DriveToProcessor() {
       pidController1 = new PIDController(1.0, 0.0, 0.0);
       int id = 16;
-    return run(
+      return run(
         () -> {
           var result = Vision.Cameras.FRONT.camera.getLatestResult();         
           boolean hasTargets = result.hasTargets();    
@@ -814,8 +817,43 @@ public class SwerveSubsystem extends SubsystemBase
                 }
             }
           }          
-        }).until(() -> pidController1.atSetpoint()||!Vision.Cameras.FRONT.camera.getLatestResult().hasTargets());
+      }).until(() -> pidController1.atSetpoint()||!Vision.Cameras.FRONT.camera.getLatestResult().hasTargets());
   }    
+
+  public Command alignWithTarget(DoubleSupplier xJoystick,int id) {
+    pidController1 = new PIDController(1.0, 0.0, 0.0);
+    pidController2 = new PIDController(0.5, 0.0, 0.0);
+    return run(
+      () -> {
+        var result = Vision.Cameras.FRONT.camera.getLatestResult();         
+        boolean hasTargets = result.hasTargets();    
+        if(hasTargets){
+          List<PhotonTrackedTarget> targets = result.getTargets();
+               
+          for(PhotonTrackedTarget target:targets){
+              Transform3d thisTarget = target.getBestCameraToTarget();
+              SmartDashboard.putNumber("This ID", target.getFiducialId());
+              if(target.getFiducialId()==id){
+                double yDistance = thisTarget.getY();
+                double angle = thisTarget.getRotation().getAngle();
+                SmartDashboard.putNumber("Target Angle", angle); 
+                double translationVal = MathUtil.clamp(pidController1.calculate(yDistance, 0.0), -0.5,0.5);
+                double rotationalVal = 0.0;
+                if(thisTarget.getX()<=2){
+                  rotationalVal = MathUtil.clamp(pidController1.calculate(angle, 2.9), -0.5,0.5);
+                }
+                else{
+                  rotationalVal=0.0;
+                }
+                drive(new Translation2d(xJoystick.getAsDouble(), translationVal), rotationalVal, true);
+              }
+          }
+        }
+        else{
+          drive(new Translation2d(xJoystick.getAsDouble(), 0.0), 0.0, true);
+        }          
+    });
+}    
 
 
   
