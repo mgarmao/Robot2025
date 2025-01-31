@@ -2,29 +2,35 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-
-// todo:
-// map subsystems
-
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.events.PointTowardsZoneTrigger;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-// import edu.wpi.first.math.geometry.Translation2d;      
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
-import frc.robot.subsystems.*;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.swervedrive.Vision;
+import frc.robot.subsystems.swervedrive.Vision.Cameras;
+
 import java.io.File;
+
+import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 
 /**
@@ -35,14 +41,13 @@ import swervelib.SwerveInputStream;
 public class RobotContainer
 {
 
-  public static final Corl corl = new Corl();
-  public static final Algae algae = new Algae();
-
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
+  
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+  private final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
+
   // Applies deadbands and inverts controls because joysticks
   // are back-right positive while robot
   // controls are front-left positive
@@ -66,8 +71,8 @@ public class RobotContainer
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * -1,
-                                                                () -> driverXbox.getLeftX() * -1)
+                                                                () -> -driverXbox.getLeftY() ,
+                                                                () -> -driverXbox.getLeftX())
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
                                                             .scaleTranslation(0.8)
@@ -76,8 +81,8 @@ public class RobotContainer
   /**
    * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
    */
-  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
-                                                                                             driverXbox::getRightY)
+  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(() -> driverXbox.getRightX() * -1,
+                                                                                            () -> driverXbox.getRightY()*-1)
                                                            .headingWhile(true);
 
 
@@ -122,12 +127,24 @@ public class RobotContainer
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+  private final SendableChooser<Command> autoChooser;
+
   public RobotContainer()
   {
     // Configure the trigger bindings
     configureBindings();
+    
     DriverStation.silenceJoystickConnectionWarning(true);
-    NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+    NamedCommands.registerCommand("Point", drivebase.DriveToProcessor());
+    // NamedCommands.registerCommand("ClosingMovement",drivebase.closingMovement(0.5,1,drivebase.getPose().getX()));
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    // Another option that allows you to specify the default auto by its name
+    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
   }
 
   /**
@@ -162,37 +179,13 @@ public class RobotContainer
     } else
     {
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-
-      driverXbox.rightBumper()
-        .onTrue(algae.algaeIntake())
-        .onFalse(algae.stop());
-      driverXbox.rightTrigger()
-        .onTrue(algae.algaeOuttake())
-        .onFalse(algae.stop());
-      driverXbox.y()
-        .onTrue(algae.wristUp())
-        .onFalse(algae.stop());
-      driverXbox.b()
-        .onTrue(algae.wristDown())
-        .onFalse(algae.stop());
-      driverXbox.leftBumper()
-        .onTrue(corl.corlIntake())
-        .onFalse(corl.corlStop());
-      driverXbox.leftTrigger()
-        .onTrue(corl.corlOuttake())
-        .onFalse(corl.corlStop());
-
-
-      // driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
-      // driverXbox.b().whileTrue(
-      //     drivebase.driveToPose(
-      //         new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
-      //                         );
-      // driverXbox.y().whileTrue(drivebase.aimAtSpeaker(2));
-      // driverXbox.start().whileTrue(Commands.none());
-      // driverXbox.back().whileTrue(Commands.none());
-      // driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      // driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
+      driverXbox.b().whileTrue(drivebase.alignWithTarget(()-> -driverXbox.getLeftY(), 17));
+      driverXbox.y().whileTrue(drivebase.alignWithTarget(() -> -driverXbox.getLeftY(),16));
+      driverXbox.start().whileTrue(Commands.none());
+      driverXbox.back().whileTrue(Commands.none());
+      driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+      driverXbox.rightBumper().onTrue(Commands.none());
     }
 
   }
@@ -205,7 +198,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("New Auto");
+    return autoChooser.getSelected();
   }
 
   public void setDriveMode()
