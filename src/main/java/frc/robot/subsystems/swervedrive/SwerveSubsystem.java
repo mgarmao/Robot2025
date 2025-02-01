@@ -52,6 +52,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import org.json.simple.parser.ParseException;
+import org.opencv.core.Mat;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -175,6 +176,8 @@ public class SwerveSubsystem extends SubsystemBase
         swerveDrive.updateOdometry();
         vision.updatePoseEstimation(swerveDrive);
       }
+      SmartDashboard.putNumber("Target Angle", getAngle(16)); 
+
     }
   
     @Override
@@ -798,7 +801,7 @@ public class SwerveSubsystem extends SubsystemBase
     }
   
     public Command DriveToProcessor() {
-      pidController1 = new PIDController(1.0, 0.0, 0.0);
+      pidController1 = new PIDController(0.7, 0.0, 0.5);
       int id = 16;
       return run(
         () -> {
@@ -820,7 +823,7 @@ public class SwerveSubsystem extends SubsystemBase
       }).until(() -> pidController1.atSetpoint()||!Vision.Cameras.FRONT.camera.getLatestResult().hasTargets());
   }    
 
-  public Command alignWithTarget(DoubleSupplier xJoystick,int id) {
+  public Command alignWithTarget(DoubleSupplier xJoystick, DoubleSupplier yJoystick, int id) {
     pidController1 = new PIDController(1.0, 0.0, 0.0);
     pidController2 = new PIDController(0.5, 0.0, 0.0);
     return run(
@@ -834,18 +837,36 @@ public class SwerveSubsystem extends SubsystemBase
               Transform3d thisTarget = target.getBestCameraToTarget();
               SmartDashboard.putNumber("This ID", target.getFiducialId());
               if(target.getFiducialId()==id){
-                double yDistance = thisTarget.getY();
-                double angle = thisTarget.getRotation().getAngle();
-                SmartDashboard.putNumber("Target Angle", angle); 
-                double translationVal = MathUtil.clamp(pidController1.calculate(yDistance, 0.0), -0.5,0.5);
+                double sinAngle =  new Translation2d(thisTarget.getX(), thisTarget.getY()).getAngle().getSin();
+                double yVal = thisTarget.getX()*sinAngle;
+                double translationVal = MathUtil.clamp(pidController1.calculate(yVal, 0.0), -0.5,0.5);
                 double rotationalVal = 0.0;
                 if(thisTarget.getX()<=2){
-                  rotationalVal = MathUtil.clamp(pidController1.calculate(angle, 2.9), -0.5,0.5);
+                  rotationalVal = MathUtil.clamp(pidController1.calculate(sinAngle, 0), -0.5,0.5);
                 }
                 else{
                   rotationalVal=0.0;
                 }
-                drive(new Translation2d(xJoystick.getAsDouble(), translationVal), rotationalVal, true);
+                double xValue = 0;
+                double robotAngle = swerveDrive.getPitch().getDegrees()*(180/Math.PI);
+                double joystickAngle = Math.atan((-yJoystick.getAsDouble())/(xJoystick.getAsDouble()))*(180/Math.PI);
+                if((yJoystick.getAsDouble()>0)&&(xJoystick.getAsDouble()<0)){
+                  joystickAngle= 180+joystickAngle;
+                }
+                if((yJoystick.getAsDouble()<0)&&(xJoystick.getAsDouble()<0)){
+                  joystickAngle = 180+joystickAngle;
+                }
+                if((yJoystick.getAsDouble()<0)&&(xJoystick.getAsDouble()>0)){
+                  joystickAngle = 360+joystickAngle;
+                }
+
+                if((joystickAngle<=robotAngle+5)&&(joystickAngle>=robotAngle-5)){
+                  xValue = Math.sqrt(Math.pow(xJoystick.getAsDouble(), 2) + Math.pow(yJoystick.getAsDouble(), 2));
+                }
+                SmartDashboard.putNumber("Joystick Angle", joystickAngle);
+                SmartDashboard.putNumber("Robot Angle", robotAngle);
+                SmartDashboard.putNumber("xVal",xValue);
+                drive(new Translation2d(xValue, translationVal), rotationalVal, true);
               }
           }
         }
@@ -855,7 +876,22 @@ public class SwerveSubsystem extends SubsystemBase
     });
 }    
 
-
+public double getAngle(int id){
+  var result = Vision.Cameras.FRONT.camera.getLatestResult();         
+  boolean hasTargets = result.hasTargets();    
+  double angle = 0;
+  if(hasTargets){
+    List<PhotonTrackedTarget> targets = result.getTargets();
+    for(PhotonTrackedTarget target:targets){
+      Transform3d thisTarget = target.getBestCameraToTarget();
+      SmartDashboard.putNumber("This ID", target.getFiducialId());
+      if(target.getFiducialId()==id){
+      
+      }
+    }
+  }
+  return angle;
+}
   
   // public Command closingMovement(double speed, double meters, double startingX) {
   //   pidController1 = new PIDController(1.0, 0.0, 0.0);
