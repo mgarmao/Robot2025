@@ -62,13 +62,7 @@ public class Algae extends SubsystemBase {
             });
     }
 
-    public Command shaurya() {
-        return runOnce(
-            () -> {
-                Commands.print("shauryasosigma72");
-            }
-        );
-    }
+    public Command shaurya() {return runOnce(() -> {Commands.print("shauryasosigma72");});}
 
     public Command wristUp() {return runOnce(() -> {motor2.set(.6);});} 
     public Command wristDown() {return runOnce(() -> {motor2.set(-.6);});} // confusing how this line is shorter than line 64 but hey, who cares?
