@@ -27,8 +27,7 @@ public class Algae extends SubsystemBase {
         wMotor1_conf = new SparkMaxConfig();
         wMotor1_enc = wMotor1.getEncoder(); // !! RELATIVE ENCODER. START WRIST AT UP POSITION. !!
 
-        wMotor1_conf
-            .idleMode(IdleMode.kBrake);
+        wMotor1_conf.idleMode(IdleMode.kBrake);
         
         wMotor2 = new SparkMax(Constants.Motors.WRIST_MOTOR_2, MotorType.kBrushless);
         wMotor2_conf = new SparkMaxConfig();

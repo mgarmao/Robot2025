@@ -181,7 +181,8 @@ public class RobotContainer
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       driverXbox.b().whileTrue(drivebase.alignWithTarget(()-> -driverXbox.getLeftX(), ()-> -driverXbox.getLeftY(), 17));
-      driverXbox.y().whileTrue(drivebase.alignWithTarget(()-> -driverXbox.getLeftX(), ()-> -driverXbox.getLeftY(), 16));
+      // driverXbox.y().whileTrue(drivebase.aimAtTarget3d(16,2));
+      driverXbox.y().whileTrue(drivebase.alignWithTarget(() -> -driverXbox.getLeftX(), () -> -driverXbox.getLeftY(), 16));
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());

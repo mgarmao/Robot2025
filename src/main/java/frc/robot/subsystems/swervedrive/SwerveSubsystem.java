@@ -274,9 +274,9 @@ public class SwerveSubsystem extends SubsystemBase
      *
      * @return {@link Rotation2d} of which you need to achieve.
      */
-    public Rotation2d getSpeakerYaw()
+    public Rotation2d getTargetYaw(int id)
     {
-      int allianceAprilTag = 16;
+      int allianceAprilTag = id;
       // Taken from PhotonUtils.getYawToPose()
       Pose3d        speakerAprilTagPose = aprilTagFieldLayout.getTagPose(allianceAprilTag).get();
       Translation2d relativeTrl         = speakerAprilTagPose.toPose2d().relativeTo(getPose()).getTranslation();
@@ -289,17 +289,17 @@ public class SwerveSubsystem extends SubsystemBase
      * @param tolerance Tolerance in degrees.
      * @return Command to turn the robot to the speaker.
      */
-    public Command aimAtSpeaker(double tolerance)
+    public Command aimAtTarget3d(int id, double tolerance)
     {
       SwerveController controller = swerveDrive.getSwerveController();
       return run(
           () -> {
             ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(0, 0,
                                                      controller.headingCalculate(getHeading().getRadians(),
-                                                                                 getSpeakerYaw().getRadians()),
+                                                                                 getTargetYaw(id).getRadians()),
                                                                          getHeading());
             drive(speeds);
-          }).until(() -> Math.abs(getSpeakerYaw().minus(getHeading()).getDegrees()) < tolerance);
+          }).until(() -> Math.abs(getTargetYaw(id).minus(getHeading()).getDegrees()) < tolerance);
     }
   
     /**
@@ -848,30 +848,47 @@ public class SwerveSubsystem extends SubsystemBase
                   rotationalVal=0.0;
                 }
                 double xValue = 0;
-                double robotAngle = swerveDrive.getPitch().getDegrees()*(180/Math.PI);
-                double joystickAngle = Math.atan((-yJoystick.getAsDouble())/(xJoystick.getAsDouble()))*(180/Math.PI);
-                if((yJoystick.getAsDouble()>0)&&(xJoystick.getAsDouble()<0)){
-                  joystickAngle= 180+joystickAngle;
-                }
-                if((yJoystick.getAsDouble()<0)&&(xJoystick.getAsDouble()<0)){
-                  joystickAngle = 180+joystickAngle;
-                }
-                if((yJoystick.getAsDouble()<0)&&(xJoystick.getAsDouble()>0)){
-                  joystickAngle = 360+joystickAngle;
-                }
+                double robotAngle = swerveDrive.getGyro().getRotation3d().getAngle()*(180/Math.PI);
+                double joystickAngle = Math.atan((yJoystick.getAsDouble())/(-xJoystick.getAsDouble()))*(180/Math.PI);
 
-                if((joystickAngle<=robotAngle+5)&&(joystickAngle>=robotAngle-5)){
-                  xValue = Math.sqrt(Math.pow(xJoystick.getAsDouble(), 2) + Math.pow(yJoystick.getAsDouble(), 2));
-                }
-                SmartDashboard.putNumber("Joystick Angle", joystickAngle);
-                SmartDashboard.putNumber("Robot Angle", robotAngle);
-                SmartDashboard.putNumber("xVal",xValue);
-                drive(new Translation2d(xValue, translationVal), rotationalVal, true);
+                // SmartDashboard.putNumber("YJoy", yJoystick.getAsDouble());
+                // SmartDashboard.putNumber("XJoy", xJoystick.getAsDouble());
+
+                // if((yJoystick.getAsDouble()>0)&&(-xJoystick.getAsDouble()>0)){
+                //   joystickAngle= 270+joystickAngle;
+                // }
+                // if((yJoystick.getAsDouble()>0)&&(-xJoystick.getAsDouble()<0)){
+                //   joystickAngle = 90+joystickAngle;
+                // }
+                // if((yJoystick.getAsDouble()<0)&&(-xJoystick.getAsDouble()<0)){
+                //   joystickAngle = 90+joystickAngle;
+                // }
+                // if((yJoystick.getAsDouble()<0)&&(-xJoystick.getAsDouble()>0)){
+                //   joystickAngle = 270+joystickAngle;
+                // }
+                // if(joystickAngle==-90){
+                //   joystickAngle = 180;
+                // }
+                // if(yJoystick.getAsDouble()>1&&xJoystick.getAsDouble()==-0||joystickAngle==90){
+                //   joystickAngle = 0;
+                // }
+
+                // if((joystickAngle<=robotAngle+15)&&(joystickAngle>=robotAngle-15)){
+                //   xValue = Math.sqrt(Math.pow(xJoystick.getAsDouble(), 2) + Math.pow(yJoystick.getAsDouble(), 2));
+                // }
+                // if((joystickAngle<=-robotAngle+15+180)&&(joystickAngle>=robotAngle-15+180)){
+                //   xValue = -Math.sqrt(Math.pow(xJoystick.getAsDouble(), 2) + Math.pow(yJoystick.getAsDouble(), 2));
+                // }
+
+                // SmartDashboard.putNumber("Joystick Angle", joystickAngle);
+                // SmartDashboard.putNumber("Robot Angle", robotAngle);
+                // SmartDashboard.putNumber("xVal",xValue);
+                drive(new Translation2d(1.5, translationVal), rotationalVal, true);
               }
           }
         }
         else{
-          drive(new Translation2d(xJoystick.getAsDouble(), 0.0), 0.0, true);
+          drive(new Translation2d(1.0, 0.0), 0.0, true);
         }          
     });
 }    
