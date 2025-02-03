@@ -26,9 +26,10 @@ public final class Constants
   // Maximum speed of the robot in meters per second, used to limit acceleration.
  
   public static final class Motors {
-    public static final int CORL_MOTOR   = 9;
-    public static final int WRIST_MOTOR  = 10;
-    public static final int AlGAE_MOTOR  = 11;
+    public static final int CORL_MOTOR     = 9;
+    public static final int WRIST_MOTOR_1  = 1;
+    public static final int WRIST_MOTOR_2  = 2;
+    public static final int AlGAE_MOTOR    = 3;
   }
 
 //  public static final class AutonConstants

@@ -43,6 +43,7 @@ public class Algae extends SubsystemBase {
         
         motor2Config
             .idleMode(IdleMode.kBrake);
+            
 
         motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         motor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
