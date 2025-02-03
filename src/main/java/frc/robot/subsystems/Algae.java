@@ -1,7 +1,4 @@
-// algae in/outake sys
-
 package frc.robot.subsystems;
-
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.*;
@@ -15,64 +12,63 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
 import frc.robot.Constants;
 
 public class Algae extends SubsystemBase {
-    private SparkMaxConfig motorConfig;
-    private SparkMax motor; // grippy
-    private SparkMaxConfig motor2Config;
-    private SparkMax motor2; // wrist
-    private RelativeEncoder m1Encoder;
-    private RelativeEncoder m2Encoder;
-
+    // wrist
+    private SparkMax wMotor1;
+    private SparkMax wMotor2;
+    private SparkMaxConfig wMotor1_conf;
+    private SparkMaxConfig wMotor2_conf;
+    private RelativeEncoder wMotor1_enc;
 
     public Algae() {
-        motor = new SparkMax(Constants.Motors.AlGAE_MOTOR, MotorType.kBrushless);
-        motorConfig = new SparkMaxConfig();    
-        m1Encoder = motor.getEncoder();
+        wMotor1 = new SparkMax(Constants.Motors.WRIST_MOTOR_1, MotorType.kBrushless);
+        wMotor1_conf = new SparkMaxConfig();
+        wMotor1_enc = wMotor1.getEncoder(); // !! RELATIVE ENCODER. START WRIST AT UP POSITION. !!
 
-        motor2 = new SparkMax(Constants.Motors.WRIST_MOTOR, MotorType.kBrushless);
-        motor2Config = new SparkMaxConfig();
-        m2Encoder = motor2.getEncoder();
-
-
-
-        motorConfig
+        wMotor1_conf
             .idleMode(IdleMode.kBrake);
         
-        motor2Config
-            .idleMode(IdleMode.kBrake);
-            
+        wMotor2 = new SparkMax(Constants.Motors.WRIST_MOTOR_2, MotorType.kBrushless);
+        wMotor2_conf = new SparkMaxConfig();
 
-        motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        motor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        wMotor2_conf
+            .idleMode(IdleMode.kBrake)
+            .follow(Constants.Motors.WRIST_MOTOR_1)
+            .inverted(true);
+
+        wMotor1.configure(wMotor1_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        wMotor2.configure(wMotor2_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
-    public Command algaeIntake() {
+    public Command wristUp() {
         return runOnce(
             () -> {
-                motor.set(.7);
-            });
+                wMotor1.set(.8);
+            }
+        );
     }
 
-    public Command algaeOuttake() {
+    public Command wristDown() {
         return runOnce(
             () -> {
-                motor.set(-.7);
-            });
+                wMotor1.set(-.8);
+            }
+        );
     }
 
-    public Command shaurya() {return runOnce(() -> {Commands.print("shauryasosigma72");});}
-
-    public Command wristUp() {return runOnce(() -> {motor2.set(.6);});} 
-    public Command wristDown() {return runOnce(() -> {motor2.set(-.6);});} // confusing how this line is shorter than line 64 but hey, who cares?
-    
-    public Command stop() {return runOnce(() -> {motor2.set(0);motor.set(0);});}
+    public Command stopWrist() {
+        return runOnce(
+            () -> {
+                wMotor1.set(0);
+                
+            }
+        );
+    }
 
     public void periodic() {
         super.periodic();
-        SmartDashboard.putNumber("AlgaeMotorVel", m1Encoder.getVelocity());
-        SmartDashboard.putNumber("WristMotorPos", m2Encoder.getPosition());
+        SmartDashboard.putNumber("wristPos", wMotor1_enc.getPosition());
     }
 }
