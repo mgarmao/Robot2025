@@ -28,7 +28,7 @@ public class Algae extends SubsystemBase {
     public Algae() {
         wMotor1 = new SparkMax(Constants.Motors.WRIST_MOTOR_1, MotorType.kBrushless);
         wMotor1_conf = new SparkMaxConfig();      
-        wMotor1_enc = wMotor1.getEncoder(); // !! RELATIVE ENCODER. START WRIST AT UP POSITION. !!
+        wMotor1_enc = wMotor1.getEncoder(); // !! RELATIVE ENCODER. START WRIST AT UP POSITION. !!  \\
 
         wMotor1_conf
             .idleMode(IdleMode.kBrake);
@@ -50,7 +50,7 @@ public class Algae extends SubsystemBase {
 
         wMotor1.configure(wMotor1_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         wMotor2.configure(wMotor2_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        aMotor1.configure(aMotor1_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters)
+        aMotor1.configure(aMotor1_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public Command wristUp() {
@@ -106,6 +106,7 @@ public class Algae extends SubsystemBase {
 
     public void periodic() {
         super.periodic();
+        SmartDashboard.putString("Algae", "Algae");
         SmartDashboard.putNumber("wristPos", wMotor1_enc.getPosition());
         SmartDashboard.putNumber("algaeVel", aMotor1_enc.getVelocity());
     }
