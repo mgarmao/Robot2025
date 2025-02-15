@@ -18,14 +18,17 @@ public class Algae extends SubsystemBase {
     // wrist
     private SparkMax wMotor1;
     private SparkMax wMotor2;
+    private SparkMax aMotor1;
     private SparkMaxConfig wMotor1_conf;
     private SparkMaxConfig wMotor2_conf;
+    private SparkMaxConfig aMotor1_conf;
     private RelativeEncoder wMotor1_enc;
+    private RelativeEncoder aMotor1_enc;
 
     public Algae() {
         wMotor1 = new SparkMax(Constants.Motors.WRIST_MOTOR_1, MotorType.kBrushless);
-        wMotor1_conf = new SparkMaxConfig();
-        wMotor1_enc = wMotor1.getEncoder(); // !! RELATIVE ENCODER. START WRIST AT UP POSITION. !!
+        wMotor1_conf = new SparkMaxConfig();      
+        wMotor1_enc = wMotor1.getEncoder(); // !! RELATIVE ENCODER. START WRIST AT UP POSITION. !!  \\
 
         wMotor1_conf.idleMode(IdleMode.kBrake);
         
@@ -37,8 +40,16 @@ public class Algae extends SubsystemBase {
             .follow(Constants.Motors.WRIST_MOTOR_1)
             .inverted(true);
 
+        aMotor1 = new SparkMax(Constants.Motors.AlGAE_MOTOR, MotorType.kBrushless);
+        aMotor1_conf = new SparkMaxConfig();
+        aMotor1_enc = aMotor1.getEncoder();
+
+            aMotor1_conf
+                .idleMode(IdleMode.kCoast);
+
         wMotor1.configure(wMotor1_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         wMotor2.configure(wMotor2_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        aMotor1.configure(aMotor1_conf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public Command wristUp() {
@@ -66,8 +77,36 @@ public class Algae extends SubsystemBase {
         );
     }
 
+    public Command algaeIn() {
+        return runOnce(
+            () -> {
+                aMotor1.set(1);
+            }
+        );
+    }
+
+
+    public Command algaeOut() {
+        return runOnce(
+            () -> {
+                aMotor1.set(-1);
+            }
+        );
+    }
+
+    
+    public Command algaeStop() {
+        return runOnce(
+            () -> {
+                aMotor1.set(0);
+            }
+        );
+    }
+
     public void periodic() {
         super.periodic();
+        SmartDashboard.putString("Algae", "Algae");
         SmartDashboard.putNumber("wristPos", wMotor1_enc.getPosition());
+        SmartDashboard.putNumber("algaeVel", aMotor1_enc.getVelocity());
     }
 }
