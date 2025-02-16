@@ -181,7 +181,6 @@ public class SwerveSubsystem extends SubsystemBase
         swerveDrive.updateOdometry();
         vision.updatePoseEstimation(swerveDrive);
       }
-      SmartDashboard.putNumber("Target Angle", getAngle(16)); 
 
     }
   
@@ -877,7 +876,7 @@ public class SwerveSubsystem extends SubsystemBase
               }
           }
         else{
-          drive(new Translation2d(xJoystick.getAsDouble(), 0.0), 0.0, true);
+          drive(new Translation2d(0.4, 0.0), 0.0, true);
         }          
     });
 }    

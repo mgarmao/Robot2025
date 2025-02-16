@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
+import frc.robot.subsystems.Corl;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 import frc.robot.subsystems.swervedrive.Vision.Cameras;
@@ -47,6 +48,8 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
+
+  public static final Corl CORL = new Corl();
 
   // Applies deadbands and inverts controls because joysticks
   // are back-right positive while robot
@@ -180,12 +183,11 @@ public class RobotContainer
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       driverXbox.b().whileTrue(drivebase.alignWithTarget( 17));
-      // driverXbox.y().whileTrue(drivebase.aimAtTarget3d(16,2));
       driverXbox.y().whileTrue(drivebase.alignWithTarget(16));
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
-      driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.leftBumper().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
+      driverXbox.rightBumper().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
     }
 
   }
