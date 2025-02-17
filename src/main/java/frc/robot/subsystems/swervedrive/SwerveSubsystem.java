@@ -824,74 +824,93 @@ public class SwerveSubsystem extends SubsystemBase
                 }
             }
           }          
-      }).until(() -> pidController1.atSetpoint()||!Vision.Cameras.FRONT.camera.getLatestResult().hasTargets());
+    }).until(() -> pidController1.atSetpoint()||!Vision.Cameras.FRONT.camera.getLatestResult().hasTargets());
   }    
 
-  public Command alignWithTarget(int id) {
-    pidController1 = new PIDController(1.0, 0.0, 0.0);
-    pidController2 = new PIDController(0.2, 0.0, 0.0);
-    pidController3 = new PIDController(0.2, 0.0, 0.0);
+  public Command alignWithTargetFront(int id) {
     return run(
       () -> {
         var result = Vision.Cameras.FRONT.camera.getLatestResult();         
         boolean hasTargets = result.hasTargets();    
         if(hasTargets){
           List<PhotonTrackedTarget> targets = result.getTargets();
-               
           for(PhotonTrackedTarget target:targets){
-              Transform3d cameraToTarget = target.getBestCameraToTarget();
-              SmartDashboard.putNumber("This ID", target.getFiducialId());
-              if(target.getFiducialId()==id){
-                  Pose2d currentPose2d = swerveDrive.getPose();
-                  // Convert to a Pose3d assuming zero Z and that the rotation's yaw is the 2d heading.
-                  Pose3d currentPose = new Pose3d(
-                    currentPose2d.getX(),
-                    currentPose2d.getY(),
-                    0,
-                    new edu.wpi.first.math.geometry.Rotation3d(0, 0, currentPose2d.getRotation().getRadians())
-                  );
-                  
-                  
-                  
-                  // Extract the errors.
-                  double xError = currentPose2d.getTranslation().getX();  // forward error (meters)
-                  double yError = currentPose2d.getTranslation().getY();  // lateral error (meters)
-                  double thetaError = currentPose2d.getRotation().getDegrees();   // yaw error (radians)
-                  
-                  // Compute PID outputs.
-                  double xOutput = pidController1.calculate(xError,5);
-                  double yOutput = pidController2.calculate(yError,5);
-                  double thetaOutput = pidController3.calculate(thetaError,0);
-                  
-                  SmartDashboard.putNumber("yError", yError);
-                  SmartDashboard.putNumber("X Pose", xError);
-                  SmartDashboard.putNumber("Y Pose", yError);
-
-
-                  // Command the drivetrain using the calculated outputs.
-                  swerveDrive.drive(new ChassisSpeeds(xOutput, yOutput, thetaOutput));
-                  // driveToPose(new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)));
-                  // driveToPose(new Pose2d(currentPose2d.getTranslation().plus(new Translation2d(cameraToTarget.getX(), cameraToTarget.getY())), Rotation2d.fromDegrees(0)));
-                }
-              }
+            Transform3d cameraToTarget = target.getBestCameraToTarget();
+            SmartDashboard.putNumber("This ID", target.getFiducialId());
+            if(target.getFiducialId()==id){
+              alignWithTarget(cameraToTarget);
+            }
           }
+        }
         else{
           drive(new Translation2d(0.4, 0.0), 0.0, true);
         }          
     });
-}    
+  }    
 
+  public Command alignWithTargetBack(int id) {
+    return run(
+      () -> {
+        var result = Vision.Cameras.BACK.camera.getLatestResult();         
+        boolean hasTargets = result.hasTargets();    
+        if(hasTargets){
+          List<PhotonTrackedTarget> targets = result.getTargets();
+          for(PhotonTrackedTarget target:targets){
+            Transform3d cameraToTarget = target.getBestCameraToTarget();
+            SmartDashboard.putNumber("This ID", target.getFiducialId());
+            if(target.getFiducialId()==id){
+              alignWithTarget(cameraToTarget);
+            }
+          }
+        }
+        else{
+          drive(new Translation2d(0.4, 0.0), 0.0, true);
+        }          
+    });
+  }  
 
-  
-  // public Command closingMovement(double speed, double meters, double startingX) {
-  //   pidController1 = new PIDController(1.0, 0.0, 0.0);
-  //   swerveDrive.
-  //   return run(
-  //       () -> {
-  //         drive(new Translation2d(speed, 0.0), 0.0, false);    
-  //         SmartDashboard.putNumber("DistRemaining", (startingX+meters)-swerveDrive.getPose().getX());
-  //       }).until(() -> (swerveDrive.getPose().getX()+(startingX+meters))<=0 );
-  // }    
+  public void alignWithTarget(Transform3d camToTarget) {
+    pidController1 = new PIDController(1.0, 0.0, 0.0);
+    pidController2 = new PIDController(0.2, 0.0, 0.0);
+    pidController3 = new PIDController(0.2, 0.0, 0.0);
+    
+    Pose2d currentPose2d = swerveDrive.getPose(); 
+    Pose3d currentPose = new Pose3d(currentPose2d.getX(),currentPose2d.getY(),0,new edu.wpi.first.math.geometry.Rotation3d(0, 0, currentPose2d.getRotation().getRadians()));
+
+    Transform3d tagTransform3d = camToTarget.inverse();
+    Pose3d tagPose3d = new Pose3d(tagTransform3d.getTranslation(), tagTransform3d.getRotation());
+
+    // Convert the 3D pose to a 2D pose by ignoring the z component.
+    Pose2d tagPose2d = new Pose2d(
+      tagPose3d.getTranslation().toTranslation2d(),
+      tagPose3d.getRotation().toRotation2d()
+    );
+
+    // Create a Transform2d offset of 1 meter in the tag’s forward direction (its x-axis).
+    Transform2d offset = new Transform2d(new Translation2d(1.0, 0.0), new Rotation2d());
+    Pose2d targetPose = tagPose2d.transformBy(offset);
+    Pose2d errorPose = targetPose.relativeTo(currentPose2d);
+
+    // The errorPose now represents:
+    // - errorPose.getTranslation().getX(): How far ahead (or behind, if negative) the target is in the robot's coordinate frame
+    // - errorPose.getTranslation().getY(): How far to the left/right the target is
+    // - errorPose.getRotation(): The difference in orientation needed to face the target
+    double yError = -errorPose.getTranslation().getX();
+    double xError = -errorPose.getTranslation().getY();
+    double thetaError = -errorPose.getRotation().getDegrees();
+
+    // Compute PID outputs.
+    double xOutput = pidController1.calculate(yError,0);
+    double yOutput = pidController2.calculate(xError, 5);
+    double thetaOutput = pidController3.calculate(thetaError, 0);
+    
+    SmartDashboard.putNumber("y Error", yError);
+    SmartDashboard.putNumber("X Error", xError);
+    SmartDashboard.putNumber("Theta Error", thetaError);
+
+    // Command the drivetrain using the calculated outputs.
+    swerveDrive.drive(new ChassisSpeeds(xOutput, yOutput, thetaOutput));
+  }
 
   /**
    * Gets the swerve drive object.

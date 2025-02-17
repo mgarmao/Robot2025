@@ -1,41 +1,26 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-// coral shitter or something i genuinely don't know
-// made by yours truly ruben
-// mb mike i took a lil long, but i did it so we good.
-
-// package frc.robot.subsystems;
-
-// import edu.wpi.first.wpilibj2.command.Command;
-// import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import com.revrobotics.spark.*;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
-
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import frc.robot.Constants;
 
 public class Corl extends SubsystemBase {
-    private SparkMaxConfig motorConfig;
-    private SparkMaxConfig rotator_motor1Config;
-    private SparkMaxConfig rotator_motor2Config;
 
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR);
+
+    private TalonFX intake_rotator = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
+
+    private PIDController pidController1 = new PIDController(0.5, 0, 0);
 
     public Corl() {
         
@@ -79,12 +64,29 @@ public class Corl extends SubsystemBase {
             });
     }
 
-//     public Command corlIntake() {
-//         return runOnce(
-//             () -> {
-//                 motor.set(.7);
-//             });
-//     }
+    public Command moveRotatorToPosition(double desiredPosition) {
+        return runOnce(
+            () -> {
+                double positon = rotator_motor1.getPosition().getValueAsDouble();
+
+                double output = pidController1.calculate(positon, desiredPosition);
+                rotator_motor1.set(output);
+                rotator_motor2.set(output);
+
+            });
+    }
+    
+    public Command moveIntakeToPosition(double desiredPosition) {
+        return runOnce(
+            () -> {
+                double positon = intake_rotator.getPosition().getValueAsDouble();
+
+                double output = pidController1.calculate(positon, desiredPosition);
+                intake_rotator.set(output);
+                intake_rotator.set(output);
+
+            });
+    }
 
 //     public Command corlOuttake() {
 //         return runOnce(

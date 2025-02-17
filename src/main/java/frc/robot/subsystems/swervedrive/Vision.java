@@ -332,12 +332,18 @@ public class Vision
   */
  public enum Cameras
  {
-   FRONT("cam1",
-             new Rotation3d(0, Math.toRadians(0), Math.toRadians(195)),
-             new Translation3d(Units.inchesToMeters(-7),
-                               Units.inchesToMeters(-11),
-                               Units.inchesToMeters(6)),
-             VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+  FRONT("cam1",
+            new Rotation3d(0, Math.toRadians(0), Math.toRadians(195)),
+            new Translation3d(Units.inchesToMeters(-7),
+                              Units.inchesToMeters(-11),
+                              Units.inchesToMeters(6)),
+            VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)),
+  BACK("cam2",
+  new Rotation3d(0, Math.toRadians(0), Math.toRadians(195)),
+  new Translation3d(Units.inchesToMeters(-7),
+                    Units.inchesToMeters(-11),
+                    Units.inchesToMeters(6)),
+  VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
   //  /**
   //   * Center Camera
   //   */
