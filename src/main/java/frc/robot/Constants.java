@@ -28,7 +28,8 @@ public final class Constants
   public static final class Motors {
     public static final int CORL_MOTOR   = 9;
     public static final int WRIST_MOTOR  = 10;
-    public static final int AlGAE_MOTOR  = 11;
+    public static final int AlGAE_ROTATOR  = 11;
+    public static final int AlGAE_INTAKE  = 12;
     public static final int ROTATOR_LEFT_MOTOR = 5;
     public static final int ROTATOR_RIGHT_MOTOR = 6;
   }
@@ -36,6 +37,8 @@ public final class Constants
   public static final class CurrentLimits{
     public static final int intakeWheels   = 25;
     public static final int intakeRotator = 25;
+    public static final int algaeRotator = 30;
+    public static final int algaeIntakeWheels = 30;
   }
 //  public static final class AutonConstants
 //  {
