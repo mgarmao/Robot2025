@@ -333,27 +333,18 @@ public class Vision
  public enum Cameras
  {
   FRONT("cam1",
-            new Rotation3d(0, Math.toRadians(0), Math.toRadians(195)),
-            new Translation3d(Units.inchesToMeters(-7),
-                              Units.inchesToMeters(-11),
-                              Units.inchesToMeters(6)),
-            VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)),
+    new Rotation3d(0, Math.toRadians(0), Math.toRadians(195)),
+    new Translation3d(Units.inchesToMeters(-7),
+                      Units.inchesToMeters(-11),
+                      Units.inchesToMeters(6)),
+    VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)),
   BACK("cam2",
-  new Rotation3d(0, Math.toRadians(0), Math.toRadians(195)),
-  new Translation3d(Units.inchesToMeters(-7),
+    new Rotation3d(0, Math.toRadians(0), Math.toRadians(195)),
+    new Translation3d(Units.inchesToMeters(-7),
                     Units.inchesToMeters(-11),
                     Units.inchesToMeters(6)),
-  VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
-  //  /**
-  //   * Center Camera
-  //   */
-  //  CENTER_CAM("center",
-  //             new Rotation3d(0, Units.degreesToRadians(18), 0),
-  //             new Translation3d(Units.inchesToMeters(-4.628),
-  //                               Units.inchesToMeters(-10.687),
-  //                               Units.inchesToMeters(16.129)),
-  //             VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
-
+    VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+  
    /**
     * Latency alert to use when high latency is detected.
     */

@@ -33,6 +33,10 @@ public final class Constants
     public static final int ROTATOR_RIGHT_MOTOR = 6;
   }
 
+  public static final class CurrentLimits{
+    public static final int intakeWheels   = 25;
+    public static final int intakeRotator = 25;
+  }
 //  public static final class AutonConstants
 //  {
 //
