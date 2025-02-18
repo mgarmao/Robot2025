@@ -30,6 +30,9 @@ public class Corl extends SubsystemBase {
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR);
 
+    private TalonFX elevatorMotor1 = new TalonFX(Constants.Motors.ELEVATOR_LEFT);
+    private TalonFX elevatorMotor2 = new TalonFX(Constants.Motors.ELEVATOR_RIGHT);
+
 
     private PIDController pidController1 = new PIDController(0.5, 0, 0);
 
@@ -54,6 +57,15 @@ public class Corl extends SubsystemBase {
         rotator_motor2.setNeutralMode(NeutralModeValue.Brake);
         rotator_motor1.setInverted(false);
         rotator_motor2.setInverted(true);
+
+        CurrentLimitsConfigs elevatorConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.CurrentLimits.elevator).withSupplyCurrentLimit(Constants.CurrentLimits.elevator).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        elevatorMotor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs1));
+        CurrentLimitsConfigs elevatorConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.CurrentLimits.elevator).withSupplyCurrentLimit(Constants.CurrentLimits.elevator).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        elevatorMotor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs2));
+        elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
+        elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
+        elevatorMotor1.setInverted(false);
+        elevatorMotor2.setInverted(true);
 
         SignalLogger.enableAutoLogging(false);
     }
@@ -82,6 +94,14 @@ public class Corl extends SubsystemBase {
             });
     }
 
+    public Command runRotator(double speed) {
+        return runOnce(
+            () -> {
+                rotator_motor1.set(speed);
+                rotator_motor2.set(speed);
+            });
+    }
+
     public Command moveRotatorToPosition(double desiredPosition) {
         return runOnce(
             () -> {
@@ -97,12 +117,17 @@ public class Corl extends SubsystemBase {
     public Command moveIntakeToPosition(double desiredPosition) {
         return runOnce(
             () -> {
-                double positon = rotator_motor1.getPosition().getValueAsDouble();
+                double positon = intakeRotator.getEncoder().getPosition();
 
                 double output = pidController1.calculate(positon, desiredPosition);
-                rotator_motor1.set(output);
-                rotator_motor2.set(output);
+                intakeRotator.set(output);
+            });
+    }
 
+    public Command intakeRotate(double speed) {
+        return runOnce(
+            () -> {
+                intakeRotator.set(speed);
             });
     }
 
@@ -112,5 +137,21 @@ public class Corl extends SubsystemBase {
             intakeWheels.set(speed);
             SmartDashboard.putNumber("Intake Bus Voltage", intakeWheels.getBusVoltage());
         });
+    }
+
+    public Command runElevator(double speed){
+        return runOnce(
+        () -> {
+            elevatorMotor1.set(speed);
+            elevatorMotor2.set(speed);
+        });
+    }
+
+    public double getRotatorPosition(){
+        return rotator_motor1.getPosition().getValueAsDouble();
+    }
+
+    public double getIntakePosition(){
+        return intakeRotator.getEncoder().getPosition();
     }
 }

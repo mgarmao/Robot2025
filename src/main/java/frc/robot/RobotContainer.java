@@ -28,6 +28,7 @@ import frc.robot.subsystems.Corl;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 import frc.robot.subsystems.swervedrive.Vision.Cameras;
+import frc.robot.commands.swervedrive.auto.GoToSetpoint;
 
 import java.io.File;
 
@@ -44,6 +45,10 @@ public class RobotContainer
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
+  final         CommandXboxController oppXbox = new CommandXboxController(1);
+
+
+
   
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
@@ -127,6 +132,9 @@ public class RobotContainer
 
   Command driveSetpointGenSim = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleSim);
 
+  private final Command GoToHumanPlayerSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HumanRotator, Constants.Setpoints.HumanIntake);   
+  private final Command GoToHighCorlSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HighRotator, Constants.Setpoints.HighIntake );   
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -138,7 +146,9 @@ public class RobotContainer
     configureBindings();
     
     DriverStation.silenceJoystickConnectionWarning(true);
-    // NamedCommands.registerCommand("ClosingMovement",drivebase.closingMovement(0.5,1,drivebase.getPose().getX()));
+    NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
+    NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
+
 
     autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -156,8 +166,7 @@ public class RobotContainer
    * {@link CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
    * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
    */
-  private void configureBindings()
-  {
+  private void configureBindings(){
     // (Condition) ? Return-On-True : Return-on-False
     drivebase.setDefaultCommand(!RobotBase.isSimulation() ?
                                 driveFieldOrientedDirectAngle :
@@ -178,17 +187,25 @@ public class RobotContainer
       driverXbox.back().whileTrue(drivebase.centerModulesCommand());
       driverXbox.leftBumper().onTrue(Commands.none());
       driverXbox.rightBumper().onTrue(Commands.none());
-    } else
-    {
+    } 
+    else{
+      //////////////////////////////////////////////////////////
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
       driverXbox.b().whileTrue(drivebase.alignWithTargetFront(17));
       driverXbox.y().whileTrue(drivebase.alignWithTargetBack(16));
 
+
       driverXbox.leftBumper().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
       driverXbox.rightBumper().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
-    }
 
+      driverXbox.leftTrigger().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
+      driverXbox.rightTrigger().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
+
+      driverXbox.povUp().whileTrue(CORL.runIntake(0.6)).onFalse(CORL.runIntake(0));
+      driverXbox.povDown().whileTrue(CORL.runIntake(-0.6)).onFalse(CORL.runIntake(0));
+
+      oppXbox.rightTrigger().whileTrue(GoToHighCorlSetpoint);
+    }
   }
 
   /**

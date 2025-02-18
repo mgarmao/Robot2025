@@ -32,6 +32,8 @@ public final class Constants
     public static final int AlGAE_INTAKE  = 12;
     public static final int ROTATOR_LEFT_MOTOR = 5;
     public static final int ROTATOR_RIGHT_MOTOR = 6;
+    public static final int ELEVATOR_LEFT = 00;
+    public static final int ELEVATOR_RIGHT = 00;
   }
 
   public static final class CurrentLimits{
@@ -39,6 +41,7 @@ public final class Constants
     public static final int intakeRotator = 25;
     public static final int algaeRotator = 30;
     public static final int algaeIntakeWheels = 30;
+    public static final int elevator = 30;
   }
 //  public static final class AutonConstants
 //  {
@@ -49,18 +52,23 @@ public final class Constants
 
   public static final class DrivebaseConstants
   {
-
     // Hold time on motor brakes when disabled
     public static final double WHEEL_LOCK_TIME = 10; // seconds
   }
 
   public static class OperatorConstants
   {
-
     // Joystick Deadband
     public static final double DEADBAND        = 0.1;
     public static final double LEFT_Y_DEADBAND = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
+  }
+
+  public static class Setpoints{
+    public static final double HumanRotator = 00;
+    public static final double HumanIntake = 00;
+    public static final double HighRotator = 00;
+    public static final double HighIntake = 00;
   }
 }
