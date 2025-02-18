@@ -23,9 +23,10 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.subsystems.GoToSetpoint;
+// import frc.robot.commands.subsystems.GoToSetpoint;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
-import frc.robot.subsystems.Corl;
+// import frc.robot.subsystems.Corl;
+import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 import frc.robot.subsystems.swervedrive.Vision.Cameras;
@@ -54,7 +55,8 @@ public class RobotContainer
   private final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
 
-  public static final Corl CORL = new Corl();
+  // public static final Corl CORL = new Corl();
+  public static final Algae ALGAE = new Algae();
 
   // Applies deadbands and inverts controls because joysticks
   // are back-right positive while robot
@@ -132,8 +134,8 @@ public class RobotContainer
 
   Command driveSetpointGenSim = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleSim);
 
-  private final Command GoToHumanPlayerSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HumanRotator, Constants.Setpoints.HumanIntake);   
-  private final Command GoToHighCorlSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HighRotator, Constants.Setpoints.HighIntake );   
+  // private final Command GoToHumanPlayerSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HumanRotator, Constants.Setpoints.HumanIntake);   
+  // private final Command GoToHighCorlSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HighRotator, Constants.Setpoints.HighIntake );   
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -146,9 +148,9 @@ public class RobotContainer
     configureBindings();
     
     DriverStation.silenceJoystickConnectionWarning(true);
-    NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
-    NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
-    NamedCommands.registerCommand("SetpointHigh", GoToHighCorlSetpoint);
+    // NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
+    // NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
+    // NamedCommands.registerCommand("SetpointHigh", GoToHighCorlSetpoint);
 
 
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -195,17 +197,22 @@ public class RobotContainer
       driverXbox.b().whileTrue(drivebase.alignWithTargetFront(17));
       driverXbox.y().whileTrue(drivebase.alignWithTargetBack(16));
 
+      driverXbox.leftBumper().whileTrue(ALGAE.moveRotator(0.5)).onFalse(ALGAE.moveRotator(0));
+      driverXbox.rightBumper().whileTrue(ALGAE.moveRotator(-0.5)).onFalse(ALGAE.moveRotator(0));
 
-      driverXbox.leftBumper().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
-      driverXbox.rightBumper().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
+      driverXbox.leftTrigger().whileTrue(ALGAE.runIntake(0.7)).onFalse(ALGAE.runIntake(0));
+      driverXbox.rightTrigger().whileTrue(ALGAE.runIntake(-0.7)).onFalse(ALGAE.runIntake(0));
 
-      driverXbox.leftTrigger().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
-      driverXbox.rightTrigger().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
+      // driverXbox.leftBumper().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
+      // driverXbox.rightBumper().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
 
-      driverXbox.povUp().whileTrue(CORL.runIntake(0.6)).onFalse(CORL.runIntake(0));
-      driverXbox.povDown().whileTrue(CORL.runIntake(-0.6)).onFalse(CORL.runIntake(0));
+      // driverXbox.leftTrigger().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
+      // driverXbox.rightTrigger().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
 
-      oppXbox.rightTrigger().whileTrue(GoToHighCorlSetpoint);
+      // driverXbox.povUp().whileTrue(CORL.runIntake(0.6)).onFalse(CORL.runIntake(0));
+      // driverXbox.povDown().whileTrue(CORL.runIntake(-0.6)).onFalse(CORL.runIntake(0));
+
+      // oppXbox.rightTrigger().whileTrue(GoToHighCorlSetpoint);
     }
   }
 
