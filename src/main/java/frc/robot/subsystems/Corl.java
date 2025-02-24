@@ -50,10 +50,18 @@ public class Corl extends SubsystemBase {
         intakeRotatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.intakeRotator);
         intakeRotator.configure(intakeRotatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        CurrentLimitsConfigs configs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(20).withSupplyCurrentLimit(20).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs configs1 = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(20)
+            .withSupplyCurrentLimit(20)
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true);
         rotator_motor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs1));
         
-        CurrentLimitsConfigs configs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(20).withSupplyCurrentLimit(20).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs configs2 = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(20)
+            .withSupplyCurrentLimit(20)
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true);
         rotator_motor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs2));
 
         rotator_motor1.setNeutralMode(NeutralModeValue.Brake);
@@ -61,10 +69,20 @@ public class Corl extends SubsystemBase {
         rotator_motor1.setInverted(false);
         rotator_motor2.setInverted(true);
 
-        CurrentLimitsConfigs elevatorConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.CurrentLimits.elevator).withSupplyCurrentLimit(Constants.CurrentLimits.elevator).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs elevatorConfigs1 = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(Constants.CurrentLimits.elevator)
+            .withSupplyCurrentLimit(Constants.CurrentLimits.elevator)
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true);
         elevatorMotor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs1));
-        CurrentLimitsConfigs elevatorConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.CurrentLimits.elevator).withSupplyCurrentLimit(Constants.CurrentLimits.elevator).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        
+        CurrentLimitsConfigs elevatorConfigs2 = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(Constants.CurrentLimits.elevator)
+            .withSupplyCurrentLimit(Constants.CurrentLimits.elevator)
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true);
         elevatorMotor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs2));
+        
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor1.setInverted(false);     
@@ -138,7 +156,7 @@ public class Corl extends SubsystemBase {
         return runOnce(
         () -> {
             intakeWheels.set(speed);
-            SmartDashboard.putNumber("Intake Bus Voltage", intakeWheels.getBusVoltage());
+            SmartDashboard.putNumber("Intake Bus Voltage", intakeWheels.getBusVoltage()); // last time didnt work with robot sim (maybe just because it was a sim)
         });
     }
 
