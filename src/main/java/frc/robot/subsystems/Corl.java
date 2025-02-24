@@ -37,6 +37,9 @@ public class Corl extends SubsystemBase {
     private PIDController pidController1 = new PIDController(0.5, 0, 0);
 
     public Corl() {
+        // todo: clean this up
+        //       pretty sure this can be shortened by syncing motors, or talon api dont got a sync()?
+
         intakeWheels = new SparkMax(Constants.Motors.CORL_MOTOR, MotorType.kBrushless);
         intakeWheelsConfig = new SparkMaxConfig();  
         intakeWheelsConfig.inverted(false).idleMode(IdleMode.kCoast).smartCurrentLimit(Constants.CurrentLimits.intakeWheels);
@@ -64,7 +67,7 @@ public class Corl extends SubsystemBase {
         elevatorMotor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs2));
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
-        elevatorMotor1.setInverted(false);
+        elevatorMotor1.setInverted(false);     
         elevatorMotor2.setInverted(true);
 
         SignalLogger.enableAutoLogging(false);
