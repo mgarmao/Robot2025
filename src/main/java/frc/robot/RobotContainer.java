@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 // import frc.robot.commands.subsystems.GoToSetpoint;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
-// import frc.robot.subsystems.Corl;
+import frc.robot.subsystems.Corl;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
@@ -55,7 +55,7 @@ public class RobotContainer
   private final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
 
-  // public static final Corl CORL = new Corl();
+  public static final Corl CORL = new Corl();
   public static final Algae ALGAE = new Algae();
 
   // Applies deadbands and inverts controls because joysticks
@@ -197,20 +197,23 @@ public class RobotContainer
       driverXbox.b().whileTrue(drivebase.alignWithTargetFront(17));
       driverXbox.y().whileTrue(drivebase.alignWithTargetBack(16));
 
-      driverXbox.leftBumper().whileTrue(ALGAE.moveRotator(0.5)).onFalse(ALGAE.moveRotator(0));
-      driverXbox.rightBumper().whileTrue(ALGAE.moveRotator(-0.5)).onFalse(ALGAE.moveRotator(0));
+      oppXbox.leftBumper().whileTrue(ALGAE.moveRotator(0.6)).onFalse(ALGAE.moveRotator(0));
+      oppXbox.rightBumper().whileTrue(ALGAE.moveRotator(-0.6)).onFalse(ALGAE.moveRotator(0));
 
-      driverXbox.leftTrigger().whileTrue(ALGAE.runIntake(0.7)).onFalse(ALGAE.runIntake(0));
-      driverXbox.rightTrigger().whileTrue(ALGAE.runIntake(-0.7)).onFalse(ALGAE.runIntake(0));
+      oppXbox.leftTrigger().whileTrue(ALGAE.runIntake(0.5)).onFalse(ALGAE.runIntake(0.07));
+      oppXbox.rightTrigger().whileTrue(ALGAE.runIntake(-0.5)).onFalse(ALGAE.runIntake(0.07));
 
-      // driverXbox.leftBumper().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
-      // driverXbox.rightBumper().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
+      driverXbox.povLeft().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
+      driverXbox.povRight().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
 
-      // driverXbox.leftTrigger().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
-      // driverXbox.rightTrigger().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
+      driverXbox.povUp().whileTrue(CORL.runElevator(0.4)).onFalse(CORL.runElevator(0.0));
+      driverXbox.povDown().whileTrue(CORL.runElevator(-0.4)).onFalse(CORL.runElevator(0.0));
 
-      // driverXbox.povUp().whileTrue(CORL.runIntake(0.6)).onFalse(CORL.runIntake(0));
-      // driverXbox.povDown().whileTrue(CORL.runIntake(-0.6)).onFalse(CORL.runIntake(0));
+      driverXbox.leftBumper().whileTrue(CORL.intakeRotate(1.0)).onFalse(CORL.intakeRotate(0));
+      driverXbox.rightBumper().whileTrue(CORL.intakeRotate(-1.0)).onFalse(CORL.intakeRotate(0));
+
+      driverXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
+      driverXbox.rightTrigger().whileTrue(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0));
 
       // oppXbox.rightTrigger().whileTrue(GoToHighCorlSetpoint);
     }
