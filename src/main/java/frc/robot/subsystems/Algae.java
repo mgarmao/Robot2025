@@ -16,10 +16,18 @@ public class Algae extends SubsystemBase {
     private PIDController pidController1 = new PIDController(0.5, 0, 0);
 
     public Algae() {
-        CurrentLimitsConfigs configs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(Constants.CurrentLimits.algaeRotator).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs configs1 = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(80)
+            .withSupplyCurrentLimit(Constants.CurrentLimits.algaeRotator)
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true);
         rotatorMotor.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs1));
 
-        CurrentLimitsConfigs configs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(Constants.CurrentLimits.algaeIntakeWheels).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs configs2 = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(80)
+            .withSupplyCurrentLimit(Constants.CurrentLimits.algaeIntakeWheels)
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true);
         intakeWheels.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs2));
     }
 
