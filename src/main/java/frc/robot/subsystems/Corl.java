@@ -39,6 +39,7 @@ public class Corl extends SubsystemBase {
     public Corl() {
         // todo: clean this up
         //       pretty sure this can be shortened by syncing motors, or talon api dont got a sync()?
+        //       also configs seem the same
 
         intakeWheels = new SparkMax(Constants.Motors.CORL_MOTOR, MotorType.kBrushless);
         intakeWheelsConfig = new SparkMaxConfig();  
