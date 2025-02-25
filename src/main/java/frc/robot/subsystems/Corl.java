@@ -66,22 +66,22 @@ public class Corl extends SubsystemBase {
 
         rotator_motor1.setNeutralMode(NeutralModeValue.Brake);
         rotator_motor2.setNeutralMode(NeutralModeValue.Brake);
-        rotator_motor1.setInverted(false);
-        rotator_motor2.setInverted(true);
+        rotator_motor1.setInverted(false); // depreceated, micheal needs to switch this. 
+        rotator_motor2.setInverted(true);  // apply the invert setting as part of a full TalonFXConfiguration object. Invert can be found in the MotorOutput config group.
 
         CurrentLimitsConfigs elevatorConfigs1 = new CurrentLimitsConfigs()
             .withStatorCurrentLimit(Constants.CurrentLimits.elevator)
             .withSupplyCurrentLimit(Constants.CurrentLimits.elevator)
             .withStatorCurrentLimitEnable(true)
             .withSupplyCurrentLimitEnable(true);
-        elevatorMotor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs1));
+        elevatorMotor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(elevatorConfigs1));
         
         CurrentLimitsConfigs elevatorConfigs2 = new CurrentLimitsConfigs()
             .withStatorCurrentLimit(Constants.CurrentLimits.elevator)
             .withSupplyCurrentLimit(Constants.CurrentLimits.elevator)
             .withStatorCurrentLimitEnable(true)
             .withSupplyCurrentLimitEnable(true);
-        elevatorMotor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs2));
+        elevatorMotor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(elevatorConfigs2));
         
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
