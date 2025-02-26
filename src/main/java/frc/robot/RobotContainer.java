@@ -177,43 +177,78 @@ public class RobotContainer
 
     if (Robot.isSimulation())
     {
-      driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
+      driverXbox.start()
+        .onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
     }
     if (DriverStation.isTest())
     {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides drive command above!
 
-      driverXbox.b().whileTrue(drivebase.sysIdDriveMotorCommand());
-      driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      driverXbox.y().whileTrue(drivebase.driveToDistanceCommand(1.0, 0.2));
-      driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.back().whileTrue(drivebase.centerModulesCommand());
-      driverXbox.leftBumper().onTrue(Commands.none());
-      driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.b()
+        .whileTrue(drivebase.sysIdDriveMotorCommand());
+      driverXbox.x()
+        .whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+      driverXbox.y()
+        .whileTrue(drivebase.driveToDistanceCommand(1.0, 0.2));
+      driverXbox.start()
+        .onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      driverXbox.back()
+        .whileTrue(drivebase.centerModulesCommand());
+      driverXbox.leftBumper()
+        .onTrue(Commands.none());
+      driverXbox.rightBumper()
+        .onTrue(Commands.none());
     } 
     else{
       //////////////////////////////////////////////////////////
-      driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.b().whileTrue(drivebase.alignWithTargetFront(17));
-      driverXbox.y().whileTrue(drivebase.alignWithTargetBack(16));
+      driverXbox.a()
+        .onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      driverXbox.b()
+        .whileTrue(drivebase.alignWithTargetFront(17));
+      driverXbox.y()
+        .whileTrue(drivebase.alignWithTargetBack(16));
 
-      oppXbox.leftBumper().whileTrue(ALGAE.moveRotator(0.6)).onFalse(ALGAE.moveRotator(0));
-      oppXbox.rightBumper().whileTrue(ALGAE.moveRotator(-0.6)).onFalse(ALGAE.moveRotator(0));
+      oppXbox.leftBumper()
+        .whileTrue(ALGAE.moveRotator(0.6))
+        .onFalse(ALGAE.moveRotator(0));
+      oppXbox.rightBumper()
+        .whileTrue(ALGAE.moveRotator(-0.6))
+        .onFalse(ALGAE.moveRotator(0));
+        
+      oppXbox.leftTrigger()
+        .whileTrue(ALGAE.smartRunIntake(0.9))
+        .onFalse(ALGAE.smartRunIntake(0.03));
+      oppXbox.rightTrigger()
+        .whileTrue(ALGAE.smartRunIntake(-0.9))
+        .onFalse(ALGAE.smartRunIntake(0.03));
 
-      oppXbox.leftTrigger().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
-      oppXbox.rightTrigger().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      driverXbox.povLeft()
+        .whileTrue(CORL.armUp())
+        .onFalse(CORL.armStop());
+      driverXbox.povRight()
+        .whileTrue(CORL.armDown())
+        .onFalse(CORL.armStop());
 
-      driverXbox.povLeft().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
-      driverXbox.povRight().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
+      driverXbox.povUp()
+        .whileTrue(CORL.runElevator(0.4))
+        .onFalse(CORL.runElevator(0.0));
+      driverXbox.povDown()
+        .whileTrue(CORL.runElevator(-0.4))
+        .onFalse(CORL.runElevator(0.0));
 
-      driverXbox.povUp().whileTrue(CORL.runElevator(0.4)).onFalse(CORL.runElevator(0.0));
-      driverXbox.povDown().whileTrue(CORL.runElevator(-0.4)).onFalse(CORL.runElevator(0.0));
+      driverXbox.leftBumper()
+        .whileTrue(CORL.intakeRotate(1.0))
+        .onFalse(CORL.intakeRotate(0));
+      driverXbox.rightBumper()
+        .whileTrue(CORL.intakeRotate(-1.0))
+        .onFalse(CORL.intakeRotate(0));
 
-      driverXbox.leftBumper().whileTrue(CORL.intakeRotate(1.0)).onFalse(CORL.intakeRotate(0));
-      driverXbox.rightBumper().whileTrue(CORL.intakeRotate(-1.0)).onFalse(CORL.intakeRotate(0));
-
-      driverXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
-      driverXbox.rightTrigger().whileTrue(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0));
+      driverXbox.leftTrigger()
+        .whileTrue(CORL.runIntake(0.8))
+        .onFalse(CORL.runIntake(0));
+      driverXbox.rightTrigger()
+        .whileTrue(CORL.runIntake(-0.8))
+        .onFalse(CORL.runIntake(0));
 
       // oppXbox.rightTrigger().whileTrue(GoToHighCorlSetpoint);
     }
