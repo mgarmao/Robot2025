@@ -5,6 +5,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -35,6 +36,19 @@ public class Algae extends SubsystemBase {
         return runOnce(
             () -> {
                 intakeWheels.set(speed);
+            }
+        );
+    }
+
+    public Command smartRunIntake(double speed) {
+        return runOnce(
+            () -> {
+                if(intakeWheels.getMotorVoltage().getValueAsDouble()>6.4){
+                    intakeWheels.set(0.05);
+                }
+                else{
+                    intakeWheels.set(speed);
+                }
             }
         );
     }

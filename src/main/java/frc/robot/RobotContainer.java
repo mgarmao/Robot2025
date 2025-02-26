@@ -200,8 +200,8 @@ public class RobotContainer
       oppXbox.leftBumper().whileTrue(ALGAE.moveRotator(0.6)).onFalse(ALGAE.moveRotator(0));
       oppXbox.rightBumper().whileTrue(ALGAE.moveRotator(-0.6)).onFalse(ALGAE.moveRotator(0));
 
-      oppXbox.leftTrigger().whileTrue(ALGAE.runIntake(0.5)).onFalse(ALGAE.runIntake(0.07));
-      oppXbox.rightTrigger().whileTrue(ALGAE.runIntake(-0.5)).onFalse(ALGAE.runIntake(0.07));
+      oppXbox.leftTrigger().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      oppXbox.rightTrigger().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
 
       driverXbox.povLeft().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
       driverXbox.povRight().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
