@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.signals.InvertedValue;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
@@ -43,6 +45,11 @@ public final class Constants
     public static final int algaeRotator = 30;
     public static final int algaeIntakeWheels = 30;
     public static final int elevator = 60;
+  }
+  
+  public static final class InvertedEnum {
+    public static final InvertedValue CounterClockwise = InvertedValue.CounterClockwise_Positive;
+    public static final InvertedValue Clockwise = InvertedValue.Clockwise_Positive;
   }
 //  public static final class AutonConstants
 //  {
