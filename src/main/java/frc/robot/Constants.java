@@ -39,7 +39,7 @@ public final class Constants
 
   public static final class CurrentLimits{
     public static final int intakeWheels   = 25;
-    public static final int intakeRotator = 45;
+    public static final int intakeRotator = 60;
     public static final int algaeRotator = 30;
     public static final int algaeIntakeWheels = 30;
     public static final int elevator = 60;
@@ -71,5 +71,6 @@ public final class Constants
     public static final double HumanIntake = 00;
     public static final double HighRotator = 00;
     public static final double HighIntake = 00;
+    public static final double AlgaeIn = 0;
   }
 }
