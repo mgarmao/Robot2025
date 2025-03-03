@@ -1,9 +1,14 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -34,12 +39,15 @@ public class Corl extends SubsystemBase {
     private TalonFX elevatorMotor2 = new TalonFX(Constants.Motors.ELEVATOR_RIGHT);
 
 
-    private PIDController pidController1 = new PIDController(0.5, 0, 0);
+    private PIDController pidController1 = new PIDController(0., 0, 0);
+    private PIDController pidController2 = new PIDController(1, 0, 0);
+    private PIDController pidController3 = new PIDController(1, 0, 0);
 
     public Corl() {
-        // todo: clean this up
-        //       pretty sure this can be shortened by syncing motors, or talon api dont got a sync()?
-        //       also configs seem the same
+        var slot0Configs = new Slot0Configs();
+        slot0Configs.kP = 25.5; // An error of 1 rotation results in 2.4 V output
+        slot0Configs.kI = 0; // no output for integrated error
+        slot0Configs.kD = 0.2; // A velocity of 1 rps results in 0.1 V output
 
         intakeWheels = new SparkMax(Constants.Motors.CORL_MOTOR, MotorType.kBrushless);
         intakeWheelsConfig = new SparkMaxConfig();  
@@ -50,44 +58,29 @@ public class Corl extends SubsystemBase {
         intakeRotatorConfig = new SparkMaxConfig();
         intakeRotatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.intakeRotator);
         intakeRotator.configure(intakeRotatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        CurrentLimitsConfigs configs1 = new CurrentLimitsConfigs()
-            .withStatorCurrentLimit(20)
-            .withSupplyCurrentLimit(20)
-            .withStatorCurrentLimitEnable(true)
-            .withSupplyCurrentLimitEnable(true);
-        rotator_motor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs1));
         
-        CurrentLimitsConfigs configs2 = new CurrentLimitsConfigs()
-            .withStatorCurrentLimit(20)
-            .withSupplyCurrentLimit(20)
-            .withStatorCurrentLimitEnable(true)
-            .withSupplyCurrentLimitEnable(true);
-        rotator_motor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(configs2));
+        MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.CounterClockwise);
+
+        CurrentLimitsConfigs limitConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(20).withSupplyCurrentLimit(20).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        rotator_motor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs1));
+        
+        CurrentLimitsConfigs limitConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(20).withSupplyCurrentLimit(20).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        rotator_motor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs2).withMotorOutput(inverConfig));
 
         rotator_motor1.setNeutralMode(NeutralModeValue.Brake);
         rotator_motor2.setNeutralMode(NeutralModeValue.Brake);
-        rotator_motor1.setInverted(false); // depreceated, micheal needs to switch this. 
-        rotator_motor2.setInverted(true);  // apply the invert setting as part of a full TalonFXConfiguration object. Invert can be found in the MotorOutput config group.
 
-        CurrentLimitsConfigs elevatorConfigs1 = new CurrentLimitsConfigs()
-            .withStatorCurrentLimit(Constants.CurrentLimits.elevator)
-            .withSupplyCurrentLimit(Constants.CurrentLimits.elevator)
-            .withStatorCurrentLimitEnable(true)
-            .withSupplyCurrentLimitEnable(true);
-        elevatorMotor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(elevatorConfigs1));
-        
-        CurrentLimitsConfigs elevatorConfigs2 = new CurrentLimitsConfigs()
-            .withStatorCurrentLimit(Constants.CurrentLimits.elevator)
-            .withSupplyCurrentLimit(Constants.CurrentLimits.elevator)
-            .withStatorCurrentLimitEnable(true)
-            .withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs elevatorConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(120).withSupplyCurrentLimit(Constants.CurrentLimits.elevator).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        elevatorMotor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(elevatorConfigs1).withMotorOutput(inverConfig));
+        CurrentLimitsConfigs elevatorConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(120).withSupplyCurrentLimit(Constants.CurrentLimits.elevator).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         elevatorMotor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(elevatorConfigs2));
-        
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
-        elevatorMotor1.setInverted(false);     
-        elevatorMotor2.setInverted(true);
+        elevatorMotor1.setInverted(true);
+        elevatorMotor2.setInverted(false);
+
+        elevatorMotor1.getConfigurator().apply(slot0Configs);
+        
 
         SignalLogger.enableAutoLogging(false);
     }
@@ -141,7 +134,7 @@ public class Corl extends SubsystemBase {
             () -> {
                 double positon = intakeRotator.getEncoder().getPosition();
 
-                double output = pidController1.calculate(positon, desiredPosition);
+                double output = clamp(pidController1.calculate(positon, desiredPosition), 0.3, -0.3);
                 intakeRotator.set(output);
             });
     }
@@ -164,6 +157,8 @@ public class Corl extends SubsystemBase {
     public Command runElevator(double speed){
         return runOnce(
         () -> {
+            SmartDashboard.putNumber("Elevator1 Positon", elevatorMotor1.getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Elevator2 Positon", elevatorMotor2.getPosition().getValueAsDouble());
             elevatorMotor1.set(speed);
             elevatorMotor2.set(speed);
         });
@@ -176,4 +171,41 @@ public class Corl extends SubsystemBase {
     public double getIntakePosition(){
         return intakeRotator.getEncoder().getPosition();
     }
+
+    public Command elevatorGoToPosition(double desiredPosition) {
+        return runOnce(
+            () -> {
+                double output1 = clamp(pidController2.calculate(elevatorMotor1.getPosition().getValueAsDouble(), desiredPosition), 0.4,-0.4);
+                double output2 = clamp(pidController2.calculate(elevatorMotor2.getPosition().getValueAsDouble(), desiredPosition), 0.4,-0.4);
+                
+                elevatorMotor1.set(output1);
+                elevatorMotor2.set(output2);
+
+                SmartDashboard.putNumber("OUTPUT2", output2);
+            });
+    }
+
+    public Command armGoToPosition(double desiredPosition) {
+        return runOnce(
+            () -> {
+                double output1 = clamp(pidController3.calculate(rotator_motor1.getPosition().getValueAsDouble(), desiredPosition), -0.4,0.4);
+                double output2 = clamp(pidController3.calculate(rotator_motor2.getPosition().getValueAsDouble(), desiredPosition),-0.4,0.4);
+                
+                rotator_motor1.set(output1);
+                rotator_motor2.set(output2);
+
+            });
+    } 
+
+    public double clamp (double value, double min, double max){
+        double newVal = 0;
+        if(value>max){
+            newVal = max;
+        }
+        if(value<min){
+            newVal = min;
+        }
+        return newVal;
+    }
 }
+
