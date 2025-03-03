@@ -183,25 +183,36 @@ public class RobotContainer
 
     if (Robot.isSimulation())
     {
-      driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
+      driverXbox.start()
+        .onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
     }
     if (DriverStation.isTest())
     {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides drive command above!
 
-      driverXbox.b().whileTrue(drivebase.sysIdDriveMotorCommand());
-      driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      driverXbox.y().whileTrue(drivebase.driveToDistanceCommand(1.0, 0.2));
-      driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.back().whileTrue(drivebase.centerModulesCommand());
-      driverXbox.leftBumper().onTrue(Commands.none());
-      driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.b()
+        .whileTrue(drivebase.sysIdDriveMotorCommand());
+      driverXbox.x()
+        .whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+      driverXbox.y()
+        .whileTrue(drivebase.driveToDistanceCommand(1.0, 0.2));
+      driverXbox.start()
+        .onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      driverXbox.back()
+        .whileTrue(drivebase.centerModulesCommand());
+      driverXbox.leftBumper()
+        .onTrue(Commands.none());
+      driverXbox.rightBumper()
+        .onTrue(Commands.none());
     } 
     else{
       //////////////////////////////////////////////////////////
-      driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.b().whileTrue(drivebase.alignWithTargetFront(17));
-      driverXbox.y().whileTrue(drivebase.alignWithTargetBack(16));
+      driverXbox.a()
+        .onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      driverXbox.b()
+        .whileTrue(drivebase.alignWithTargetFront(17));
+      driverXbox.y()
+        .whileTrue(drivebase.alignWithTargetBack(16));
 
       oppXbox.leftBumper().whileTrue(new goToPosition(-20, ALGAE)).whileFalse(algaeAutomaticIn);
       // oppXbox.rightBumper().whileTrue(algaeAutomaticIn).onFalse(ALGAE.moveRotator(0));
@@ -209,8 +220,12 @@ public class RobotContainer
       oppXbox.leftTrigger().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
       oppXbox.rightTrigger().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
 
-      driverXbox.povLeft().whileTrue(CORL.armUp()).onFalse(CORL.armStop());
-      driverXbox.povRight().whileTrue(CORL.armDown()).onFalse(CORL.armStop());
+      driverXbox.povLeft()
+        .whileTrue(CORL.armUp())
+        .onFalse(CORL.armStop());
+      driverXbox.povRight()
+        .whileTrue(CORL.armDown())
+        .onFalse(CORL.armStop());
 
       driverXbox.povUp().whileTrue(CORL.elevatorGoToPosition(10)).onFalse(CORL.runElevator(0.0));
       driverXbox.povDown().whileTrue(CORL.runElevator(-0.1)).onFalse(CORL.runElevator(0.0));
