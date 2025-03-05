@@ -227,7 +227,7 @@ public class RobotContainer
         .whileTrue(CORL.armDown())
         .onFalse(CORL.armStop());
 
-      driverXbox.povUp().whileTrue(CORL.elevatorGoToPosition(10)).onFalse(CORL.runElevator(0.0));
+      driverXbox.povUp().whileTrue(CORL.runElevator(0.5)).onFalse(CORL.runElevator(0.0));
       driverXbox.povDown().whileTrue(CORL.runElevator(-0.1)).onFalse(CORL.runElevator(0.0));
 
       driverXbox.leftBumper().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
