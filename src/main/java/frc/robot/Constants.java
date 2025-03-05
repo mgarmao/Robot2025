@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.signals.InvertedValue;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
@@ -26,22 +28,28 @@ public final class Constants
   // Maximum speed of the robot in meters per second, used to limit acceleration.
  
   public static final class Motors {
-    public static final int CORL_MOTOR   = 00;
-    public static final int WRIST_MOTOR  = 00;
+    public static final int CORL_MOTOR   = 16;/////
+    public static final int WRIST_MOTOR  = 15;////
+
     public static final int AlGAE_ROTATOR  = 11;
     public static final int AlGAE_INTAKE  = 12;
     public static final int ROTATOR_LEFT_MOTOR = 5;
     public static final int ROTATOR_RIGHT_MOTOR = 6;
-    public static final int ELEVATOR_LEFT = 00;
-    public static final int ELEVATOR_RIGHT = 00;
+    public static final int ELEVATOR_LEFT = 9;
+    public static final int ELEVATOR_RIGHT = 10;
   }
 
   public static final class CurrentLimits{
     public static final int intakeWheels   = 25;
-    public static final int intakeRotator = 25;
+    public static final int intakeRotator = 60;
     public static final int algaeRotator = 30;
     public static final int algaeIntakeWheels = 30;
-    public static final int elevator = 30;
+    public static final int elevator = 40;
+  }
+  
+  public static final class InvertedEnum {
+    public static final InvertedValue CounterClockwise = InvertedValue.CounterClockwise_Positive;
+    public static final InvertedValue Clockwise = InvertedValue.Clockwise_Positive;
   }
 //  public static final class AutonConstants
 //  {
@@ -70,5 +78,6 @@ public final class Constants
     public static final double HumanIntake = 00;
     public static final double HighRotator = 00;
     public static final double HighIntake = 00;
+    public static final double AlgaeIn = 0;
   }
 }
