@@ -159,9 +159,15 @@ public class RobotContainer
 
     
     DriverStation.silenceJoystickConnectionWarning(true);
-    // NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
-    // NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
-    // NamedCommands.registerCommand("SetpointHigh", GoToHighCorlSetpoint);
+    NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
+    NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
+    NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, 0, Constants.Setpoints.ArmVeritcal, 0));
+
+    // NamedCommands.registerCommand("SetpointHigh", new GoToSetpoint(CORL, 0, 0, 0));
+    // NamedCommands.registerCommand("SetpointDown", new GoToSetpoint(CORL, 0, 0, 0));
+    // NamedCommands.registerCommand("SetpointMid", new GoToSetpoint(CORL, 0, 0, 0));
+    // NamedCommands.registerCommand("SetpointHumanPlayer", new GoToSetpoint(CORL, 0, 0, 0));
+
 
 
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -225,7 +231,7 @@ public class RobotContainer
       oppXbox.a().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
       oppXbox.b().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
       oppXbox.y().whileTrue(new goToPosition(-20, ALGAE)).whileFalse(algaeAutomaticIn);
-      oppXbox.x().whileTrue(new GoToSetpoint(CORL,0,0,3)).whileFalse(algaeAutomaticIn);
+      oppXbox.x().whileTrue(new GoToSetpoint(CORL,0,0,3.0));
 
 
       oppXbox.povLeft()
