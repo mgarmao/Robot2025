@@ -79,5 +79,9 @@ public final class Constants
     public static final double HighRotator = 00;
     public static final double HighIntake = 00;
     public static final double AlgaeIn = 0;
+
+    public static final double ArmVeritcal = -43.48;
+    public static final double WristPerpendicular = -6.9; 
+
   }
 }

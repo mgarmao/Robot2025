@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.subsystems.GoToSetpoint;
 import frc.robot.commands.subsystems.goToPosition;
 // import frc.robot.commands.subsystems.GoToSetpoint;
 import frc.robot.commands.subsystems.rotateBackToHardstop;
@@ -34,6 +35,8 @@ import frc.robot.subsystems.swervedrive.Vision;
 import frc.robot.subsystems.swervedrive.Vision.Cameras;
 
 import java.io.File;
+
+import org.opencv.features2d.FastFeatureDetector;
 
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
@@ -153,6 +156,8 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
     
+
+    
     DriverStation.silenceJoystickConnectionWarning(true);
     // NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
     // NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
@@ -204,6 +209,7 @@ public class RobotContainer
         .onTrue(Commands.none());
       driverXbox.rightBumper()
         .onTrue(Commands.none());
+      
     } 
     else{
       //////////////////////////////////////////////////////////
@@ -214,28 +220,31 @@ public class RobotContainer
       driverXbox.y()
         .whileTrue(drivebase.alignWithTargetBack(16));
 
-      oppXbox.leftBumper().whileTrue(new goToPosition(-20, ALGAE)).whileFalse(algaeAutomaticIn);
       // oppXbox.rightBumper().whileTrue(algaeAutomaticIn).onFalse(ALGAE.moveRotator(0));
 
-      oppXbox.leftTrigger().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
-      oppXbox.rightTrigger().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      oppXbox.a().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      oppXbox.b().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      oppXbox.y().whileTrue(new goToPosition(-20, ALGAE)).whileFalse(algaeAutomaticIn);
+      oppXbox.x().whileTrue(new GoToSetpoint(CORL,0,0,3)).whileFalse(algaeAutomaticIn);
 
-      driverXbox.povLeft()
+
+      oppXbox.povLeft()
         .whileTrue(CORL.armUp())
         .onFalse(CORL.armStop());
-      driverXbox.povRight()
+        oppXbox.povRight()
         .whileTrue(CORL.armDown())
         .onFalse(CORL.armStop());
 
-      driverXbox.povUp().whileTrue(CORL.runElevator(0.5)).onFalse(CORL.runElevator(0.0));
-      driverXbox.povDown().whileTrue(CORL.runElevator(-0.1)).onFalse(CORL.runElevator(0.0));
+      oppXbox.povUp().whileTrue(CORL.runElevator(0.8)).onFalse(CORL.runElevator(0.0));
+      oppXbox.povDown().whileTrue(CORL.runElevator(-0.1)).onFalse(CORL.runElevator(0.0));
 
-      driverXbox.leftBumper().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
-      driverXbox.rightBumper().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
+      oppXbox.leftBumper().whileTrue(CORL.intakeRotate(0.)).onFalse(CORL.intakeRotate(0));
+      oppXbox.rightBumper().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
 
-      driverXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
-      driverXbox.rightTrigger().whileTrue(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0));
+      oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
+      oppXbox.rightTrigger().whileTrue(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0));
 
+      driverXbox.leftTrigger().whileTrue(drivebase.alignMode(true, ()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), 1.5));
       
       
 

@@ -20,16 +20,16 @@ public class GoToSetpoint extends Command{
 
     double desiredRotatorPosition;
     double desiredIntakePosition;
-    double desiredHeight;
+    double desiredElevatorPosition;
 
-    public GoToSetpoint(Corl corlSubsystem, double desiredHeight, double desiredRotatorPosition, double desiredIntakePosition){
+    public GoToSetpoint(Corl corlSubsystem, double desiredElevatorPosition, double desiredRotatorPosition, double desiredIntakePosition){
         controller1.setPID(0.4, 0, 0);
         controller2.setPID(0.4, 0, 0);
         controller3.setPID(0.4, 0, 0);
 
         this.desiredIntakePosition = desiredIntakePosition;
         this.desiredRotatorPosition = desiredRotatorPosition;
-        this.desiredHeight = desiredHeight;
+        this.desiredElevatorPosition = desiredElevatorPosition;
 
         this.corlSubsystem = corlSubsystem;
         addRequirements(this.corlSubsystem);
@@ -42,13 +42,13 @@ public class GoToSetpoint extends Command{
 
     @Override
     public void execute(){
-        double corlRotatorOutput = MathUtil.clamp(controller1.calculate(corlSubsystem.getRotatorPosition(), desiredRotatorPosition), -1, 1);
+        double corlRotatorOutput = MathUtil.clamp(controller1.calculate(corlSubsystem.getRotatorPosition(), desiredRotatorPosition), -0.8, 0.8);
         double corlIntakeOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getIntakePosition(), desiredIntakePosition), -0.5, 0.5);
-        double elevatorOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getIntakePosition(), desiredIntakePosition), -0.5, 0.5);
+        double elevatorOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.5, 0.5);
 
         corlSubsystem.runRotator(corlRotatorOutput);
-        corlSubsystem.intakeRotate(corlIntakeOutput);
-        corlSubsystem.runElevator(elevatorOutput);
+        // corlSubsystem.intakeRotate(corlIntakeOutput);
+        // corlSubsystem.runElevator(elevatorOutput);
     }
 
     @Override

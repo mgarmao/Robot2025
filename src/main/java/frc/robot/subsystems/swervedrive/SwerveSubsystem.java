@@ -869,6 +869,26 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }  
 
+  public Command alignMode(boolean onoff, DoubleSupplier driverX, DoubleSupplier driverY, double limit)
+  {
+    return run(
+      ()->{
+        if (onoff) {
+          double neox = driverX.getAsDouble();
+          if (neox > limit) {
+            neox = limit;
+          }
+          double neoy = driverY.getAsDouble();
+          if (neoy > limit) {neoy = limit;}
+          drive(new Translation2d(neox, neoy), 0, false);
+        }
+        else {
+          // do jack shit
+        }
+      });
+  }
+   
+
   public void alignWithTarget(Transform3d camToTarget) {
     pidController1 = new PIDController(1.0, 0.0, 0.0);
     pidController2 = new PIDController(0.2, 0.0, 0.0);

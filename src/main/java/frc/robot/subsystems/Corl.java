@@ -59,7 +59,7 @@ public class Corl extends SubsystemBase {
         intakeRotatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.intakeRotator);
         intakeRotator.configure(intakeRotatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
-        MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.CounterClockwise);
+        MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
 
         CurrentLimitsConfigs limitConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(20).withSupplyCurrentLimit(20).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         rotator_motor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs1));
@@ -69,6 +69,7 @@ public class Corl extends SubsystemBase {
 
         rotator_motor1.setNeutralMode(NeutralModeValue.Brake);
         rotator_motor2.setNeutralMode(NeutralModeValue.Brake);
+
 
         CurrentLimitsConfigs elevatorConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(120).withSupplyCurrentLimit(Constants.CurrentLimits.elevator).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         elevatorMotor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(elevatorConfigs1).withMotorOutput(inverConfig));
@@ -172,6 +173,10 @@ public class Corl extends SubsystemBase {
         return intakeRotator.getEncoder().getPosition();
     }
 
+    public double getElevatorPosition(){
+        return elevatorMotor1.getPosition().getValueAsDouble();
+    }
+
     public Command elevatorGoToPosition(double desiredPosition) {
         return runOnce(
             () -> {
@@ -206,6 +211,14 @@ public class Corl extends SubsystemBase {
             newVal = min;
         }
         return newVal;
+    }
+
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putNumber("Arm Position", rotator_motor1.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Wrist Position", intakeRotator.getEncoder().getPosition());
+        SmartDashboard.putNumber("Elevator Position", elevatorMotor1.getPosition().getValueAsDouble());        
     }
 }
 
