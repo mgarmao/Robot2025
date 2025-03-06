@@ -843,7 +843,7 @@ public class SwerveSubsystem extends SubsystemBase
           }
         }
         else{
-          drive(new Translation2d(0.4, 0.0), 0.0, true);
+          drive(new Translation2d(0.4, 0.0), 0.0, true); //xyzxyzxyz
         }          
     });
   }    
