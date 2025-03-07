@@ -8,24 +8,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Corl;
 
 
+
 /**
  * Goes to a specific setpoint
  * 
  */
 public class GoToSetpoint extends Command{
     private final Corl corlSubsystem;
-    PIDController controller1;
-    PIDController controller2;
-    PIDController controller3;
+    PIDController controller1 = new PIDController(0.4, 0, 0);
+    PIDController controller2 =  new PIDController(0.4, 0, 0);
+    PIDController controller3 =  new PIDController(0.4, 0, 0);
 
     double desiredRotatorPosition;
     double desiredIntakePosition;
     double desiredElevatorPosition;
 
     public GoToSetpoint(Corl corlSubsystem, double desiredElevatorPosition, double desiredRotatorPosition, double desiredIntakePosition){
-        controller1.setPID(0.4, 0, 0);
-        controller2.setPID(0.4, 0, 0);
-        controller3.setPID(0.4, 0, 0);
+
 
         this.desiredIntakePosition = desiredIntakePosition;
         this.desiredRotatorPosition = desiredRotatorPosition;
@@ -61,3 +60,4 @@ public class GoToSetpoint extends Command{
         corlSubsystem.armStop();
     }
 }
+
