@@ -878,29 +878,18 @@ public class SwerveSubsystem extends SubsystemBase
 
         double drivx = driverX.getAsDouble();
         double drivy = driverY.getAsDouble();
-        
-        double slowVal =  2.0;
-        double speedx  = -drivx;
-        double speedy  =  drivy;
-        
-        double neospeedx  = drivx-slowVal;
-        double neospeedy  = drivy-slowVal;
+        double driveR = rotate.getAsDouble();        
 
+        double neospeedx  = drivx;
+        double neospeedy  = drivy;
 
-        // while (speedx == 0) {
-        //   neospeedx = 0;
-        // }
-        // while (speedy == 0) {
-        //   neospeedy = 0;
-        // }
-        // // speedx -= slowVal;
-        // // speedy -= slowVal;
-        
-        
+        neospeedx = MathUtil.clamp(neospeedx, -0.5, 0.5);
+        neospeedy = MathUtil.clamp(neospeedy, -0.5, 0.5);
+        driveR = MathUtil.clamp(driveR, -0.5, 0.5);
 
         drive(
           new Translation2d(neospeedx, neospeedy), 
-          rotate.getAsDouble(), 
+          driveR, 
           false
           );
           
