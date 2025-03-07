@@ -902,9 +902,6 @@ public class SwerveSubsystem extends SubsystemBase
           false
           );
           
-          SmartDashboard.putNumber("speedx", speedx);
-          SmartDashboard.putNumber("speedy", speedy);
-          SmartDashboard.putNumber("roat", rotate.getAsDouble());
       });
   }
    
