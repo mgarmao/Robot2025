@@ -897,7 +897,7 @@ public class SwerveSubsystem extends SubsystemBase
         // speedy -= slowVal;
         
         drive(
-          new Translation2d(neospeedx, neospeedy ), 
+          new Translation2d(neospeedx, neospeedy), 
           rotate.getAsDouble(), 
           false
           );
