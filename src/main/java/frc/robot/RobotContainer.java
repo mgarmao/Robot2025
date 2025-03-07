@@ -250,7 +250,7 @@ public class RobotContainer
       oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
       oppXbox.rightTrigger().whileTrue(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0));
 
-      driverXbox.leftTrigger().whileTrue(drivebase.alignMode(true, ()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), 1.5));
+      driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
       
 

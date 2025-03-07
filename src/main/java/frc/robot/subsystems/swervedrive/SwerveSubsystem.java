@@ -182,6 +182,8 @@ public class SwerveSubsystem extends SubsystemBase
         vision.updatePoseEstimation(swerveDrive);
       }
 
+      
+
     }
   
     @Override
@@ -869,22 +871,37 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }  
 
-  public Command alignMode(boolean onoff, DoubleSupplier driverX, DoubleSupplier driverY, double limit)
+  public Command alignMode(DoubleSupplier driverX, DoubleSupplier driverY, DoubleSupplier rotate)
   {
     return run(
       ()->{
-        if (onoff) {
-          double neox = driverX.getAsDouble();
-          if (neox > limit) {
-            neox = limit;
-          }
-          double neoy = driverY.getAsDouble();
-          if (neoy > limit) {neoy = limit;}
-          drive(new Translation2d(neox, neoy), 0, false);
+
+        double drivx = driverX.getAsDouble();
+        double drivy = driverY.getAsDouble();
+        
+        double slowVal =  2.0;
+        double speedx  = -drivx;
+        double speedy  =  drivy;
+        
+        double neospeedx  = drivx-slowVal;
+        double neospeedy  = drivy-slowVal;
+
+
+        while (speedx == 0) {
+          neospeedx = 0;
         }
-        else {
-          // do jack shit
+        while (speedy == 0) {
+          neospeedy = 0;
         }
+        // speedx -= slowVal;
+        // speedy -= slowVal;
+        
+        drive(
+          new Translation2d(neospeedx, neospeedy), 
+          rotate.getAsDouble(), 
+          false
+          );
+          
       });
   }
    
