@@ -202,6 +202,20 @@ public class Corl extends SubsystemBase {
             });
     } 
 
+    public void runRotatorNoCommand(double speed){
+        rotator_motor1.set(speed);
+        rotator_motor2.set(speed);
+    }
+
+    public void intakeRotatorNoCommand(double speed){
+        intakeRotator.set(speed);
+    }
+
+    public void elevatorRunNoCommand(double speed){
+        elevatorMotor1.set(speed);
+        elevatorMotor2.set(speed);
+    }
+
     public double clamp (double value, double min, double max){
         double newVal = 0;
         if(value>max){

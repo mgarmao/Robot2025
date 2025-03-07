@@ -231,7 +231,7 @@ public class RobotContainer
       oppXbox.a().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
       oppXbox.b().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
       oppXbox.y().whileTrue(new goToPosition(-20, ALGAE)).whileFalse(algaeAutomaticIn);
-      oppXbox.x().whileTrue(new GoToSetpoint(CORL,0,0,3.0));
+      oppXbox.x().whileTrue(new GoToSetpoint(CORL,0,-43.7,-6.0)).onFalse(CORL.armStop());
 
 
       oppXbox.povLeft()
@@ -242,9 +242,9 @@ public class RobotContainer
         .onFalse(CORL.armStop());
 
       oppXbox.povUp().whileTrue(CORL.runElevator(0.8)).onFalse(CORL.runElevator(0.0));
-      oppXbox.povDown().whileTrue(CORL.runElevator(-0.1)).onFalse(CORL.runElevator(0.0));
+      oppXbox.povDown().whileTrue(CORL.runElevator(-0.35)).onFalse(CORL.runElevator(0.0));
 
-      oppXbox.leftBumper().whileTrue(CORL.intakeRotate(0.)).onFalse(CORL.intakeRotate(0));
+      oppXbox.leftBumper().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
       oppXbox.rightBumper().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
 
       oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));

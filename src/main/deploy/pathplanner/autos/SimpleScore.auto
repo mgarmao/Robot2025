@@ -5,33 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "ArmVertical"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Single Score"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 5.0
           }
         }
       ]

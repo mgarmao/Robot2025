@@ -15,8 +15,8 @@ import frc.robot.subsystems.Corl;
  */
 public class GoToSetpoint extends Command{
     private final Corl corlSubsystem;
-    PIDController controller1 = new PIDController(0.4, 0, 0);
-    PIDController controller2 =  new PIDController(0.4, 0, 0);
+    PIDController controller1 = new PIDController(0.15, 0.04, 0.0);
+    PIDController controller2 =  new PIDController(0.4, 0.02, 0);
     PIDController controller3 =  new PIDController(0.4, 0, 0);
 
     double desiredRotatorPosition;
@@ -42,10 +42,16 @@ public class GoToSetpoint extends Command{
     @Override
     public void execute(){
         double corlRotatorOutput = MathUtil.clamp(controller1.calculate(corlSubsystem.getRotatorPosition(), desiredRotatorPosition), -0.8, 0.8);
-        double corlIntakeOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getIntakePosition(), desiredIntakePosition), -0.5, 0.5);
-        double elevatorOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.5, 0.5);
+        double corlIntakeOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getIntakePosition(), desiredIntakePosition), -0.3, 0.3);
+        double elevatorOutput = MathUtil.clamp(controller3.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.5, 0.5);
 
-        corlSubsystem.runRotator(corlRotatorOutput);
+        corlSubsystem.runRotatorNoCommand(corlRotatorOutput);
+        corlSubsystem.intakeRotatorNoCommand(corlIntakeOutput);
+        if(corlSubsystem.getRotatorPosition()>-35){
+            corlSubsystem.elevatorRunNoCommand(elevatorOutput);
+        }
+        // corlSubsystem.runRotatorNoCommand(elevatorOutput);
+
         // corlSubsystem.intakeRotate(corlIntakeOutput);
         // corlSubsystem.runElevator(elevatorOutput);
     }
