@@ -219,20 +219,20 @@ public class RobotContainer
     } 
     else{
       //////////////////////////////////////////////////////////
-      driverXbox.a()
-        .onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.b()
-        .whileTrue(drivebase.alignWithTargetFront(17));
-      driverXbox.y()
-        .whileTrue(drivebase.alignWithTargetBack(16));
-
+      driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      driverXbox.b().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      driverXbox.x().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      driverXbox.y().whileTrue(new goToPosition(-30, ALGAE)).whileFalse(algaeAutomaticIn);
+      driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
+      
       // oppXbox.rightBumper().whileTrue(algaeAutomaticIn).onFalse(ALGAE.moveRotator(0));
 
-      oppXbox.a().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
-      oppXbox.b().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
-      oppXbox.y().whileTrue(new goToPosition(-20, ALGAE)).whileFalse(algaeAutomaticIn);
-      oppXbox.x().whileTrue(new GoToSetpoint(CORL,0,-43.7,-6.0)).onFalse(CORL.armStop());
+      oppXbox.b().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.MidElevator,Constants.Setpoints.MidRotator,Constants.Setpoints.MidIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0));      
+      oppXbox.x().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.HumanElevator,Constants.Setpoints.HumanRotator,Constants.Setpoints.HumanIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0));
+      oppXbox.y().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.HighElevator,Constants.Setpoints.HighRotator,Constants.Setpoints.HighIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0));      
 
+
+      oppXbox.rightStick().whileFalse(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0.0));
 
       oppXbox.povLeft()
         .whileTrue(CORL.armUp())
@@ -250,7 +250,6 @@ public class RobotContainer
       oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
       oppXbox.rightTrigger().whileTrue(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0));
 
-      driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
       
 

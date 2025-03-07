@@ -47,7 +47,7 @@ public class GoToSetpoint extends Command{
 
         corlSubsystem.runRotatorNoCommand(corlRotatorOutput);
         corlSubsystem.intakeRotatorNoCommand(corlIntakeOutput);
-        if(corlSubsystem.getRotatorPosition()>-35){
+        if(corlSubsystem.getRotatorPosition()<-15||corlSubsystem.getRotatorPosition()>-48||elevatorOutput<0){
             corlSubsystem.elevatorRunNoCommand(elevatorOutput);
         }
         // corlSubsystem.runRotatorNoCommand(elevatorOutput);

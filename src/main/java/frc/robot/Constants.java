@@ -74,14 +74,24 @@ public final class Constants
   }
 
   public static class Setpoints{
-    public static final double HumanRotator = 00;
-    public static final double HumanIntake = 00;
-    public static final double HighRotator = 00;
-    public static final double HighIntake = 00;
+    public static final double HumanRotator = -21.86;
+    public static final double HumanIntake = -13.69;
+    public static final double HumanElevator = 0.0;
+
+    public static final double HighRotator = -46.5;
+    public static final double HighIntake = -6;
+    public static final double HighElevator = 120;
+
+    public static final double MidRotator = -41.0;
+    public static final double MidElevator = 65.0;
+    public static final double MidIntake = -3.0;
+
+
     public static final double AlgaeIn = 0;
 
     public static final double ArmVeritcal = -43.48;
-    public static final double WristPerpendicular = -6.9; 
+    public static final double WristPerpendicular = -6.9;
+     
 
   }
 }
