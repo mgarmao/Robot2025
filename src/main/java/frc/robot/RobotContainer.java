@@ -220,14 +220,14 @@ public class RobotContainer
     else{
       //////////////////////////////////////////////////////////
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.b().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
-      driverXbox.x().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
-      driverXbox.y().whileTrue(new goToPosition(-30, ALGAE)).whileFalse(algaeAutomaticIn);
+      driverXbox.rightBumper().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      driverXbox.rightTrigger().whileTrue(new goToPosition(-30, ALGAE)).whileFalse(algaeAutomaticIn);
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
-      oppXbox.b().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.MidElevator,Constants.Setpoints.MidRotator,Constants.Setpoints.MidIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0));      
-      oppXbox.x().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.HumanElevator,Constants.Setpoints.HumanRotator,Constants.Setpoints.HumanIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0));
-      oppXbox.y().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.HighElevator,Constants.Setpoints.HighRotator,Constants.Setpoints.HighIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0));      
+      oppXbox.a().whileTrue(new GoToSetpoint(CORL,0,5,0)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0)).onFalse(CORL.intakeRotate(0));      
+      oppXbox.b().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.MidElevator,Constants.Setpoints.MidRotator,Constants.Setpoints.MidIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0)).onFalse(CORL.intakeRotate(0));            
+      oppXbox.x().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.HumanElevator,Constants.Setpoints.HumanRotator,Constants.Setpoints.HumanIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0)).onFalse(CORL.intakeRotate(0));      
+      oppXbox.y().whileTrue(new GoToSetpoint(CORL,Constants.Setpoints.HighElevator,Constants.Setpoints.HighRotator,Constants.Setpoints.HighIntake)).onFalse(CORL.armStop()).onFalse(CORL.runElevator(0)).onFalse(CORL.intakeRotate(0));      
 
 
 
