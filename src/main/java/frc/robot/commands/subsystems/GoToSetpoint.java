@@ -46,19 +46,25 @@ public class GoToSetpoint extends Command{
         double elevatorOutput = MathUtil.clamp(controller3.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.4, 0.8);
 
         corlSubsystem.intakeRotatorNoCommand(corlIntakeOutput);
-        if(corlSubsystem.getRotatorPosition()<-45||elevatorOutput<0){
-            corlSubsystem.elevatorRunNoCommand(elevatorOutput);
-        }
-        else{
-            corlSubsystem.elevatorRunNoCommand(0);
-        }
+        corlSubsystem.elevatorRunNoCommand(elevatorOutput);
 
-        if(corlSubsystem.getElevatorPosition() >=65 && corlRotatorOutput>0){
-            corlSubsystem.runRotatorNoCommand(0);
-        }
-        else{
+        SmartDashboard.putNumber("EL POS", corlSubsystem.getElevatorPosition());
+
+        if(corlSubsystem.getElevatorPosition()<40)
+        {
             corlSubsystem.runRotatorNoCommand(corlRotatorOutput);
         }
+        else{
+            corlSubsystem.runRotatorNoCommand(0);
+        }
+
+        // If the rotator is -25 or greater and the elevator is not below a certain height
+
+        // if(corlSubsystem.getElevatorPosition() >=65 && corlRotatorOutput>0){
+        //     corlSubsystem.runRotatorNoCommand(0);
+        // }
+        // else{
+        // }
 
         // if(corlSubsystem.getElevatorPosition()>-40 || (corlSubsystem.getRotatorPosition()>=-50&&corlRotatorOutput>0)||(corlSubsystem.getRotatorPosition()<=0&&corlRotatorOutput<0)){
         // }

@@ -220,7 +220,7 @@ public class RobotContainer
     else{
       //////////////////////////////////////////////////////////
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.rightBumper().whileTrue(ALGAE.smartRunIntake(0.9)).onFalse(ALGAE.smartRunIntake(0.03));
+      driverXbox.rightBumper().whileTrue(ALGAE.smartRunIntake(-0.9)).onFalse(ALGAE.smartRunIntake(0.03));
       driverXbox.rightTrigger().whileTrue(new goToPosition(-30, ALGAE)).whileFalse(algaeAutomaticIn);
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
