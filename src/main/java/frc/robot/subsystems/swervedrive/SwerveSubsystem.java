@@ -243,7 +243,7 @@ public class SwerveSubsystem extends SubsystemBase
               var alliance = DriverStation.getAlliance();
               if (alliance.isPresent())
               {
-                return alliance.get() == DriverStation.Alliance.Red;
+                return alliance.get() == DriverStation.Alliance.Red; //// FLAG AS POSSIBLE ERROR
               }
               return false;
             },
@@ -269,7 +269,7 @@ public class SwerveSubsystem extends SubsystemBase
      */
     public double getDistanceToSpeaker()
     {
-      int allianceAprilTag = DriverStation.getAlliance().get() == Alliance.Blue ? 7 : 4;
+      int allianceAprilTag = DriverStation.getAlliance().get() == Alliance.Blue ? 7 : 4; 
       // Taken from PhotonUtils.getDistanceToPose
       Pose3d speakerAprilTagPose = aprilTagFieldLayout.getTagPose(allianceAprilTag).get();
       return getPose().getTranslation().getDistance(speakerAprilTagPose.toPose2d().getTranslation());
@@ -654,6 +654,8 @@ public class SwerveSubsystem extends SubsystemBase
      *
      * @return true if the red alliance, false if blue. Defaults to false if none is available.
      */
+
+    // FLAG AS POSSIBLE ERROR
     private boolean isRedAlliance()
     {
       var alliance = DriverStation.getAlliance();
@@ -665,6 +667,8 @@ public class SwerveSubsystem extends SubsystemBase
      * <p>
      * If red alliance rotate the robot 180 after the drviebase zero command
      */
+    
+    // FLAG AS POSSIBLE ERROR
     public void zeroGyroWithAlliance()
     {
       if (isRedAlliance())
@@ -876,6 +880,7 @@ public class SwerveSubsystem extends SubsystemBase
     return run(
       ()->{
 
+        double clamp = 0.5;
         double drivx = driverX.getAsDouble();
         double drivy = driverY.getAsDouble();
         double driveR = rotate.getAsDouble();        
@@ -883,9 +888,9 @@ public class SwerveSubsystem extends SubsystemBase
         double neospeedx  = drivx;
         double neospeedy  = drivy;
 
-        neospeedx = MathUtil.clamp(neospeedx, -0.5, 0.5);
-        neospeedy = MathUtil.clamp(neospeedy, -0.5, 0.5);
-        driveR = MathUtil.clamp(driveR, -0.5, 0.5);
+        neospeedx = MathUtil.clamp(neospeedx, -clamp, clamp);
+        neospeedy = MathUtil.clamp(neospeedy, -clamp, clamp);
+        // driveR    = MathUtil.clamp(driveR, -0.5, 0.5); in actuallity we dont need to limit the rotation
 
         drive(
           new Translation2d(neospeedx, neospeedy), 
