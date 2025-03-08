@@ -43,7 +43,7 @@ public class GoToSetpoint extends Command{
     public void execute(){
         double corlRotatorOutput = MathUtil.clamp(controller1.calculate(corlSubsystem.getRotatorPosition(), desiredRotatorPosition), -0.8, 0.8);
         double corlIntakeOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getIntakePosition(), desiredIntakePosition), -0.3, 0.3);
-        double elevatorOutput = MathUtil.clamp(controller3.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.5, 0.5);
+        double elevatorOutput = MathUtil.clamp(controller3.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.4, 0.8);
 
         corlSubsystem.intakeRotatorNoCommand(corlIntakeOutput);
         if(corlSubsystem.getRotatorPosition()<-45||elevatorOutput<0){
