@@ -876,6 +876,7 @@ public class SwerveSubsystem extends SubsystemBase
     return run(
       ()->{
 
+        double clamp = 0.5;
         double drivx = driverX.getAsDouble();
         double drivy = driverY.getAsDouble();
         double driveR = rotate.getAsDouble();        
@@ -883,8 +884,8 @@ public class SwerveSubsystem extends SubsystemBase
         double neospeedx  = drivx;
         double neospeedy  = drivy;
 
-        neospeedx = MathUtil.clamp(neospeedx, -0.5, 0.5);
-        neospeedy = MathUtil.clamp(neospeedy, -0.5, 0.5);
+        neospeedx = MathUtil.clamp(neospeedx, -clamp, clamp);
+        neospeedy = MathUtil.clamp(neospeedy, -clamp, clamp);
         // driveR    = MathUtil.clamp(driveR, -0.5, 0.5); in actuallity we dont need to limit the rotation
 
         drive(
