@@ -158,8 +158,8 @@ public class Corl extends SubsystemBase {
     public Command runElevator(double speed){
         return runOnce(
         () -> {
-            SmartDashboard.putNumber("Elevator1 Positon", elevatorMotor1.getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Elevator2 Positon", elevatorMotor2.getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("ElevatorMotor1 Positon", elevatorMotor1.getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("ElevatorMotor2 Positon", elevatorMotor2.getPosition().getValueAsDouble());
             elevatorMotor1.set(speed);
             elevatorMotor2.set(speed);
         });
