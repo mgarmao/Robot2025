@@ -885,7 +885,7 @@ public class SwerveSubsystem extends SubsystemBase
 
         neospeedx = MathUtil.clamp(neospeedx, -0.5, 0.5);
         neospeedy = MathUtil.clamp(neospeedy, -0.5, 0.5);
-        driveR = MathUtil.clamp(driveR, -0.5, 0.5);
+        // driveR    = MathUtil.clamp(driveR, -0.5, 0.5); in actuallity we dont need to limit the rotation
 
         drive(
           new Translation2d(neospeedx, neospeedy), 
