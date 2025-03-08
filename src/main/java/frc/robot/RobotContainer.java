@@ -159,9 +159,9 @@ public class RobotContainer
 
     
     DriverStation.silenceJoystickConnectionWarning(true);
-    NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
-    NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
-    NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, 0, Constants.Setpoints.ArmVeritcal, 0));
+    NamedCommands.registerCommand("IntakeIn",CORL.runIntake(0.5));
+    NamedCommands.registerCommand("IntakeOut",CORL.runIntake(-0.5));
+    NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, 0, Constants.Setpoints.ArmVeritcal, -3).withTimeout(2.0));
 
     // NamedCommands.registerCommand("SetpointHigh", new GoToSetpoint(CORL, 0, 0, 0));
     // NamedCommands.registerCommand("SetpointDown", new GoToSetpoint(CORL, 0, 0, 0));
@@ -238,14 +238,14 @@ public class RobotContainer
         .whileTrue(CORL.armDown())
         .onFalse(CORL.armStop());
 
-      oppXbox.povUp().whileTrue(CORL.runElevator(0.8)).onFalse(CORL.runElevator(0.0));
-      oppXbox.povDown().whileTrue(CORL.runElevator(-0.35)).onFalse(CORL.runElevator(0.0));
+      oppXbox.povUp().whileTrue(CORL.runElevator(0.9)).onFalse(CORL.runElevator(0.0));
+      oppXbox.povDown().whileTrue(CORL.runElevator(-0.4)).onFalse(CORL.runElevator(0.0));
 
       oppXbox.leftBumper().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
       oppXbox.rightBumper().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
 
       oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
-      oppXbox.rightStick().whileFalse(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0.0));
+      oppXbox.rightStick().toggleOnTrue(CORL.runIntake(-0.8)).onFalse(CORL.runIntake(0.0));
 
       
     }

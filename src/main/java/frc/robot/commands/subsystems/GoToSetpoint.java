@@ -46,12 +46,22 @@ public class GoToSetpoint extends Command{
         double elevatorOutput = MathUtil.clamp(controller3.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.5, 0.5);
 
         corlSubsystem.intakeRotatorNoCommand(corlIntakeOutput);
-        if(corlSubsystem.getRotatorPosition()<-15||corlSubsystem.getRotatorPosition()>-50||elevatorOutput<0){
+        if(corlSubsystem.getRotatorPosition()<-45||elevatorOutput<0){
             corlSubsystem.elevatorRunNoCommand(elevatorOutput);
         }
-        if(corlSubsystem.getElevatorPosition()>-40 && (corlSubsystem.getRotatorPosition()>=-50&&corlRotatorOutput>0)||(corlSubsystem.getRotatorPosition()<=0&&corlRotatorOutput<0)){
+        else{
+            corlSubsystem.elevatorRunNoCommand(0);
+        }
+
+        if(corlSubsystem.getElevatorPosition() >=65 && corlRotatorOutput>0){
+            corlSubsystem.runRotatorNoCommand(0);
+        }
+        else{
             corlSubsystem.runRotatorNoCommand(corlRotatorOutput);
         }
+
+        // if(corlSubsystem.getElevatorPosition()>-40 || (corlSubsystem.getRotatorPosition()>=-50&&corlRotatorOutput>0)||(corlSubsystem.getRotatorPosition()<=0&&corlRotatorOutput<0)){
+        // }
         // corlSubsystem.runRotatorNoCommand(elevatorOutput);
 
         // corlSubsystem.intakeRotate(corlIntakeOutput);

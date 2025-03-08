@@ -74,15 +74,15 @@ public final class Constants
   }
 
   public static class Setpoints{
-    public static final double HumanRotator = -21.86;
-    public static final double HumanIntake = -13.69;
+    public static final double HumanRotator = -20.00;
+    public static final double HumanIntake = -8.69;
     public static final double HumanElevator = 0.0;
 
     public static final double HighRotator = -46.5;
     public static final double HighIntake = -6;
     public static final double HighElevator = 120;
 
-    public static final double MidRotator = -41.0;
+    public static final double MidRotator = -46.0;
     public static final double MidElevator = 65.0;
     public static final double MidIntake = -3.0;
 
