@@ -95,7 +95,7 @@ public class RobotContainer
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
                                                             .scaleTranslation(0.8)
-                                                            .allianceRelativeControl(true);
+                                                            .allianceRelativeControl(true); // FLAG AS POSSIBLE ERROR
 
   /**
    * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
@@ -127,7 +127,7 @@ public class RobotContainer
                                                                .withControllerRotationAxis(() -> driverXbox.getRawAxis(2))
                                                                .deadband(OperatorConstants.DEADBAND)
                                                                .scaleTranslation(0.8)
-                                                               .allianceRelativeControl(true);
+                                                               .allianceRelativeControl(true); // FLAG AS POSSIBLE ERROR
   // Derive the heading axis with math!
   SwerveInputStream driveDirectAngleSim     = driveAngularVelocitySim.copy()
                                                                      .withControllerHeadingAxis(() -> Math.sin(
