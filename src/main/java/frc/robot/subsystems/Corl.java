@@ -61,10 +61,10 @@ public class Corl extends SubsystemBase {
         
         MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
 
-        CurrentLimitsConfigs limitConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(20).withSupplyCurrentLimit(20).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs limitConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         rotator_motor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs1));
         
-        CurrentLimitsConfigs limitConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(20).withSupplyCurrentLimit(20).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs limitConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         rotator_motor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs2).withMotorOutput(inverConfig));
 
         rotator_motor1.setNeutralMode(NeutralModeValue.Brake);
