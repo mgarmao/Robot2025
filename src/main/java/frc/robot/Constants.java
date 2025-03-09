@@ -76,7 +76,7 @@ public final class Constants
   public static class Setpoints{
     public static final double HumanRotator = -20.00;
     public static final double HumanIntake = -8.69;
-    public static final double HumanElevator = 0.0;
+    public static final double HumanElevator = 16.0;
 
     public static final double HighRotator = -46.5;
     public static final double HighIntake = -6;

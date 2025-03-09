@@ -27,11 +27,11 @@ public class Robot extends TimedRobot
 
   private Timer disabledTimer;
 
-  Timer m_gcTimer = new Timer();
+  // Timer m_gcTimer = new Timer();
 
   public Robot()
   {
-    m_gcTimer.start();
+    // m_gcTimer.start();
     instance = this;
   }
 
@@ -76,9 +76,9 @@ public class Robot extends TimedRobot
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putString("command",CommandScheduler.getInstance().toString());
-    if (m_gcTimer.advanceIfElapsed(5)) {
-      System.gc();
-    }
+    // if (m_gcTimer.advanceIfElapsed(5)) {
+    //   System.gc();
+    // }
 
   }
 
