@@ -46,6 +46,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.Vision.Cameras;
+
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -55,6 +57,8 @@ import java.util.concurrent.atomic.AtomicReference;
 // import swervelib.math.YAGSLConversions; // Ensure this class exists in the correct package or remove if not needed
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
+
+import org.dyn4j.geometry.Geometry;
 import org.json.simple.parser.ParseException;
 import org.opencv.core.Mat;
 import org.photonvision.PhotonCamera;
@@ -88,7 +92,7 @@ public class SwerveSubsystem extends SubsystemBase
      */
     private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
     /**
-     * Enable vision odometry updates while driving.
+     * Enable vision odometry updates while driving. micheal said racoon a lot
      */
     private final boolean             visionDriveTest     = false;////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -141,9 +145,16 @@ public class SwerveSubsystem extends SubsystemBase
       swerveDrive.pushOffsetsToEncoders(); // Set the absolute encoder to be used over the internal encoder and push the offsets onto it. Throws warning if not possible
       if (visionDriveTest)
       {
-        setupPhotonVision();
-        // Stop the odometry thread if we are using vision that way we can synchronize updates better.
-        swerveDrive.stopOdometryThread();
+        try{
+          setupPhotonVision();
+          // Stop the odometry thread if we are using vision that way we can synchronize updates better.
+          swerveDrive.stopOdometryThread();
+        }
+        catch(Exception e)
+        {
+          DriverStation.reportError(e.toString(), true);
+          System.out.println("Vision setup failed");
+        }
       }
       setupPathPlanner();
     }
@@ -178,8 +189,14 @@ public class SwerveSubsystem extends SubsystemBase
       // When vision is enabled we must manually update odometry in SwerveDrive
       if (visionDriveTest)
       {
-        swerveDrive.updateOdometry();
-        vision.updatePoseEstimation(swerveDrive);
+        try{
+          swerveDrive.updateOdometry();
+          vision.updatePoseEstimation(swerveDrive);
+        }catch (Exception e)
+        {
+          DriverStation.reportError(e.toString(), true);
+          System.out.println("Vision update failed");
+        }
       }
 
       
@@ -939,12 +956,79 @@ public class SwerveSubsystem extends SubsystemBase
     double yOutput = pidController2.calculate(xError, 5);
     double thetaOutput = pidController3.calculate(thetaError, 0);
     
+
     SmartDashboard.putNumber("y Error", yError);
     SmartDashboard.putNumber("X Error", xError);
     SmartDashboard.putNumber("Theta Error", thetaError);
 
     // Command the drivetrain using the calculated outputs.
     swerveDrive.drive(new ChassisSpeeds(xOutput, yOutput, thetaOutput));
+  }
+
+  public Pose3d getDesiredReefPose2d(int bestID){
+    double additionalX = 5;
+    double additionalY = 5;
+    Pose2d reefPose;
+    Pose3d desiredPose;
+    double newX = 0, newY = 0;
+    
+    Optional<Pose3d> aprilTagePose = aprilTagFieldLayout.getTagPose(bestID);
+
+    //closestToHuman
+    if(bestID == 18 || bestID==7){
+      // subtract some y 
+      newX = aprilTagePose.get().getX();
+      newY = aprilTagePose.get().getX()-additionalY;
+    }
+
+    if (bestID == 10 || bestID==21){
+      // add some y
+      newX = aprilTagePose.get().getX();
+      newY = aprilTagePose.get().getX()+additionalY;
+    }
+
+    if(bestID == 17 || bestID==8){
+      // addLittle x and subtract alittle y
+      newX = aprilTagePose.get().getX()+additionalX;
+      newY = aprilTagePose.get().getX()-additionalY;
+    }
+
+    if(bestID == 19 || bestID==6){
+      // subract Alittle x and subtract alittle y
+      newX = aprilTagePose.get().getX()-additionalX;
+      newY = aprilTagePose.get().getX()-additionalY;
+    }
+
+    if(bestID == 11 || bestID==20){
+      // subract Alittle x and subtract add alittle y
+      newX = aprilTagePose.get().getX()-additionalX;
+      newY = aprilTagePose.get().getX()-additionalY;
+    }
+
+    if(bestID == 9 || bestID==22){
+      // add Alittle x and add alittle y
+      newX = aprilTagePose.get().getX()+additionalX;
+      newY = aprilTagePose.get().getX()+additionalY;
+    }
+
+    
+
+    desiredPose = new Pose3d(newX, newY, 0, aprilTagePose.get().getRotation());
+
+    return desiredPose;
+  }
+
+  public int bestTargetID(){
+    int id = 0;
+    var result = Vision.Cameras.FRONT.camera.getLatestResult();         
+    boolean hasTargets = result.hasTargets();    
+    if(hasTargets){
+      List<PhotonTrackedTarget> targets = result.getTargets();
+      for(PhotonTrackedTarget target:targets){
+        SmartDashboard.putNumber("This ID", target.getFiducialId());
+      }
+    }
+    return id;    
   }
 
   /**

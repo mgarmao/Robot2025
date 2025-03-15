@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.subsystems.AlignWithApriltag;
 import frc.robot.commands.subsystems.GoToSetpoint;
 import frc.robot.commands.subsystems.goToPosition;
 // import frc.robot.commands.subsystems.GoToSetpoint;
@@ -32,7 +33,6 @@ import frc.robot.subsystems.Corl;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
-import frc.robot.subsystems.swervedrive.Vision.Cameras;
 
 import java.io.File;
 
@@ -238,8 +238,8 @@ public class RobotContainer
         .whileTrue(CORL.armDown())
         .onFalse(CORL.armStop());
 
-      oppXbox.povUp().whileTrue(CORL.runElevator(0.9)).onFalse(CORL.runElevator(0.0));
-      oppXbox.povDown().whileTrue(CORL.runElevator(-0.4)).onFalse(CORL.runElevator(0.0));
+      oppXbox.povUp().whileTrue(CORL.runElevator(1)).onFalse(CORL.runElevator(0.0));
+      oppXbox.povDown().whileTrue(CORL.runElevator(-0.7)).onFalse(CORL.runElevator(0.0));
 
       oppXbox.leftBumper().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
       oppXbox.rightBumper().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
@@ -247,6 +247,7 @@ public class RobotContainer
       oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
       oppXbox.rightStick().toggleOnTrue(CORL.runIntake(-0.5)).onFalse(CORL.runIntake(0.0));
 
+      driverXbox.x().whileTrue(new AlignWithApriltag(drivebase, 0));
       
     }
   }
