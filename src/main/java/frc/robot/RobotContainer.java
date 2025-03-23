@@ -23,7 +23,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.subsystems.AlignWithApriltag;
+// import frc.robot.commands.subsystems.AlignWithApriltag;
+// import frc.robot.commands.subsystems.AlignWithApriltag;
 import frc.robot.commands.subsystems.GoToSetpoint;
 import frc.robot.commands.subsystems.goToPosition;
 // import frc.robot.commands.subsystems.GoToSetpoint;
@@ -220,18 +221,20 @@ public class RobotContainer
     else{
       //////////////////////////////////////////////////////////
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.rightBumper().whileTrue(new goToPosition(-20, ALGAE,-0.4)).onFalse(algaeAutomaticIn);
-      driverXbox.rightTrigger().whileTrue(new goToPosition(-30, ALGAE,0.7)).whileFalse(new goToPosition(-15, ALGAE,0.15));
+      // driverXbox.rightBumper().whileTrue(new goToPosition(-20, ALGAE,-0.4)).onFalse(algaeAutomaticIn);
+      driverXbox.rightTrigger().whileTrue(drivebase.reverseAlignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
       oppXbox.a().whileTrue(
         new GoToSetpoint(CORL,
-        0,
-        5,
-        0))
+        Constants.Setpoints.LowElevator,
+        Constants.Setpoints.LowRotator,
+        Constants.Setpoints.LowIntake))
       .onFalse(CORL.armStop())
       .onFalse(CORL.runElevator(0))
       .onFalse(CORL.intakeRotate(0));      
+      
+      //Mid Corl
       oppXbox.b().whileTrue(
         new GoToSetpoint(CORL,
         Constants.Setpoints.MidElevator,
@@ -240,6 +243,8 @@ public class RobotContainer
         .onFalse(CORL.armStop())
         .onFalse(CORL.runElevator(0))
         .onFalse(CORL.intakeRotate(0));            
+      
+      //Human corl
       oppXbox.x().whileTrue(
         new GoToSetpoint(CORL,
         Constants.Setpoints.HumanElevator,
@@ -248,34 +253,36 @@ public class RobotContainer
         .onFalse(CORL.armStop())
         .onFalse(CORL.runElevator(0))
         .onFalse(CORL.intakeRotate(0));      
+      
+      //Mid corl
       oppXbox.y().whileTrue(
         new GoToSetpoint(CORL,
-        Constants.Setpoints.HighElevator,
-        Constants.Setpoints.HighRotator,
-        Constants.Setpoints.HighIntake))
+        Constants.Setpoints.algaeElevatorMid,
+        Constants.Setpoints.algaeArmMid,
+        Constants.Setpoints.algaeIntakeMid))
         .onFalse(CORL.armStop())
         .onFalse(CORL.runElevator(0))
         .onFalse(CORL.intakeRotate(0));      
 
 
-
-      oppXbox.povLeft()
+      //Human corl
+      oppXbox.povRight()
         .whileTrue(CORL.armUp())
         .onFalse(CORL.armStop());
-        oppXbox.povRight()
+        oppXbox.povLeft()
         .whileTrue(CORL.armDown())
         .onFalse(CORL.armStop());
 
       oppXbox.povUp().whileTrue(CORL.runElevator(1)).onFalse(CORL.runElevator(0.0));
       oppXbox.povDown().whileTrue(CORL.runElevator(-0.7)).onFalse(CORL.runElevator(0.0));
 
-      oppXbox.leftBumper().whileTrue(CORL.intakeRotate(0.3)).onFalse(CORL.intakeRotate(0));
-      oppXbox.rightBumper().whileTrue(CORL.intakeRotate(-0.3)).onFalse(CORL.intakeRotate(0));
+      oppXbox.rightBumper().whileTrue(CORL.intakeRotate(0.4)).onFalse(CORL.intakeRotate(0));
+      oppXbox.leftBumper().whileTrue(CORL.intakeRotate(-0.4)).onFalse(CORL.intakeRotate(0));
 
-      oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.8)).onFalse(CORL.runIntake(0));
-      oppXbox.rightStick().toggleOnTrue(CORL.runIntake(-0.5)).onFalse(CORL.runIntake(0.0));
+      oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.95)).onFalse(CORL.runIntake(0));
+      oppXbox.rightTrigger().toggleOnTrue(CORL.runIntake(-0.85)).onFalse(CORL.runIntake(0.0));
 
-      driverXbox.x().whileTrue(new AlignWithApriltag(drivebase, 0));
+      // driverXbox.x().whileTrue(new AlignWithApriltag(drivebase, 0));
       
     }
   }

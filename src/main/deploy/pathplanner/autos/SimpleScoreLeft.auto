@@ -17,24 +17,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ArmVertical"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeOut"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 0.5

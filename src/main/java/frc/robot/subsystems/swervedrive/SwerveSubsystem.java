@@ -330,24 +330,24 @@ public class SwerveSubsystem extends SubsystemBase
      *
      * @return A {@link Command} which will run the alignment.
      */
-    public Command aimAtTarget(Cameras camera)
-    {
+    // public Command aimAtTarget(Cameras camera)
+    // {
   
-      return run(() -> {
-        Optional<PhotonPipelineResult> resultO = camera.getBestResult();
-        if (resultO.isPresent())
-        {
-          var result = resultO.get();
-          if (result.hasTargets())
-          {
-            drive(getTargetSpeeds(0,
-                                  0,
-                                  Rotation2d.fromDegrees(result.getBestTarget()
-                                                               .getYaw()))); // Not sure if this will work, more math may be required.
-          }
-        }
-      });
-    }
+    //   return run(() -> {
+    //     Optional<PhotonPipelineResult> resultO = camera.getBestResult();
+    //     if (resultO.isPresent())
+    //     {
+    //       var result = resultO.get();
+    //       if (result.hasTargets())
+    //       {
+    //         drive(getTargetSpeeds(0,
+    //                               0,
+    //                               Rotation2d.fromDegrees(result.getBestTarget()
+    //                                                            .getYaw()))); // Not sure if this will work, more math may be required.
+    //       }
+    //     }
+    //   });
+    // }
   
     /**
      * Get the path follower with events.
@@ -829,70 +829,70 @@ public class SwerveSubsystem extends SubsystemBase
       swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
     }
   
-    public Command DriveToProcessor() {
-      pidController1 = new PIDController(1.0, 0.0, 0.0);
-      int id = 16;
-      return run(
-        () -> {
-          var result = Vision.Cameras.FRONT.camera.getLatestResult();         
-          boolean hasTargets = result.hasTargets();    
-          if(hasTargets){
-            List<PhotonTrackedTarget> targets = result.getTargets();
-            double yDistance = 0;     
-            for(PhotonTrackedTarget target:targets){
-                Transform3d thisTarget = target.getBestCameraToTarget();
-                SmartDashboard.putNumber("This ID", target.getFiducialId());
-                if(target.getFiducialId()==id){
-                  yDistance = thisTarget.getY();    
-                  double translationVal = MathUtil.clamp(pidController1.calculate(yDistance, 0.0), -0.5,0.5);
-                  drive(new Translation2d(0.5, translationVal), 0.0, true);
-                }
-            }
-          }          
-    }).until(() -> pidController1.atSetpoint()||!Vision.Cameras.FRONT.camera.getLatestResult().hasTargets());
-  }    
+  //   public Command DriveToProcessor() {
+  //     pidController1 = new PIDController(1.0, 0.0, 0.0);
+  //     int id = 16;
+  //     return run(
+  //       () -> {
+  //         var result = Vision.Cameras.FRONT.camera.getLatestResult();         
+  //         boolean hasTargets = result.hasTargets();    
+  //         if(hasTargets){
+  //           List<PhotonTrackedTarget> targets = result.getTargets();
+  //           double yDistance = 0;     
+  //           for(PhotonTrackedTarget target:targets){
+  //               Transform3d thisTarget = target.getBestCameraToTarget();
+  //               SmartDashboard.putNumber("This ID", target.getFiducialId());
+  //               if(target.getFiducialId()==id){
+  //                 yDistance = thisTarget.getY();    
+  //                 double translationVal = MathUtil.clamp(pidController1.calculate(yDistance, 0.0), -0.5,0.5);
+  //                 drive(new Translation2d(0.5, translationVal), 0.0, true);
+  //               }
+  //           }
+  //         }          
+  //   }).until(() -> pidController1.atSetpoint()||!Vision.Cameras.FRONT.camera.getLatestResult().hasTargets());
+  // }    
 
-  public Command alignWithTargetFront(int id) {
-    return run(
-      () -> {
-        var result = Vision.Cameras.FRONT.camera.getLatestResult();         
-        boolean hasTargets = result.hasTargets();    
-        if(hasTargets){
-          List<PhotonTrackedTarget> targets = result.getTargets();
-          for(PhotonTrackedTarget target:targets){
-            Transform3d cameraToTarget = target.getBestCameraToTarget();
-            SmartDashboard.putNumber("This ID", target.getFiducialId());
-            if(target.getFiducialId()==id){
-              alignWithTarget(cameraToTarget);
-            }
-          }
-        }
-        else{
-          drive(new Translation2d(0.4, 0.0), 0.0, true); //xyzxyzxyz
-        }          
-    });
-  }    
+  // public Command alignWithTargetFront(int id) {
+  //   return run(
+  //     () -> {
+  //       var result = Vision.Cameras.FRONT.camera.getLatestResult();         
+  //       boolean hasTargets = result.hasTargets();    
+  //       if(hasTargets){
+  //         List<PhotonTrackedTarget> targets = result.getTargets();
+  //         for(PhotonTrackedTarget target:targets){
+  //           Transform3d cameraToTarget = target.getBestCameraToTarget();
+  //           SmartDashboard.putNumber("This ID", target.getFiducialId());
+  //           if(target.getFiducialId()==id){
+  //             alignWithTarget(cameraToTarget);
+  //           }
+  //         }
+  //       }
+  //       else{
+  //         drive(new Translation2d(0.4, 0.0), 0.0, true); //xyzxyzxyz
+  //       }          
+  //   });
+  // }    
 
-  public Command alignWithTargetBack(int id) {
-    return run(
-      () -> {
-        var result = Vision.Cameras.BACK.camera.getLatestResult();         
-        boolean hasTargets = result.hasTargets();    
-        if(hasTargets){
-          List<PhotonTrackedTarget> targets = result.getTargets();
-          for(PhotonTrackedTarget target:targets){
-            Transform3d cameraToTarget = target.getBestCameraToTarget();
-            SmartDashboard.putNumber("This ID", target.getFiducialId());
-            if(target.getFiducialId()==id){
-              alignWithTarget(cameraToTarget);
-            }
-          }
-        }
-        else{
-          drive(new Translation2d(0.4, 0.0), 0.0, true);
-        }          
-    });
-  }  
+  // public Command alignWithTargetBack(int id) {
+  //   return run(
+  //     () -> {
+  //       var result = Vision.Cameras.BACK.camera.getLatestResult();         
+  //       boolean hasTargets = result.hasTargets();    
+  //       if(hasTargets){
+  //         List<PhotonTrackedTarget> targets = result.getTargets();
+  //         for(PhotonTrackedTarget target:targets){
+  //           Transform3d cameraToTarget = target.getBestCameraToTarget();
+  //           SmartDashboard.putNumber("This ID", target.getFiducialId());
+  //           if(target.getFiducialId()==id){
+  //             alignWithTarget(cameraToTarget);
+  //           }
+  //         }
+  //       }
+  //       else{
+  //         drive(new Translation2d(0.4, 0.0), 0.0, true);
+  //       }          
+  //   });
+  // }  
 
   public Command alignMode(DoubleSupplier driverX, DoubleSupplier driverY, DoubleSupplier rotate)
   {
@@ -912,8 +912,34 @@ public class SwerveSubsystem extends SubsystemBase
         // driveR    = MathUtil.clamp(driveR, -0.5, 0.5); in actuallity we dont need to limit the rotation
 
         drive(
-          new Translation2d(neospeedx, neospeedy), 
-          driveR, 
+          new Translation2d(neospeedy, neospeedx), 
+          -driveR, 
+          false
+          );
+          
+      });
+  }
+
+  public Command reverseAlignMode(DoubleSupplier driverX, DoubleSupplier driverY, DoubleSupplier rotate)
+  {
+    return run(
+      ()->{
+
+        double clamp = 0.5;
+        double drivx = driverX.getAsDouble();
+        double drivy = driverY.getAsDouble();
+        double driveR = rotate.getAsDouble();        
+
+        double neospeedx  = drivx;
+        double neospeedy  = drivy;
+
+        neospeedx = MathUtil.clamp(neospeedx, -clamp, clamp);
+        neospeedy = MathUtil.clamp(neospeedy, -clamp, clamp);
+        // driveR    = MathUtil.clamp(driveR, -0.5, 0.5); in actuallity we dont need to limit the rotation
+
+        drive(
+          new Translation2d(-neospeedy, -neospeedx), 
+          -driveR, 
           false
           );
           
@@ -1018,18 +1044,18 @@ public class SwerveSubsystem extends SubsystemBase
     return desiredPose;
   }
 
-  public int bestTargetID(){
-    int id = 0;
-    var result = Vision.Cameras.FRONT.camera.getLatestResult();         
-    boolean hasTargets = result.hasTargets();    
-    if(hasTargets){
-      List<PhotonTrackedTarget> targets = result.getTargets();
-      for(PhotonTrackedTarget target:targets){
-        SmartDashboard.putNumber("This ID", target.getFiducialId());
-      }
-    }
-    return id;    
-  }
+  // public int bestTargetID(){
+  //   int id = 0;
+  //   var result = Vision.Cameras.FRONT.camera.getLatestResult();         
+  //   boolean hasTargets = result.hasTargets();    
+  //   if(hasTargets){
+  //     List<PhotonTrackedTarget> targets = result.getTargets();
+  //     for(PhotonTrackedTarget target:targets){
+  //       SmartDashboard.putNumber("This ID", target.getFiducialId());
+  //     }
+  //   }
+  //   return id;    
+  // }
 
   /**
    * Gets the swerve drive object.

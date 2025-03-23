@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import javax.xml.stream.events.StartDocument;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.geometry.Translation3d;
@@ -74,17 +76,29 @@ public final class Constants
   }
 
   public static class Setpoints{
-    public static final double HumanRotator = -20.00;
-    public static final double HumanIntake = -8.69;
-    public static final double HumanElevator = 16.0;
+    public static final double HumanRotator = 14.24;
+    public static final double HumanIntake = -5.93;
+    public static final double HumanElevator = 27.24;
 
     public static final double HighRotator = -46.5;
     public static final double HighIntake = -6;
     public static final double HighElevator = 120;
 
-    public static final double MidRotator = -46.0;
-    public static final double MidElevator = 65.0;
-    public static final double MidIntake = -3.0;
+    public static final double MidRotator = -13.647;
+    public static final double MidElevator = 34.77;
+    public static final double MidIntake = 4.6;
+
+    public static final double LowRotator = -19.92;
+    public static final double LowElevator = 0.3;
+    public static final double LowIntake = 3.75;
+
+    public static final double algaeIntakeMid = -4.4;
+    public static final double algaeElevatorMid = 68.6;
+    public static final double algaeArmMid = -5.12;
+
+    public static final double algaeWristProcessor = -1.166;
+    public static final double algaeElevatorProcessor = 9.22;
+    public static final double algaeArmProcessor = 57.8;    
 
 
     public static final double AlgaeIn = 0;
