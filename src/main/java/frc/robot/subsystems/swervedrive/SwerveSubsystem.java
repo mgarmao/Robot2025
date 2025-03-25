@@ -94,7 +94,7 @@ public class SwerveSubsystem extends SubsystemBase
     /**
      * Enable vision odometry updates while driving. micheal said racoon a lot
      */
-    private final boolean             visionDriveTest     = false;////////////////////////////////////////////////////////////////////////////////////////
+    private final boolean             visionDriveTest     = true;////////////////////////////////////////////////////////////////////////////////////////
     /**
      * PhotonVision class to keep an accurate odometry.
      */
@@ -899,7 +899,7 @@ public class SwerveSubsystem extends SubsystemBase
     return run(
       ()->{
 
-        double clamp = 0.5;
+        double clamp = 0.8;
         double drivx = driverX.getAsDouble();
         double drivy = driverY.getAsDouble();
         double driveR = rotate.getAsDouble();        
@@ -925,7 +925,7 @@ public class SwerveSubsystem extends SubsystemBase
     return run(
       ()->{
 
-        double clamp = 0.5;
+        double clamp = 0.8;
         double drivx = driverX.getAsDouble();
         double drivy = driverY.getAsDouble();
         double driveR = rotate.getAsDouble();        

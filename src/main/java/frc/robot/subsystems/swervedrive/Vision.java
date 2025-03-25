@@ -352,14 +352,14 @@ public class Vision
               new Translation3d(Units.inchesToMeters(10.614),
                     Units.inchesToMeters(10.152),
                     Units.inchesToMeters(7.5)),
-              VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+              VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)),
 
-    // REAR("Cam3",
-    // new Rotation3d(0, Math.toRadians(5), Math.toRadians(-45)),
-    // new Translation3d(Units.inchesToMeters(10.614),
-    //       Units.inchesToMeters(10.152),
-    //       Units.inchesToMeters(7.5)),
-    // VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+    REAR("Cam3",
+    new Rotation3d(0, Math.toRadians(0.0), Math.toRadians(-45)),
+    new Translation3d(Units.inchesToMeters(-10.614),
+          Units.inchesToMeters(-9.5),
+          Units.inchesToMeters(-9.75)),
+    VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
     // REAR("Cam3",
     // new Rotation3d(0, Math.toRadians(0), Math.toRadians(180)),
     // new Translation3d(Units.inchesToMeters(-10.614),

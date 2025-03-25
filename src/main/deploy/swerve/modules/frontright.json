@@ -3,7 +3,7 @@
     "front": 11,
     "left": -11
   },
-  "absoluteEncoderOffset": 258,
+  "absoluteEncoderOffset": 318,
   "drive": {
     "type": "falcon",
     "id": 2,
@@ -16,7 +16,7 @@
   },
   "inverted": {
     "angle": true,
-    "drive": false
+    "drive": true
   },
   "encoder": {
     "type": "thrifty",

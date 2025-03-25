@@ -164,6 +164,9 @@ public class Corl extends SubsystemBase {
             if(getRotatorPosition()<5||getRotatorPosition()>-48||speed<0){
                 elevatorMotor2.set(speed);
             }
+            else{
+                elevatorMotor2.set(0);
+            }
         });
     }
 
@@ -218,6 +221,9 @@ public class Corl extends SubsystemBase {
         if(getRotatorPosition()<5||getRotatorPosition()>-48||speed<0){
             elevatorMotor2.set(speed);
         }        
+        else{
+            elevatorMotor2.set(0);   
+        }
     }
 
     public double clamp (double value, double min, double max){

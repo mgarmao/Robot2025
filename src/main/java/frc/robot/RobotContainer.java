@@ -58,7 +58,7 @@ public class RobotContainer
 
   
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+  public final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
 
   public static final Corl CORL = new Corl();
@@ -161,8 +161,8 @@ public class RobotContainer
     
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("IntakeIn",CORL.runIntake(0.5));
-    NamedCommands.registerCommand("IntakeOut",CORL.runIntake(-0.5));
-    NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, 0, Constants.Setpoints.ArmVeritcal, -3).withTimeout(2.0));
+    NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
+    NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, Constants.Setpoints.LowIntake).withTimeout(2.0));
 
     // NamedCommands.registerCommand("SetpointHigh", new GoToSetpoint(CORL, 0, 0, 0));
     // NamedCommands.registerCommand("SetpointDown", new GoToSetpoint(CORL, 0, 0, 0));
@@ -279,8 +279,8 @@ public class RobotContainer
       oppXbox.rightBumper().whileTrue(CORL.intakeRotate(0.4)).onFalse(CORL.intakeRotate(0));
       oppXbox.leftBumper().whileTrue(CORL.intakeRotate(-0.4)).onFalse(CORL.intakeRotate(0));
 
-      oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.95)).onFalse(CORL.runIntake(0));
-      oppXbox.rightTrigger().toggleOnTrue(CORL.runIntake(-0.85)).onFalse(CORL.runIntake(0.0));
+      oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.95)).onFalse(CORL.runIntake(0.0));
+      oppXbox.rightTrigger().whileTrue(CORL.runIntake(-0.85)).onFalse(CORL.runIntake(0.0));
 
       // driverXbox.x().whileTrue(new AlignWithApriltag(drivebase, 0));
       
