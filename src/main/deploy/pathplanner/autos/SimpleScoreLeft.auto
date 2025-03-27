@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "ArmVertical"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Single Score Left"
@@ -14,12 +20,6 @@
           "type": "wait",
           "data": {
             "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ArmVertical"
           }
         },
         {
@@ -41,9 +41,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Go To Human Left"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ReverseForAlgae"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ArmAlgae"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeOut"
           }
         }
       ]

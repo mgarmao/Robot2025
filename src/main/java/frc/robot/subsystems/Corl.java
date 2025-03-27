@@ -121,7 +121,7 @@ public class Corl extends SubsystemBase {
     public Command moveRotatorToPosition(double desiredPosition) {
         return runOnce(
             () -> {
-                double position = rotator_motor1.getPosition().getValueAsDouble();
+                double position = rotator_motor2.getPosition().getValueAsDouble();
 
                 double output = pidController1.calculate(position, desiredPosition);
                 rotator_motor1.set(output);
@@ -171,7 +171,7 @@ public class Corl extends SubsystemBase {
     }
 
     public double getRotatorPosition(){
-        return rotator_motor1.getPosition().getValueAsDouble();
+        return rotator_motor2.getPosition().getValueAsDouble();
     }
 
     public double getIntakePosition(){
