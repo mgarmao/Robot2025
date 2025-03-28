@@ -87,7 +87,7 @@ public class SwerveSubsystem extends SubsystemBase
     /**
      * Swerve drive object.
      */
-    private final SwerveDrive         swerveDrive;
+    public final SwerveDrive         swerveDrive;
     /**
      * AprilTag field layout.
      */
@@ -183,25 +183,24 @@ public class SwerveSubsystem extends SubsystemBase
       SmartDashboard.putBoolean("photonIsActive", false);
       vision = new Vision(swerveDrive::getPose, swerveDrive.field);
     }
+
+    public void updateVisionOdom(){
+      try{
+        vision.updatePoseEstimation(swerveDrive);
+      }catch (Exception e)
+      {
+        DriverStation.reportError(e.toString(), true);
+        System.out.println("Vision update failed");
+      }
+    }
   
     @Override
     public void periodic()
     {
-      // When vision is enabled we must manually update odometry in SwerveDrive
-      if (visionDriveTest)
-      {
-        try{
-          swerveDrive.updateOdometry();
-          vision.updatePoseEstimation(swerveDrive);
-        }catch (Exception e)
-        {
-          DriverStation.reportError(e.toString(), true);
-          System.out.println("Vision update failed");
-        }
-      }
-
+      // When vision is enabled we must manually ufpdate odometry in SwerveDrive
+     
+      swerveDrive.updateOdometry();
       
-
     }
   
     @Override

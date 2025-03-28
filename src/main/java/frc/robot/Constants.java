@@ -76,25 +76,25 @@ public final class Constants
   }
 
   public static class Setpoints{
-    public static final double HumanRotator = 14.66;
-    public static final double HumanIntake = -4.21;
-    public static final double HumanElevator = 26.95;
+    public static final double HumanRotator = 10.16;
+    public static final double HumanIntake = -1.02;
+    public static final double HumanElevator = 25.52;
 
     public static final double HighRotator = -46.5;
     public static final double HighIntake = -6;
     public static final double HighElevator = 120;
 
-    public static final double MidRotator = -13.647;
-    public static final double MidElevator = 34.77;
-    public static final double MidIntake = 4.0;
+    public static final double MidRotator = -18.06;
+    public static final double MidElevator = 36.8;
+    public static final double MidIntake = 7.64;
 
-    public static final double LowRotator = -19.92;
+    public static final double LowRotator = -21.92;
     public static final double LowElevator = 0.3;
-    public static final double LowIntake = 3.75;
+    public static final double LowIntake = 7.85;
 
-    public static final double algaeIntakeMid = -1.1;
-    public static final double algaeElevatorMid = 55.8;
-    public static final double algaeArmMid = 10.24;
+    public static final double algaeIntakeMid = 0.666;
+    public static final double algaeElevatorMid = 69.52;
+    public static final double algaeArmMid = 4.46;
 
     public static final double algaeWristProcessor = -1.166;
     public static final double algaeElevatorProcessor = 9.22;
@@ -108,4 +108,6 @@ public final class Constants
      
 
   }
+
+  public static boolean IsInTele = false;
 }

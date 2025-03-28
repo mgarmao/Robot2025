@@ -120,6 +120,7 @@ public class Robot extends TimedRobot
     {
       m_autonomousCommand.schedule();
     }
+
   }
 
   /**
@@ -127,7 +128,10 @@ public class Robot extends TimedRobot
    */
   @Override
   public void autonomousPeriodic()
-  {
+  {    
+    
+    m_robotContainer.drivebase.updateVisionOdom();
+
   }
 
   @Override
@@ -153,6 +157,7 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic()
   {
+
   }
 
   @Override
