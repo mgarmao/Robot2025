@@ -673,7 +673,7 @@ public class SwerveSubsystem extends SubsystemBase
      */
 
     // FLAG AS POSSIBLE ERROR
-    private boolean isRedAlliance()
+    public boolean isRedAlliance()
     {
       var alliance = DriverStation.getAlliance();
       return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
@@ -720,6 +720,12 @@ public class SwerveSubsystem extends SubsystemBase
     public Rotation2d getHeading()
     {
       return getPose().getRotation();
+      // if(isRedAlliance()) {
+      //   return Rotation2d.fromDegrees((getPose().getRotation().getDegrees() + 180) % 360);
+      // }
+      // else {
+      //   return getPose().getRotation();
+      // }
     }
   
     /**
@@ -1044,18 +1050,18 @@ public class SwerveSubsystem extends SubsystemBase
     return desiredPose;
   }
 
-  // public int bestTargetID(){
-  //   int id = 0;
-  //   var result = Vision.Cameras.FRONT.camera.getLatestResult();         
-  //   boolean hasTargets = result.hasTargets();    
-  //   if(hasTargets){
-  //     List<PhotonTrackedTarget> targets = result.getTargets();
-  //     for(PhotonTrackedTarget target:targets){
-  //       SmartDashboard.putNumber("This ID", target.getFiducialId());
-  //     }
-  //   }
-  //   return id;    
-  // }
+  public int bestTargetID(){
+    int id = 0;
+    var result = Vision.Cameras.REAR.camera.getLatestResult();         
+    boolean hasTargets = result.hasTargets();    
+    if(hasTargets){
+      List<PhotonTrackedTarget> targets = result.getTargets();
+      for(PhotonTrackedTarget target:targets){
+        SmartDashboard.putNumber("This ID", target.getFiducialId());
+      }
+    }
+    return id;    
+  }
 
   /**
    * Gets the swerve drive object.

@@ -23,8 +23,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-// import frc.robot.commands.subsystems.AlignWithApriltag;
-// import frc.robot.commands.subsystems.AlignWithApriltag;
+import frc.robot.commands.subsystems.AlignWithApriltag;
 import frc.robot.commands.subsystems.GoToSetpoint;
 import frc.robot.commands.subsystems.goToPosition;
 // import frc.robot.commands.subsystems.GoToSetpoint;
@@ -75,13 +74,14 @@ public class RobotContainer
   // right stick controls the rotational velocity 
   // buttons are quick rotation positions to different ways to face
   // WARNING: default buttons are on the same buttons as the ones defined in configureBindings
+  
+  // drivebase.swerveDrive.isRedAlliance() ? :
   AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
                                                                  () -> -MathUtil.applyDeadband(driverXbox.getLeftY(),
                                                                                                OperatorConstants.LEFT_Y_DEADBAND),
                                                                  () -> -MathUtil.applyDeadband(driverXbox.getLeftX(),
                                                                                                OperatorConstants.DEADBAND),
-                                                                 () -> -MathUtil.applyDeadband(driverXbox.getRightX(),
-                                                                                               OperatorConstants.RIGHT_X_DEADBAND),
+                                                                 () -> -MathUtil.applyDeadband(driverXbox.getRightX(),  OperatorConstants.RIGHT_X_DEADBAND),
                                                                  driverXbox.getHID()::getYButtonPressed,
                                                                  driverXbox.getHID()::getAButtonPressed,
                                                                  driverXbox.getHID()::getXButtonPressed,
@@ -101,8 +101,8 @@ public class RobotContainer
   /**
    * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
    */
-  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(() -> driverXbox.getRightX() * -1,
-                                                                                            () -> driverXbox.getRightY()*-1)
+  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(() ->  (drivebase.isRedAlliance() ?  driverXbox.getRightX() : driverXbox.getRightX() * -1),
+                                                                                            () -> drivebase.isRedAlliance()? driverXbox.getRightY() :driverXbox.getRightY()*-1 )
                                                            .headingWhile(true);
 
 
@@ -284,7 +284,7 @@ public class RobotContainer
       oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.95)).onFalse(CORL.runIntake(0.0));
       oppXbox.rightTrigger().whileTrue(CORL.runIntake(-0.85)).onFalse(CORL.runIntake(0.0));
 
-      // driverXbox.x().whileTrue(new AlignWithApriltag(drivebase, 0));
+      // driverXbox.x().whileTrue(new AlignWithApriltag(drivebase, drivebase.bestTargetID()));
       
     }
   }
