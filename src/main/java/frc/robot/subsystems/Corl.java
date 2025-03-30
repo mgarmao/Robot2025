@@ -161,7 +161,7 @@ public class Corl extends SubsystemBase {
             // SmartDashboard.putNumber("Elevator1 Positon", elevatorMotor1.getPosition().getValueAsDouble());
             SmartDashboard.putNumber("Elevator2 Positon", elevatorMotor2.getPosition().getValueAsDouble());
             // elevatorMotor1.set(speed);
-            if(getRotatorPosition()<5||getRotatorPosition()>-48||speed<0){
+            if((getRotatorPosition()<5||getRotatorPosition()>-48||speed<0)&&(getElevatorPosition()<=80||speed<0)){
                 elevatorMotor2.set(speed);
             }
             else{
@@ -218,7 +218,7 @@ public class Corl extends SubsystemBase {
 
     public void elevatorRunNoCommand(double speed){
         // elevatorMotor1.set(speed);
-        if(getRotatorPosition()<5||getRotatorPosition()>-48||speed<0){
+        if((getRotatorPosition()<5||getRotatorPosition()>-48||speed<0)&&(getElevatorPosition()<=80||speed<0)){
             elevatorMotor2.set(speed);
         }        
         else{
