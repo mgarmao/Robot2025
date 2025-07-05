@@ -50,7 +50,7 @@ public class GoToSetpoint extends Command{
 
         SmartDashboard.putNumber("EL POS", corlSubsystem.getElevatorPosition());
 
-        if(corlSubsystem.getElevatorPosition()<40)
+        if(corlSubsystem.getElevatorPosition()<40)//If the elevator is collapsed you can move the rotator otherwise you can't move the rotator because it will extend beyond the limit
         {
             corlSubsystem.runRotatorNoCommand(corlRotatorOutput);
         }
@@ -74,7 +74,7 @@ public class GoToSetpoint extends Command{
         // corlSubsystem.runElevator(elevatorOutput);
     }
 
-    @Override
+    @Override//its just a finish basically
     public boolean isFinished(){
         return controller1.atSetpoint()&&controller2.atSetpoint();
     }
