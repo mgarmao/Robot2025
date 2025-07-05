@@ -39,6 +39,8 @@ public final class Constants
     public static final int ROTATOR_RIGHT_MOTOR = 6;
     public static final int ELEVATOR_LEFT = 9;
     public static final int ELEVATOR_RIGHT = 10;
+    public static final int flag_motor = 29; 
+
   }
 
   public static final class CurrentLimits{

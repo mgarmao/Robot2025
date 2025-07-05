@@ -22,18 +22,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+    // How to make a new motor: 
+        // 1. Configure motor's ID (35-36)
+        // 2. Create and Apply a limit configuration(65)
+        // 3. Set the neutral mode (77-78)
 
 import frc.robot.Constants;
 
 public class Corl extends SubsystemBase {
     private SparkMax intakeWheels;
     private SparkMaxConfig intakeWheelsConfig;
-    
+
     private SparkMax intakeRotator;
-    private SparkMaxConfig intakeRotatorConfig;
+    private SparkMaxConfig intakeRotatorConfig; // First motor rotator, for the company, "Spark Max"
+
+    private SparkMax flagMotor; 
+    private SparkMaxConfig flagMotorConfig; // First motor rotator, for the company, "Spark Max"
+
 
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
-    private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR);
+    private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR); //Second motor rotator for the company "TalonFX" 
 
     // private TalonFX elevatorMotor1 = new TalonFX(Constants.Motors.ELEVATOR_LEFT);
     private TalonFX elevatorMotor2 = new TalonFX(Constants.Motors.ELEVATOR_RIGHT);
@@ -54,10 +62,17 @@ public class Corl extends SubsystemBase {
         intakeWheelsConfig.inverted(false).idleMode(IdleMode.kCoast).smartCurrentLimit(Constants.CurrentLimits.intakeWheels);
         intakeWheels.configure(intakeWheelsConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+       
+
         intakeRotator = new SparkMax(Constants.Motors.WRIST_MOTOR, MotorType.kBrushless);
         intakeRotatorConfig = new SparkMaxConfig();
         intakeRotatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.intakeRotator);
         intakeRotator.configure(intakeRotatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        flagMotor = new SparkMax(Constants.Motors.flag_motor, MotorType.kBrushless);
+        flagMotorConfig = new SparkMaxConfig(); 
+        flagMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
+        flagMotor.configure(intakeWheelsConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
         
         MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
 
@@ -93,6 +108,15 @@ public class Corl extends SubsystemBase {
                 rotator_motor2.set(1);
             });
     }
+
+    public Command raiseTheFlag(double speed) {
+        return runOnce(
+            () -> {
+                double clampSpeed = clamp(speed, -1, 1); 
+                flagMotor.set(clampSpeed);
+            });
+    }
+    
 
     public Command armDown() {
         return runOnce(
@@ -198,12 +222,13 @@ public class Corl extends SubsystemBase {
     public Command armGoToPosition(double desiredPosition) {
         return runOnce(
             () -> {
-                double output1 = clamp(pidController3.calculate(rotator_motor1.getPosition().getValueAsDouble(), desiredPosition), -0.4,0.4);
+                double output1 = clamp(pidController3.calculate(rotator_motor1.getPosition().getValueAsDouble(), desiredPosition), -0.4,0.4); 
+        
                 double output2 = clamp(pidController3.calculate(rotator_motor2.getPosition().getValueAsDouble(), desiredPosition),-0.4,0.4);
+                //  Double data type for 0.4 and 0.4, clamp means that the speed doesn't go over 40% or under 40% (backwards). 
                 
                 rotator_motor1.set(output1);
                 rotator_motor2.set(output2);
-
             });
     } 
 
