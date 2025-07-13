@@ -90,7 +90,7 @@ public class Corl extends SubsystemBase {
     
     
     
-    }
+    
         
         MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
 
@@ -256,7 +256,7 @@ public class Corl extends SubsystemBase {
         chargeMotor.set(adjustedSpeed);
     
         SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
-
+    }
     public void runRotatorNoCommand(double speed){
         rotator_motor1.set(speed);
         rotator_motor2.set(speed);
