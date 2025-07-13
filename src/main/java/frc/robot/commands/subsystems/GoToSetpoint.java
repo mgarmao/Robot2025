@@ -14,7 +14,7 @@ import frc.robot.subsystems.Corl;
  * 
  */
 public class GoToSetpoint extends Command{
-''    private final Corl corlSubsystem; // defines the subsystem through the type coral 
+    private final Corl corlSubsystem; // defines the subsystem through the type coral 
     PIDController controller1 = new PIDController(0.15, 0.04, 0.0);
     PIDController controller2 =  new PIDController(0.4, 0.02, 0);
     PIDController controller3 =  new PIDController(0.4, 0, 0);
