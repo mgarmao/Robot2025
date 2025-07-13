@@ -229,7 +229,7 @@ public class RobotContainer
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
       oppXbox.a().onTrue(
-        new Corl.setchargeMotorSpeed(0.5))
+        CORL.setchargeMotorSpeed(0.5))
         .onFalse(CORL.setchargeMotorSpeed(0));
       
       /*turning on energy efficiency mode*/
