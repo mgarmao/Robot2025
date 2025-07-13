@@ -41,7 +41,7 @@ public final class Constants
     public static final int ELEVATOR_LEFT = 9;
     public static final int ELEVATOR_RIGHT = 10;
     public static final int flag_motor = 29; 
-    public static final int charge_motor = 20; 
+    public static final int chargeMotor = 20; 
 
   }
 
@@ -51,7 +51,7 @@ public final class Constants
     public static final int algaeRotator = 30;
     public static final int algaeIntakeWheels = 30;
     public static final int elevator = 40;
-    public static final int charge_motor = 20; 
+    public static final int chargeMotor = 20; 
   }
   
   public static final class InvertedEnum {
