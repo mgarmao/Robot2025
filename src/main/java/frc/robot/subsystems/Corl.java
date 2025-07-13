@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //Mr. Sisodia
+        /*Mike should do the gnarly dance */
     // How to make a new motor: 
         // 1. Configure motor's ID (35-36)
         // 2. Create and Apply a limit configuration(65)
