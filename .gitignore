@@ -139,6 +139,9 @@ $RECYCLE.BIN/
 .gradle
 /build/
 
+/src/main/java/frc/robot/Oracle_JDK-24
+/Oracle_JDK-24
+
 # Ignore Gradle GUI config
 gradle-app.setting
 

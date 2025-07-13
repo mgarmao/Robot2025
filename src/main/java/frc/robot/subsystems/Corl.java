@@ -256,7 +256,7 @@ public class Corl extends SubsystemBase {
                 double efficiencyFactor = batteryVoltage / 12.0; // Scale speed based on battery voltage
                 double adjustedSpeed = speed * efficiencyFactor; // Adjust speed for efficiency
                 chargeMotor.set(adjustedSpeed); 
-                /* mike should do the gnarly dance - shaurya */
+        
             SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
         });
     }

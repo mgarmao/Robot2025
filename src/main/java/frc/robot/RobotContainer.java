@@ -240,7 +240,8 @@ public class RobotContainer
         Constants.Setpoints.MidIntake))
         .onFalse(CORL.armStop())
         .onFalse(CORL.runElevator(0))
-        .onFalse(CORL.intakeRotate(0));            
+        .onFalse(CORL.intakeRotate(0));
+                  
       
       //Human corl
       oppXbox.x().whileTrue(
