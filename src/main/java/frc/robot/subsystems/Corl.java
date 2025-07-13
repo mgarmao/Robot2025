@@ -77,7 +77,7 @@ public class Corl extends SubsystemBase {
         flagMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
         flagMotor.configure(intakeWheelsConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
 
-        chargeMotor = new SparkMax(Constants.Motors.charge_motor, MotorType.kBrushless); // all motors are kBrushless this line initializes the charge motor
+        chargeMotor = new SparkMax(Constants.Motors.chargeMotor, MotorType.kBrushless); // all motors are kBrushless this line initializes the charge motor
         chargeMotorConfig = new SparkMaxConfig(); // company name "Spark Max"
         chargeMotorConfig.inverted(false) // set the motor to not inverted
                          .idleMode(IdleMode.kBrake) // settings 
