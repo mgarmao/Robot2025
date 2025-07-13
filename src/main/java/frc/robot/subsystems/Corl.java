@@ -39,6 +39,9 @@ public class Corl extends SubsystemBase {
     private SparkMax flagMotor; 
     private SparkMaxConfig flagMotorConfig; // First motor rotator, for the company, "Spark Max"
 
+    private SparkMax chargeMotor;
+    private SparkMaxConfig chargeMotorConfig; // First motor rotator, for the company, "Spark Max"
+
 
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR); //Second motor rotator for the company "TalonFX" 
@@ -73,6 +76,26 @@ public class Corl extends SubsystemBase {
         flagMotorConfig = new SparkMaxConfig(); 
         flagMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
         flagMotor.configure(intakeWheelsConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+
+        chargeMotor = new SparkMax(Constants.Motors.charge_motor, MotorType.kBrushless); // all motors are kBrushless this line initializes the charge motor
+        chargeMotorConfig = new SparkMaxConfig(); // company name "Spark Max"
+        chargeMotorConfig.inverted(false) // set the motor to not inverted
+                         .idleMode(IdleMode.kBrake) // settings 
+                         .smartCurrentLimit(Constants.CurrentLimits.chargeMotor); // settings
+        chargeMotor.configure(chargeMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    
+        // Implement Energy Efficiency Mode
+        SmartDashboard.putNumber("Charge Motor Speed", 0.0);
+    }
+    
+    public void setchargeMotorSpeed(double speed) {
+        double batteryVoltage = SmartDashboard.getNumber("Battery Voltage", 12.0); // Example battery voltage
+        double efficiencyFactor = batteryVoltage / 12.0; // Scale speed based on battery voltage
+        double adjustedSpeed = speed * efficiencyFactor; // Adjust speed for efficiency
+        chargeMotor.set(adjustedSpeed);
+    
+        SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
+    }
         
         MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
 

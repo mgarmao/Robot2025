@@ -33,6 +33,7 @@ public final class Constants
     public static final int CORL_MOTOR   = 16;/////
     public static final int WRIST_MOTOR  = 15;////
 
+
     public static final int AlGAE_ROTATOR  = 11;
     public static final int AlGAE_INTAKE  = 12;
     public static final int ROTATOR_LEFT_MOTOR = 5;
@@ -40,6 +41,7 @@ public final class Constants
     public static final int ELEVATOR_LEFT = 9;
     public static final int ELEVATOR_RIGHT = 10;
     public static final int flag_motor = 29; 
+    public static final int charge_motor = 20; 
 
   }
 

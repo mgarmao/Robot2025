@@ -258,9 +258,9 @@ public class RobotContainer
         .onFalse(CORL.intakeRotate(0));      
       
       //Mid corl
-      oppXbox.y().whileTrue(
-        new GoToSetpoint(CORL,
-        Constants.Setpoints.algaeElevatorMid,
+      oppXbox.y().whileTrue( // while we are holding the y down, we are going to get a new command 
+        new GoToSetpoint(CORL, // new command 
+        Constants.Setpoints.algaeElevatorMid, // this is for the upper algae(mid)
         Constants.Setpoints.algaeArmMid,
         Constants.Setpoints.algaeIntakeMid))
         .onFalse(CORL.armStop())

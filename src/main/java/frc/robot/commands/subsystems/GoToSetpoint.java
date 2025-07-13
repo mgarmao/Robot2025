@@ -14,7 +14,7 @@ import frc.robot.subsystems.Corl;
  * 
  */
 public class GoToSetpoint extends Command{
-    private final Corl corlSubsystem;
+''    private final Corl corlSubsystem; // defines the subsystem through the type coral 
     PIDController controller1 = new PIDController(0.15, 0.04, 0.0);
     PIDController controller2 =  new PIDController(0.4, 0.02, 0);
     PIDController controller3 =  new PIDController(0.4, 0, 0);
@@ -31,11 +31,11 @@ public class GoToSetpoint extends Command{
         this.desiredElevatorPosition = desiredElevatorPosition;
 
         this.corlSubsystem = corlSubsystem;
-        addRequirements(this.corlSubsystem);
+        addRequirements(this.corlSubsystem); // lets you use this stuff as a subsystem 
     }
 
     @Override
-    public void initialize(){
+    public void initialize(){ 
 
     }
 
@@ -44,13 +44,14 @@ public class GoToSetpoint extends Command{
         double corlRotatorOutput = MathUtil.clamp(controller1.calculate(corlSubsystem.getRotatorPosition(), desiredRotatorPosition), -0.8, 0.8);
         double corlIntakeOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getIntakePosition(), desiredIntakePosition), -0.6, 0.6);
         double elevatorOutput = MathUtil.clamp(controller3.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.4, 0.8);
+        // We defined PID controller as controller 1 
 
         corlSubsystem.intakeRotatorNoCommand(corlIntakeOutput);
         corlSubsystem.elevatorRunNoCommand(elevatorOutput);
 
         SmartDashboard.putNumber("EL POS", corlSubsystem.getElevatorPosition());
 
-        if(corlSubsystem.getElevatorPosition()<40)//If the elevator is collapsed you can move the rotator otherwise you can't move the rotator because it will extend beyond the limit
+        if(corlSubsystem.getElevatorPosition()<40)
         {
             corlSubsystem.runRotatorNoCommand(corlRotatorOutput);
         }
@@ -74,7 +75,7 @@ public class GoToSetpoint extends Command{
         // corlSubsystem.runElevator(elevatorOutput);
     }
 
-    @Override//its just a finish basically
+    @Override
     public boolean isFinished(){
         return controller1.atSetpoint()&&controller2.atSetpoint();
     }
