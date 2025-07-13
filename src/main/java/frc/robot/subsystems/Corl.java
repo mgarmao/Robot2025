@@ -86,15 +86,9 @@ public class Corl extends SubsystemBase {
     
         // Implement Energy Efficiency Mode
         SmartDashboard.putNumber("Charge Motor Speed", 0.0);
-    }
     
-    public void setchargeMotorSpeed(double speed) {
-        double batteryVoltage = SmartDashboard.getNumber("Battery Voltage", 12.0); // Example battery voltage
-        double efficiencyFactor = batteryVoltage / 12.0; // Scale speed based on battery voltage
-        double adjustedSpeed = speed * efficiencyFactor; // Adjust speed for efficiency
-        chargeMotor.set(adjustedSpeed);
     
-        SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
+    
     }
         
         MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
@@ -254,6 +248,13 @@ public class Corl extends SubsystemBase {
                 rotator_motor2.set(output2);
             });
     } 
+    public void setchargeMotorSpeed(double speed) {
+        double batteryVoltage = SmartDashboard.getNumber("Battery Voltage", 12.0); // Example battery voltage
+        double efficiencyFactor = batteryVoltage / 12.0; // Scale speed based on battery voltage
+        double adjustedSpeed = speed * efficiencyFactor; // Adjust speed for efficiency
+        chargeMotor.set(adjustedSpeed);
+    
+        SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
 
     public void runRotatorNoCommand(double speed){
         rotator_motor1.set(speed);
@@ -291,6 +292,8 @@ public class Corl extends SubsystemBase {
         SmartDashboard.putNumber("Arm Position", rotator_motor1.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("Wrist Position", intakeRotator.getEncoder().getPosition());
         SmartDashboard.putNumber("Elevator Now Position", elevatorMotor2.getPosition().getValueAsDouble());        
+    }
+    
     }
 }
 
