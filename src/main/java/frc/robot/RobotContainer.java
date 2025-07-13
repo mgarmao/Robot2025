@@ -232,10 +232,12 @@ public class RobotContainer
         new GoToSetpoint(CORL,
         Constants.Setpoints.LowElevator,
         Constants.Setpoints.LowRotator,
-        Constants.Setpoints.LowIntake))
+        Constants.Setpoints.LowIntake,
+        Constants.Setpoints.setchargeMotorSpeed))
       .onFalse(CORL.armStop())
       .onFalse(CORL.runElevator(0))
-      .onFalse(CORL.intakeRotate(0));      
+      .onFalse(CORL.intakeRotate(0))
+      .onFalse(CORL.chargeMotor(0)); // Charge motor to 0.0 when not in use
       
       //Mid Corl
       oppXbox.b().whileTrue(

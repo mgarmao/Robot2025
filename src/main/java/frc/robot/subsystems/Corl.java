@@ -249,14 +249,19 @@ public class Corl extends SubsystemBase {
                 rotator_motor2.set(output2);
             });
     } 
-    public void setchargeMotorSpeed(double speed) {
-        double batteryVoltage = SmartDashboard.getNumber("Battery Voltage", 12.0); // Example battery voltage
-        double efficiencyFactor = batteryVoltage / 12.0; // Scale speed based on battery voltage
-        double adjustedSpeed = speed * efficiencyFactor; // Adjust speed for efficiency
-        chargeMotor.set(adjustedSpeed);
-    
-        SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
+
+    public Command setchargeMotorSpeed(double speed) {
+        return runOnce(
+            () -> {
+                double batteryVoltage = SmartDashboard.getNumber("Battery Voltage", 12.0); // Example battery voltage
+                double efficiencyFactor = batteryVoltage / 12.0; // Scale speed based on battery voltage
+                double adjustedSpeed = speed * efficiencyFactor; // Adjust speed for efficiency
+                chargeMotor.set(adjustedSpeed);
+        
+                SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
+            });
     }
+
     public void runRotatorNoCommand(double speed){
         rotator_motor1.set(speed);
         rotator_motor2.set(speed);
