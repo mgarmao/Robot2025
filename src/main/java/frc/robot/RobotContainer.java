@@ -228,16 +228,11 @@ public class RobotContainer
       driverXbox.rightTrigger().whileTrue(drivebase.reverseAlignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
-      oppXbox.a().whileTrue(
-        new GoToSetpoint(CORL,
-        Constants.Setpoints.LowElevator,
-        Constants.Setpoints.LowRotator,
-        Constants.Setpoints.LowIntake))
-      .onFalse(CORL.armStop())
-      .onFalse(CORL.runElevator(0))
-      .onFalse(CORL.intakeRotate(0));      
+      oppXbox.a().onTrue(
+        new setchargeMotorSpeed(0.5))
+        .onFalse(setchargeMotorSpeed(0));
       
-      //Mid Corl
+      /*turning on energy efficiency mode*/
       oppXbox.b().whileTrue(
         new GoToSetpoint(CORL,
         Constants.Setpoints.MidElevator,
