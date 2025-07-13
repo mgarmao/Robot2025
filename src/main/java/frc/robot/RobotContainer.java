@@ -229,8 +229,8 @@ public class RobotContainer
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
       oppXbox.a().onTrue(
-        new setchargeMotorSpeed(0.5))
-        .onFalse(setchargeMotorSpeed(0));
+        new Corl.setchargeMotorSpeed(0.5))
+        .onFalse(CORL.setchargeMotorSpeed(0));
       
       /*turning on energy efficiency mode*/
       oppXbox.b().whileTrue(
@@ -240,7 +240,8 @@ public class RobotContainer
         Constants.Setpoints.MidIntake))
         .onFalse(CORL.armStop())
         .onFalse(CORL.runElevator(0))
-        .onFalse(CORL.intakeRotate(0));            
+        .onFalse(CORL.intakeRotate(0));
+                  
       
       //Human corl
       oppXbox.x().whileTrue(
