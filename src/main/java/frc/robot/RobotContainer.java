@@ -182,7 +182,7 @@ NamedCommands.registerCommand(
     CORL.setchargeMotorSpeed(0.5)
 );
 NamedCommands.registerCommand(
-  "setchargeMotorSpeed",
+  "motatorahahahaha",
   CORL.runMotator(0.5)
 );
 

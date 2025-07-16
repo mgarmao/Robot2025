@@ -55,6 +55,12 @@
       "command": null
     },
     {
+      "name": "energy efficiency mode",
+      "waypointRelativePos": 0.2941176470588239,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
       "name": "ScoreL1",
       "waypointRelativePos": 1.6871657754010685,
       "endWaypointRelativePos": null,
