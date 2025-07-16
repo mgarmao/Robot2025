@@ -176,13 +176,10 @@ public class RobotContainer
         Constants.Setpoints.L1Intake
     ).withTimeout(2.0)
 );
+
 NamedCommands.registerCommand(
-  "RunMotator",
-  CORL.runMotator(-0.5)
-);
-NamedCommands.registerCommand(
-  "RunMotator",
-  CORL.runMotator(0.5)
+    "energy efficiency mode", 
+    CORL.setchargeMotorSpeed(0.5)
 );
 NamedCommands.registerCommand(
   "setchargeMotorSpeed",
