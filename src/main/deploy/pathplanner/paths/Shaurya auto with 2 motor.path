@@ -1,0 +1,94 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.599070945945946,
+        "y": 6.633783783783783
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.6950940432785115,
+        "y": 6.402960117798987
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.379194078947368,
+        "y": 5.9878289473684205
+      },
+      "prevControl": {
+        "x": 6.869901315789473,
+        "y": 6.199506578947369
+      },
+      "nextControl": {
+        "x": 5.881223727528404,
+        "y": 5.773018207540631
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.089884868421052,
+        "y": 5.391282894736841
+      },
+      "prevControl": {
+        "x": 5.28842703713234,
+        "y": 5.5903745522908865
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "energy efficiency mode",
+      "waypointRelativePos": 0.2941176470588239,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "motatorahahahaha",
+      "waypointRelativePos": 1.6818181818181814,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "ScoreL1",
+      "waypointRelativePos": 1.6871657754010685,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": null
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -119.99999999999999
+  },
+  "reversed": false,
+  "folder": "New Folder",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

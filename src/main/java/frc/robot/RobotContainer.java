@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -166,6 +167,25 @@ public class RobotContainer
     NamedCommands.registerCommand("ArmScoot",new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, Constants.Setpoints.LowIntake).withTimeout(2.0));
     NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, 2.0).withTimeout(2.0));
     NamedCommands.registerCommand("ArmAlgae", new GoToSetpoint(CORL, Constants.Setpoints.algaeElevatorMid, Constants.Setpoints.algaeArmMid, Constants.Setpoints.algaeIntakeMid).withTimeout(2.0));
+    NamedCommands.registerCommand(
+    "ScoreL1", 
+    new GoToSetpoint(
+        CORL, 
+        Constants.Setpoints.L1Elevator, 
+        Constants.Setpoints.L1Rotator, 
+        Constants.Setpoints.L1Intake
+    ).withTimeout(2.0)
+);
+
+NamedCommands.registerCommand(
+    "energy efficiency mode", 
+    CORL.setchargeMotorSpeed(0.5)
+);
+NamedCommands.registerCommand(
+  "motatorahahahaha",
+  CORL.runMotator(0.5)
+);
+
 
     // NamedCommands.registerCommand("SetpointHigh", new GoToSetpoint(CORL, 0, 0, 0));
     // NamedCommands.registerCommand("SetpointDown", new GoToSetpoint(CORL, 0, 0, 0));

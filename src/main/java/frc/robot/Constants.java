@@ -40,9 +40,10 @@ public final class Constants
     public static final int ROTATOR_RIGHT_MOTOR = 6;
     public static final int ELEVATOR_LEFT = 9;
     public static final int ELEVATOR_RIGHT = 10;
-    public static final int flag_motor = 29;
-    public static final int motator = 20; 
+    public static final int flag_motor = 29; 
+    public static final int motator = 20;
     public static final int chargeMotor = 20; 
+    public static final int turboMotor = 22; // Assigning a unique ID for the turbo motor
 
   }
 
@@ -52,20 +53,22 @@ public final class Constants
     public static final int algaeRotator = 30;
     public static final int algaeIntakeWheels = 30;
     public static final int elevator = 40;
-    public static final int motator = 20; 
     public static final int chargeMotor = 20; 
+    public static final int motator = 20; // Assigning a unique ID for the motator motor
+    public static final int turboMotor = 30; 
+
   }
   
   public static final class InvertedEnum {
     public static final InvertedValue CounterClockwise = InvertedValue.CounterClockwise_Positive;
     public static final InvertedValue Clockwise = InvertedValue.Clockwise_Positive;
   }
-//  public static final class AutonConstants
-//  {
-//
-//    public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
-//    public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
-//  }
+  //  public static final class AutonConstants
+  //  {
+  //
+  //    public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
+  //    public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
+  //  }
 
   public static final class DrivebaseConstants
   {
@@ -113,8 +116,10 @@ public final class Constants
     public static final double ArmVeritcal = -43.48;
     public static final double WristPerpendicular = -6.9;
      
+    public static final double L1Elevator = 0.5;
+    public static final double L1Rotator = 0.5;
+    public static final double L1Intake = 0.2;
 
-  }
-
+    }
   public static boolean IsInTele = false;
 }
