@@ -43,9 +43,8 @@ public class Corl extends SubsystemBase {
     private SparkMax chargeMotor;
     private SparkMaxConfig chargeMotorConfig; // First motor rotator, for the company, "Spark Max"
 
-    private TalonFX turboMotor; 
-    private TalonFX turboMotorConfig; 
-
+    private TalonFX turboMotor = new TalonFX(Constants.Motors.turboMotor); // Second motor rotator, for the company "TalonFX"
+    
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR); //Second motor rotator for the company "TalonFX" 
 
@@ -91,11 +90,6 @@ public class Corl extends SubsystemBase {
         // Implement Energy Efficiency Mode
         SmartDashboard.putNumber("Charge Motor Speed", 0.0);
 
-        
-    
-    
-    
-    
         
         MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
 
