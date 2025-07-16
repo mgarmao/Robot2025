@@ -270,7 +270,7 @@ public class Corl extends SubsystemBase {
                 rotator_motor2.set(output2);
             });
     } 
-    public Command setTurboMotorSpeed(double speed) {
+    public Command setturboMotorSpeed(double speed) {
         return runOnce(
             () -> {
                 double batteryVoltage = SmartDashboard.getNumber("Battery Voltage", 12.0); // Example battery voltage
