@@ -43,8 +43,8 @@ public class Corl extends SubsystemBase {
     private SparkMax chargeMotor;
     private SparkMaxConfig chargeMotorConfig; // First motor rotator, for the company, "Spark Max"
 
-    private SparkMax rMotator;
-    private SparkMaxConfig rMotatorConfig; // First motor rotator, for the company, "Spark Max" (not used in this code, but can be used later on) 
+    private SparkMax motator;
+    private SparkMaxConfig motatorConfig; // First motor rotator, for the company, "Spark Max" (not used in this code, but can be used later on) 
 
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR); //Second motor rotator for the company "TalonFX" 
@@ -283,15 +283,7 @@ public class Corl extends SubsystemBase {
         });
     }
 
-    public Command runMotator(double speed) {
-        return runOnce(
-            () -> {
-                double clampSpeed = clamp(speed, -1, 1); // Clamps the speed between -1 and 1
-                rMotator.set(clampSpeed);
-            });
-    }
-
-        public void runRotatorNoCommand(double speed){
+    public void runRotatorNoCommand(double speed){
         rotator_motor1.set(speed);
         rotator_motor2.set(speed);
     }
