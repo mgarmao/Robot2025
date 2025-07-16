@@ -40,11 +40,14 @@ public class Corl extends SubsystemBase {
     private SparkMax flagMotor; 
     private SparkMaxConfig flagMotorConfig; // First motor rotator, for the company, "Spark Max"
 
+    private SparkMax motator;
+    private SparkMaxConfig motatorConfig;
+
     private SparkMax chargeMotor;
     private SparkMaxConfig chargeMotorConfig; // First motor rotator, for the company, "Spark Max"
 
-    private SparkMax motator;
-    private SparkMaxConfig motatorConfig; // First motor rotator, for the company, "Spark Max" (not used in this code, but can be used later on) 
+    private TalonFX turboMotor; 
+    private TalonFX turboMotorConfig; 
 
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR); //Second motor rotator for the company "TalonFX" 
@@ -80,15 +83,10 @@ public class Corl extends SubsystemBase {
         flagMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
         flagMotor.configure(flagMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
 
-        motator = new SparkMax(Constants.Motors.motator, MotorType.kBrushless);
-        motatorConfig = new SparkMaxConfig(); 
-        motatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
-        motator.configure(motatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        turboMotor = new TalonFX(Constants.Motors.turboMotor);
-        TalonFXConfiguration turbomotorConfig = new TalonFXConfiguration();
-        turboMotor.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(30);
-        turboMotor.configure(turboMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        rMotator = new SparkMax(Constants.Motors.r_Motator, MotorType.kBrushless);
+        rMotatorConfig = new SparkMaxConfig(); 
+        rMotatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
+        rMotator.configure(rMotatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         chargeMotor = new SparkMax(Constants.Motors.chargeMotor, MotorType.kBrushless); // all motors are kBrushless this line initializes the charge motor
         chargeMotorConfig = new SparkMaxConfig(); // company name "Spark Max"
@@ -99,6 +97,8 @@ public class Corl extends SubsystemBase {
     
         // Implement Energy Efficiency Mode
         SmartDashboard.putNumber("Charge Motor Speed", 0.0);
+
+        
     
     
     
@@ -112,6 +112,9 @@ public class Corl extends SubsystemBase {
         CurrentLimitsConfigs limitConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         rotator_motor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs2).withMotorOutput(inverConfig));
 
+        CurrentLimitsConfigs limitConfigs3 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        turboMotor.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs3));
+        
         rotator_motor1.setNeutralMode(NeutralModeValue.Brake);
         rotator_motor2.setNeutralMode(NeutralModeValue.Brake);
 
@@ -270,17 +273,34 @@ public class Corl extends SubsystemBase {
                 rotator_motor1.set(output1);
                 rotator_motor2.set(output2);
             });
-    } 
+    }
+
+    public Command setTurboMotorPosition(double desiredPosition) {
+        return runOnce(
+            () -> {
+                double output = clamp(pidController1.calculate(intakeRotator.getEncoder().getPosition(), desiredPosition), -0.3, 0.3);
+                intakeRotator.set(output);
+            });
+    }
+
     public Command setchargeMotorSpeed(double speed) {
         return runOnce(
             () -> {
                 double batteryVoltage = SmartDashboard.getNumber("Battery Voltage", 12.0); // Example battery voltage
                 double efficiencyFactor = batteryVoltage / 12.0; // Scale speed based on battery voltage
                 double adjustedSpeed = speed * efficiencyFactor; // Adjust speed for efficiency
-                chargeMotor.set(adjustedSpeed); 
+                turboMotor.set(adjustedSpeed); 
         
             SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
         });
+    }
+
+    public Command runMotator(double speed) {
+        return runOnce(
+            () -> {
+                double clampSpeed = clamp(speed, -1, 1); // Clamps the speed between -1 and 1
+                rMotator.set(clampSpeed);
+            });
     }
 
     public void runRotatorNoCommand(double speed){
