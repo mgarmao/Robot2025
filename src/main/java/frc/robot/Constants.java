@@ -43,6 +43,7 @@ public final class Constants
     public static final int flag_motor = 29; 
     public static final int chargeMotor = 20; 
     public static final int turboMotor = 22; // Assigning a unique ID for the turbo motor
+    public static final int TURBO_MOTOR = 21; 
 
   }
 

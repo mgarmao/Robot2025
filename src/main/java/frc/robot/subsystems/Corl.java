@@ -43,7 +43,7 @@ public class Corl extends SubsystemBase {
     private SparkMax chargeMotor;
     private SparkMaxConfig chargeMotorConfig; // First motor rotator, for the company, "Spark Max"
 
-    private TalonFX turboMotor = new TalonFX(Constants.Motors.turboMotor); // Second motor rotator, for the company "TalonFX"
+    private TalonFX turboMotor = new TalonFX(Constants.Motors.TURBO_MOTOR); // Second motor rotator, for the company "TalonFX"
     
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR); //Second motor rotator for the company "TalonFX" 
