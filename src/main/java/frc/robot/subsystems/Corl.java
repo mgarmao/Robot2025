@@ -278,7 +278,7 @@ public class Corl extends SubsystemBase {
                 double adjustedSpeed = speed * efficiencyFactor; // Adjust speed for efficiency
                 turboMotor.set(adjustedSpeed); 
         
-                SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
+                SmartDashboard.putNumber("Turbo Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
         });
     }
 
