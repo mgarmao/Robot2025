@@ -166,7 +166,16 @@ public class RobotContainer
     NamedCommands.registerCommand("ArmScoot",new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, Constants.Setpoints.LowIntake).withTimeout(2.0));
     NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, 2.0).withTimeout(2.0));
     NamedCommands.registerCommand("ArmAlgae", new GoToSetpoint(CORL, Constants.Setpoints.algaeElevatorMid, Constants.Setpoints.algaeArmMid, Constants.Setpoints.algaeIntakeMid).withTimeout(2.0));
-
+    NamedCommands.registerCommand(
+    "ScoreL1", 
+    new GoToSetpoint(
+        CORL, 
+        Constants.Setpoints.L1Elevator, 
+        Constants.Setpoints.L1Rotator, 
+        Constants.Setpoints.L1Intake
+    ).withTimeout(2.0)
+    
+);
     // NamedCommands.registerCommand("SetpointHigh", new GoToSetpoint(CORL, 0, 0, 0));
     // NamedCommands.registerCommand("SetpointDown", new GoToSetpoint(CORL, 0, 0, 0));
     // NamedCommands.registerCommand("SetpointMid", new GoToSetpoint(CORL, 0, 0, 0));

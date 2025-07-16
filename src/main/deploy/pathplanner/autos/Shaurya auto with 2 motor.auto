@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sharudjun auto with 2 motor"
+            "pathName": "Shaurya auto with 2 motor"
           }
         },
         {
@@ -17,9 +17,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": null
+            "waitTime": 0.5
           }
         }
       ]

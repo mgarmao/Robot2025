@@ -8,20 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.942877497997361,
-        "y": 6.492396593128998
+        "x": 7.6950940432785115,
+        "y": 6.402960117798987
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.257094594594594,
-        "y": 5.309628378378378
+        "x": 6.379194078947368,
+        "y": 5.9878289473684205
       },
       "prevControl": {
-        "x": 5.2499731065214155,
-        "y": 5.559526926608703
+        "x": 6.869901315789473,
+        "y": 6.199506578947369
+      },
+      "nextControl": {
+        "x": 5.881223727528404,
+        "y": 5.773018207540631
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.089884868421052,
+        "y": 5.391282894736841
+      },
+      "prevControl": {
+        "x": 5.28842703713234,
+        "y": 5.5903745522908865
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +49,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "",
-      "waypointRelativePos": 0,
+      "name": "ScoreL1",
+      "waypointRelativePos": 1.6871657754010685,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -52,7 +68,7 @@
     "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": null,
+  "folder": "New Folder",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
