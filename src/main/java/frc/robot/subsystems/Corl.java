@@ -43,8 +43,8 @@ public class Corl extends SubsystemBase {
     private SparkMax chargeMotor;
     private SparkMaxConfig chargeMotorConfig; // First motor rotator, for the company, "Spark Max"
 
-    private SparkMax rMotator;
-    private SparkMaxConfig rMotatorConfig; // First motor rotator, for the company, "Spark Max" (not used in this code, but can be used later on) 
+    private TalonFX turboMotor; 
+    private TalonFX turboMotorConfig; 
 
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR); //Second motor rotator for the company "TalonFX" 
@@ -78,12 +78,12 @@ public class Corl extends SubsystemBase {
         flagMotor = new SparkMax(Constants.Motors.flag_motor, MotorType.kBrushless);
         flagMotorConfig = new SparkMaxConfig(); 
         flagMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
-        flagMotor.configure(flagMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+        flagMotor.configure(intakeWheelsConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
 
-        rMotator = new SparkMax(Constants.Motors.r_Motator, MotorType.kBrushless);
-        rMotatorConfig = new SparkMaxConfig(); 
-        rMotatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
-        rMotator.configure(rMotatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        turboMotor = new TalonFX(Constants.Motors.turboMotor);
+        TalonFXConfiguration turbomotorConfig = new TalonFXConfiguration();
+        turboMotor.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(30);
+        turboMotor.configure(turboMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         chargeMotor = new SparkMax(Constants.Motors.chargeMotor, MotorType.kBrushless); // all motors are kBrushless this line initializes the charge motor
         chargeMotorConfig = new SparkMaxConfig(); // company name "Spark Max"
@@ -94,6 +94,8 @@ public class Corl extends SubsystemBase {
     
         // Implement Energy Efficiency Mode
         SmartDashboard.putNumber("Charge Motor Speed", 0.0);
+
+        
     
     
     
@@ -255,6 +257,13 @@ public class Corl extends SubsystemBase {
                 rotator_motor1.set(output1);
                 rotator_motor2.set(output2);
             });
+
+    public Command setTurboMotorPosition(double desiredPosition) {
+        return runOnce(
+            () -> {
+                double output = clamp(pidController1.calculate(intakeRotator.getEncoder().getPosition(), desiredPosition), -0.3, 0.3);
+                intakeRotator.set(output);
+            });
     } 
     public Command setchargeMotorSpeed(double speed) {
         return runOnce(
@@ -266,14 +275,6 @@ public class Corl extends SubsystemBase {
         
             SmartDashboard.putNumber("Charge Motor Speed", adjustedSpeed); // Prints if battery is low, depending on the situation
         });
-    }
-
-    public Command runMotator(double speed) {
-        return runOnce(
-            () -> {
-                double clampSpeed = clamp(speed, -1, 1); // Clamps the speed between -1 and 1
-                rMotator.set(clampSpeed);
-            });
     }
 
     public void runRotatorNoCommand(double speed){
