@@ -83,7 +83,7 @@ public class Corl extends SubsystemBase {
         flagMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
         flagMotor.configure(flagMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
 
-        motator = new SparkMax(Constants.Motors.r_Motator, MotorType.kBrushless);
+        motator = new SparkMax(Constants.Motors.motator, MotorType.kBrushless);
         motatorConfig = new SparkMaxConfig(); 
         motatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
         motator.configure(motatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
