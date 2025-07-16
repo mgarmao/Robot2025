@@ -235,7 +235,7 @@ public class Corl extends SubsystemBase {
             double positon = motator.getEncoder().getPosition();
 
             double output = clamp(pidController1.calculate(positon, desiredPosition), 0.3, -0.3);
-            motator.set(output);
+            intakeRotator.set(output);
         });
     }
 
