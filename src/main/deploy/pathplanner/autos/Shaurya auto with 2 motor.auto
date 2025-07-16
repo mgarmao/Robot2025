@@ -11,15 +11,47 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ArmVertical"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "energy efficiency mode"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ArmVertical"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "ScoreL1"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeOut"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              }
+            ]
           }
         }
       ]

@@ -49,14 +49,14 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "",
-      "waypointRelativePos": 0,
+      "name": "energy efficiency mode",
+      "waypointRelativePos": 0.2941176470588239,
       "endWaypointRelativePos": null,
       "command": null
     },
     {
-      "name": "energy efficiency mode",
-      "waypointRelativePos": 0.2941176470588239,
+      "name": "motatorahahahaha",
+      "waypointRelativePos": 1.6818181818181814,
       "endWaypointRelativePos": null,
       "command": null
     },
