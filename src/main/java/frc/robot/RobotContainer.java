@@ -249,8 +249,8 @@ NamedCommands.registerCommand(
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
       oppXbox.a().onTrue(
-        CORL.setTurboMotorSpeed(0.5))
-        .onFalse(CORL.setTurboMotorSpeed(0));
+        CORL.setturboMotorSpeed(0.5))
+        .onFalse(CORL.setturboMotorSpeed(0));
       
       /*turning on energy efficiency mode*/
       oppXbox.b().whileTrue(
