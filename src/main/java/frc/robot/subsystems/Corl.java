@@ -40,11 +40,15 @@ public class Corl extends SubsystemBase {
     private SparkMax flagMotor; 
     private SparkMaxConfig flagMotorConfig; // First motor rotator, for the company, "Spark Max"
 
+    private SparkMax motator;
+    private SparkMaxConfig motatorConfig;
+
     private SparkMax chargeMotor;
     private SparkMaxConfig chargeMotorConfig; // First motor rotator, for the company, "Spark Max"
 
-    private TalonFX turboMotor = new TalonFX(Constants.Motors.TURBO_MOTOR); // Second motor rotator, for the company "TalonFX"
-    
+    private TalonFX turboMotor; 
+    private TalonFX turboMotorConfig; 
+
     private TalonFX rotator_motor1 = new TalonFX(Constants.Motors.ROTATOR_LEFT_MOTOR);
     private TalonFX rotator_motor2 = new TalonFX(Constants.Motors.ROTATOR_RIGHT_MOTOR); //Second motor rotator for the company "TalonFX" 
 
@@ -77,8 +81,17 @@ public class Corl extends SubsystemBase {
         flagMotor = new SparkMax(Constants.Motors.flag_motor, MotorType.kBrushless);
         flagMotorConfig = new SparkMaxConfig(); 
         flagMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
-        flagMotor.configure(intakeWheelsConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+        flagMotor.configure(flagMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
 
+        motator = new SparkMax(Constants.Motors.r_Motator, MotorType.kBrushless);
+        motatorConfig = new SparkMaxConfig(); 
+        motatorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
+        motator.configure(motatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        turboMotor = new TalonFX(Constants.Motors.turboMotor);
+        TalonFXConfiguration turbomotorConfig = new TalonFXConfiguration();
+        turboMotor.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(30);
+        turboMotor.configure(turboMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         chargeMotor = new SparkMax(Constants.Motors.chargeMotor, MotorType.kBrushless); // all motors are kBrushless this line initializes the charge motor
         chargeMotorConfig = new SparkMaxConfig(); // company name "Spark Max"
@@ -91,19 +104,18 @@ public class Corl extends SubsystemBase {
         SmartDashboard.putNumber("Charge Motor Speed", 0.0);
 
         
+    
+    
+    
+    
+        
         MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
-
-
 
         CurrentLimitsConfigs limitConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         rotator_motor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs1));
         
         CurrentLimitsConfigs limitConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         rotator_motor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs2).withMotorOutput(inverConfig));
-
-        CurrentLimitsConfigs limitConfigs3 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
-        turboMotor.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs3));
-
 
         rotator_motor1.setNeutralMode(NeutralModeValue.Brake);
         rotator_motor2.setNeutralMode(NeutralModeValue.Brake);
@@ -217,6 +229,16 @@ public class Corl extends SubsystemBase {
         });
     }
 
+    public Command runMotator(double desiredPosition){
+        return runOnce(
+        () -> {
+            double positon = motator.getEncoder().getPosition();
+
+            double output = clamp(pidController1.calculate(positon, desiredPosition), 0.3, -0.3);
+            motator.set(output);
+        });
+    }
+
     public double getRotatorPosition(){
         return rotator_motor2.getPosition().getValueAsDouble();
     }
@@ -254,13 +276,15 @@ public class Corl extends SubsystemBase {
                 rotator_motor2.set(output2);
             });
     }
-    public Command setturboMotorPosition(double desiredPosition) {
+
+    public Command setTurboMotorPosition(double desiredPosition) {
         return runOnce(
             () -> {
                 double output = clamp(pidController1.calculate(intakeRotator.getEncoder().getPosition(), desiredPosition), -0.3, 0.3);
                 intakeRotator.set(output);
             });
-    } 
+    }
+
     public Command setchargeMotorSpeed(double speed) {
         return runOnce(
             () -> {
