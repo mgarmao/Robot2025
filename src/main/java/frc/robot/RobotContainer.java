@@ -179,7 +179,7 @@ public class RobotContainer
 
 NamedCommands.registerCommand(
     "energy efficiency mode", 
-    CORL.setTurboMotorSpeed(0.5)
+    CORL.setturboMotorSpeed(0.5)
 );
 NamedCommands.registerCommand(
   "motatorahahahaha",
