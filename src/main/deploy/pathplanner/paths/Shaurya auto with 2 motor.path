@@ -47,31 +47,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "energy efficiency mode",
-      "waypointRelativePos": 0.2941176470588239,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "motatorahahahaha",
-      "waypointRelativePos": 1.6818181818181814,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "ScoreL1",
-      "waypointRelativePos": 1.6871657754010685,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": null
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
