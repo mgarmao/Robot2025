@@ -179,7 +179,7 @@ public class RobotContainer
 
 NamedCommands.registerCommand(
     "energy efficiency mode", 
-    CORL.setchargeMotorSpeed(0.5)
+    CORL.setTurboMotorSpeed(0.5)
 );
 NamedCommands.registerCommand(
   "motatorahahahaha",
@@ -249,8 +249,8 @@ NamedCommands.registerCommand(
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
       oppXbox.a().onTrue(
-        CORL.setchargeMotorSpeed(0.5))
-        .onFalse(CORL.setchargeMotorSpeed(0));
+        CORL.setTurboMotorSpeed(0.5))
+        .onFalse(CORL.setTurboMotorSpeed(0));
       
       /*turning on energy efficiency mode*/
       oppXbox.b().whileTrue(
