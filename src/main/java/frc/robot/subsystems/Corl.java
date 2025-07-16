@@ -80,10 +80,6 @@ public class Corl extends SubsystemBase {
         flagMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(20);
         flagMotor.configure(intakeWheelsConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
 
-        turboMotor = new TalonFX(Constants.Motors.turboMotor);
-        TalonFXConfiguration turbomotorConfig = new TalonFXConfiguration();
-        turboMotor.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(30);
-        turboMotor.configure(turboMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         chargeMotor = new SparkMax(Constants.Motors.chargeMotor, MotorType.kBrushless); // all motors are kBrushless this line initializes the charge motor
         chargeMotorConfig = new SparkMaxConfig(); // company name "Spark Max"
@@ -104,9 +100,12 @@ public class Corl extends SubsystemBase {
         MotorOutputConfigs inverConfig = new MotorOutputConfigs().withInverted(Constants.InvertedEnum.Clockwise);
 
         CurrentLimitsConfigs limitConfigs1 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        turboMotor.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs1));
+
+        CurrentLimitsConfigs limitConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         rotator_motor1.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs1));
         
-        CurrentLimitsConfigs limitConfigs2 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
+        CurrentLimitsConfigs limitConfigs3 = new CurrentLimitsConfigs().withStatorCurrentLimit(80).withSupplyCurrentLimit(30).withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true);
         rotator_motor2.getConfigurator().apply(new TalonFXConfiguration().withCurrentLimits(limitConfigs2).withMotorOutput(inverConfig));
 
         rotator_motor1.setNeutralMode(NeutralModeValue.Brake);
@@ -257,8 +256,8 @@ public class Corl extends SubsystemBase {
                 rotator_motor1.set(output1);
                 rotator_motor2.set(output2);
             });
-
-    public Command setTurboMotorPosition(double desiredPosition) {
+    }
+    public Command setturboMotorPosition(double desiredPosition) {
         return runOnce(
             () -> {
                 double output = clamp(pidController1.calculate(intakeRotator.getEncoder().getPosition(), desiredPosition), -0.3, 0.3);
