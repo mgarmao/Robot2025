@@ -15,7 +15,7 @@ public class HoldAtMidPoint extends Command {
     double Kp = 0.1; // PROPORTIONAL: Makes the robot respond to error right away 
     double Ki = 0.001; // INTEGRAL: Fixes small steady errors over time 
     double Kd = 0.01; // DERIVATIVE: Helps slow things down before overshooting
-}
+
     
     public HoldAtMidPoint(CorlSubsystem corl) {
         this.corl = corl;
@@ -32,3 +32,4 @@ public class HoldAtMidPoint extends Command {
     public void execute () {
         corl.moveToTargetPosition(); // This method is called repeatedly to hold the motors at the midpoint
     }   
+}
