@@ -1,6 +1,6 @@
 /*
 Ok little guys, so we split you into 2 teams, team ved/shaurya and team rudra/arjun.
-Team ved shaurya needs to make a new subsystem (like the corl subsystem that’s already there) with 2 spark max motors. T
+Team ved shaurya needs to make a new subsystem (like the corl subsystem that’s already there) with 2 spark max motors. 
 Team arjun and rudra need to use the already existing corl subsystem but make a new file command (like the GoToSetpoint.java) using corl functions.
 */ 
 
