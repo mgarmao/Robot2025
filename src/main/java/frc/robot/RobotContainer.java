@@ -34,6 +34,7 @@ import frc.robot.subsystems.Corl;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
+import frc.robot.commands.subsystems.holdAtMidpoint;
 
 import java.io.File;
 
@@ -236,10 +237,9 @@ NamedCommands.registerCommand(
       driverXbox.back()
         .whileTrue(drivebase.centerModulesCommand());
       driverXbox.leftBumper()
-        .onTrue(Commands.none());
+        .whileTrue(new holdAtMidpoint(CORL));
       driverXbox.rightBumper()
         .onTrue(Commands.none());
-      
     } 
     else{
       //////////////////////////////////////////////////////////
