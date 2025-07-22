@@ -237,8 +237,8 @@ NamedCommands.registerCommand(
       driverXbox.back()
         .whileTrue(drivebase.centerModulesCommand());
       driverXbox.leftBumper()
-        .whileTrue(new holdAtMidpoint(CORL));
-      driverXbox.rightBumper()
+        .whileTrue(new holdAtMidpoint(CORL)); // rudra's only accomplishment
+      driverXbox.rightBumper() 
         .onTrue(Commands.none());
     } 
     else{
