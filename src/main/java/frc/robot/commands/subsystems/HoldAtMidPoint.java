@@ -13,6 +13,7 @@ package frc.robot.commands.subsystems;
 
 import edu.wpi.first.math.MathUtil; // For clamping the PID output
 import edu.wpi.first.math.controller.PIDController; // For PID control in the first place
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Corl; // Importing the corl.java subsystem which contains the method to control the motors
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -62,7 +63,7 @@ public class holdAtMidpoint extends Command {
    public void execute() {
        double currentPosition = corlSubsystem.getElevatorPosition();
 
-
+        SmartDashboard.putNumber("EL POS", corlSubsystem.getElevatorPosition());
 
 
        double output = MathUtil.clamp(
