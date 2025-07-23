@@ -44,6 +44,8 @@ public final class Constants
     public static final int motator = 20;
     public static final int chargeMotor = 20; 
     public static final int turboMotor = 22; // Assigning a unique ID for the turbo motor
+    public static final int gMotor = 34;
+    public static final int vMotor = 35;
 
   }
 
