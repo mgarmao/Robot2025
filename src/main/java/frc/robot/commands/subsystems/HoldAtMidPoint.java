@@ -64,7 +64,7 @@ public class HoldAtMidpoint extends Command {
    public void execute() {
         double currentPosition = corlSubsystem.getElevatorPosition(); //good
 
-
+        SmartDashboard.putNumber("EL POS", corlSubsystem.getElevatorPosition());
 
 
         double output = MathUtil.clamp(
