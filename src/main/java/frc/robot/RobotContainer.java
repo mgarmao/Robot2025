@@ -31,6 +31,7 @@ import frc.robot.commands.subsystems.goToPosition;
 import frc.robot.commands.subsystems.rotateBackToHardstop;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.subsystems.Corl;
+import frc.robot.subsystems.Jitgoon;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
@@ -63,7 +64,8 @@ public class RobotContainer
 
   public static final Corl CORL = new Corl();
   public static final Algae ALGAE = new Algae();
-
+  public static final Jitgoon JITGOON = new Jitgoon();
+  
   private final Command algaeAutomaticIn = new rotateBackToHardstop(ALGAE);
   
 
