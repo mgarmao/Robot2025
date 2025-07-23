@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 
 
-
+// Red Squiggles vvvvvvvvv (Off to a bad start) (Check your capitlization!!!) (Then fix the caps in RobotContainer.java)
 public class holdAtMidpoint extends Command {
    private final Corl corlSubsystem;
-   private final PIDController elevatorHoldController;
+   private final PIDController elevatorHoldController; //** 
 
 
 
@@ -34,8 +34,11 @@ public class holdAtMidpoint extends Command {
    // Function to hold the elevator at the midpoint position
    public holdAtMidpoint(Corl corlSubsystem) {
        this.corlSubsystem = corlSubsystem;
+       //Ok tequnically correct but just put this up where you first define the PID controller //**
        this.elevatorHoldController = new PIDController(0.4, 0.02, 0.0);
 
+
+       // PLEASE if you dont need it and its commented out, just delete it 
 
     //    double kp = 0.4;  Proportional: How far off am I right now? Big error =  big correction
     //    double ki = 0.02; Integral: How long have I been off Adds up errors to fi small gaps over time
@@ -58,18 +61,18 @@ public class holdAtMidpoint extends Command {
 
 
 
-
+   //Your guys indenting is just all over the place *******!!!!!
    @Override
    public void execute() {
-       double currentPosition = corlSubsystem.getElevatorPosition();
+        double currentPosition = corlSubsystem.getElevatorPosition(); //good
 
         SmartDashboard.putNumber("EL POS", corlSubsystem.getElevatorPosition());
 
 
-       double output = MathUtil.clamp(
-           elevatorHoldController.calculate(currentPosition, midpointElevatorPosition),
+        double output = MathUtil.clamp(
+            elevatorHoldController.calculate(currentPosition, midpointElevatorPosition),
            -0.4, 0.4
-       );
+        );
        //elevatorHoldController.calculate(...) → might give you a value like 0.7 or -1.2
 
 
@@ -81,8 +84,8 @@ public class holdAtMidpoint extends Command {
 
       //If PID says "-1.0", clamp lifts it up to -0.4
 
-
-
+    
+        // Nice ^ (Better if indented properly)
 
 
 
@@ -99,7 +102,7 @@ public class holdAtMidpoint extends Command {
 
    @Override
    public void end(boolean interrupted) {
-       corlSubsystem.armStop();
+       corlSubsystem.armStop(); // THis is a command, won't work here
        corlSubsystem.elevatorRunNoCommand(0); // Stop the motor
    }
 }
