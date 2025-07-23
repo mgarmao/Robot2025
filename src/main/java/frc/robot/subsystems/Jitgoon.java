@@ -48,13 +48,13 @@ public class Jitgoon extends SubsystemBase{
     public Jitgoon(){
         gMotor = new SparkMax(Constants.Motors.gMotor, MotorType.kBrushless);
         gMotorConfig = new SparkMaxConfig();  
-        gMotorConfig.inverted(false).idleMode(IdleMode.kCoast).smartCurrentLimit(Constants.CurrentLimits.intakeWheels);
+        gMotorConfig.inverted(false).idleMode(IdleMode.kCoast).smartCurrentLimit(Constants.CurrentLimits.gMotor);
         gMotor.configure(gMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 
         vMotor = new SparkMax(Constants.Motors.vMotor, MotorType.kBrushless);
         vMotorConfig = new SparkMaxConfig();
-        vMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.intakeRotator);
+        vMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.vMotor);
         vMotor.configure(vMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 

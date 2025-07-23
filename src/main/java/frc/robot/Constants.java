@@ -58,7 +58,8 @@ public final class Constants
     public static final int chargeMotor = 20; 
     public static final int motator = 20; // Assigning a unique ID for the motator motor
     public static final int turboMotor = 30; 
-
+    public static final int gMotor = 30;
+    public static final int vMotor = 30;
   }
   
   public static final class InvertedEnum {
