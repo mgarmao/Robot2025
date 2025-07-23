@@ -15,23 +15,19 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//Mr. Sisodia
-        /*Mike should do the gnarly dance */
+
+      
     // How to make a new motor: 
         // 1. Configure motor's ID (35-36)
         // 2. Create and Apply a limit configuration(65)
         // 3. Set the neutral mode (77-78)
 
 import frc.robot.Constants;
-
-
-
 
 public class Jitgoon extends SubsystemBase{
 
@@ -41,22 +37,33 @@ public class Jitgoon extends SubsystemBase{
     private SparkMax vMotor;
     private SparkMaxConfig vMotorConfig;
 
-    private PIDController pidController4 = new PIDController(0., 0, 0);
+    //OK just don't copy everything you see. 
+    //You are currently using 0 PID controllers in your code, so why is there 4 unuused declarations. 
+    //Use them in a command or function somewhere - Michael
+    private PIDController pidController4 = new PIDController(0., 0, 0); 
     private PIDController pidController5 = new PIDController(1, 0, 0);
     private PIDController pidController6 = new PIDController(1, 0, 0);
 
     public Jitgoon(){
         gMotor = new SparkMax(Constants.Motors.gMotor, MotorType.kBrushless);
         gMotorConfig = new SparkMaxConfig();  
-        gMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.gMotor);
+        // OK, make a new current limit specifically for this motor                              vvvvv
+        gMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.gMotor); 
         gMotor.configure(gMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 
         vMotor = new SparkMax(Constants.Motors.vMotor, MotorType.kBrushless);
         vMotorConfig = new SparkMaxConfig();
+        //Same thing, new current limit for this motor                                          vvvvv
         vMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.vMotor);
         vMotor.configure(vMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+
+
+
     }
-    
+
+    // Add a command to run the motors at a certain speed
+    // Make a command too 
+    // - Michael
 }
