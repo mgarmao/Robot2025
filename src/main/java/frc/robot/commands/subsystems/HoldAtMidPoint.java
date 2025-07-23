@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // Red Squiggles vvvvvvvvv (Off to a bad start) (Check your capitlization!!!) (Then fix the caps in RobotContainer.java)
-public class holdAtMidpoint extends Command {
+public class HoldAtMidpoint extends Command {
    private final Corl corlSubsystem;
    private final PIDController elevatorHoldController; //** 
 
@@ -30,7 +30,7 @@ public class holdAtMidpoint extends Command {
 
 
    // Function to hold the elevator at the midpoint position
-   public holdAtMidpoint(Corl corlSubsystem) {
+   public HoldAtMidpoint(Corl corlSubsystem) {
        this.corlSubsystem = corlSubsystem;
        //Ok tequnically correct but just put this up where you first define the PID controller //**
        this.elevatorHoldController = new PIDController(0.4, 0.02, 0.0);

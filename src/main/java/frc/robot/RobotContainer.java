@@ -34,7 +34,7 @@ import frc.robot.subsystems.Corl;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
-import frc.robot.commands.subsystems.holdAtMidpoint;
+import frc.robot.commands.subsystems.HoldAtMidpoint;
 
 import java.io.File;
 
@@ -237,7 +237,7 @@ NamedCommands.registerCommand(
       driverXbox.back()
         .whileTrue(drivebase.centerModulesCommand());
       driverXbox.leftBumper()
-        .whileTrue(new holdAtMidpoint(CORL)); // rudra's only accomplishment
+        .whileTrue(new HoldAtMidpoint(CORL)); // rudra's only accomplishment
       driverXbox.rightBumper() 
         .onTrue(Commands.none());
     } 
@@ -281,8 +281,9 @@ NamedCommands.registerCommand(
         Constants.Setpoints.algaeIntakeMid))
         .onFalse(CORL.armStop())
         .onFalse(CORL.runElevator(0))
-        .onFalse(CORL.intakeRotate(0));      
-
+        .onFalse(CORL.intakeRotate(0));  
+        
+      
 
       //Human corl
       oppXbox.povRight()
