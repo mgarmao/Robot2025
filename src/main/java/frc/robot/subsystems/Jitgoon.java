@@ -30,9 +30,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-
-
-
 public class Jitgoon extends SubsystemBase{
 
     private SparkMax gMotor;
@@ -41,19 +38,24 @@ public class Jitgoon extends SubsystemBase{
     private SparkMax vMotor;
     private SparkMaxConfig vMotorConfig;
 
-    private PIDController pidController4 = new PIDController(0., 0, 0);
+    //OK just don't copy everything you see. 
+    //You are currently using 0 PID controllers in your code, so why is there 4 unuused declarations. 
+    //Use them in a command or function somewhere - Michael
+    private PIDController pidController4 = new PIDController(0., 0, 0); 
     private PIDController pidController5 = new PIDController(1, 0, 0);
     private PIDController pidController6 = new PIDController(1, 0, 0);
 
     public Jitgoon(){
         gMotor = new SparkMax(Constants.Motors.gMotor, MotorType.kBrushless);
         gMotorConfig = new SparkMaxConfig();  
-        gMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.intakeWheels);
+        // OK, make a new current limit specifically for this motor                              vvvvv
+        gMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.intakeWheels); 
         gMotor.configure(gMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 
         vMotor = new SparkMax(Constants.Motors.vMotor, MotorType.kBrushless);
         vMotorConfig = new SparkMaxConfig();
+        //Same thing, new current limit for this motor                                          vvvvv
         vMotorConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(Constants.CurrentLimits.intakeRotator);
         vMotor.configure(vMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -61,5 +63,8 @@ public class Jitgoon extends SubsystemBase{
 
 
     }
-    
+
+    // Add a command to run the motors at a certain speed
+    // Make a command too 
+    // - Michael
 }
