@@ -138,13 +138,13 @@ public class Corl extends SubsystemBase {
             });
     }
 
-    public Command raiseTheFlag(double speed) {
-        return runOnce(
-            () -> {
-                double clampSpeed = clamp(speed, -1, 1); 
-                flagMotor.set(clampSpeed);
-            });
-    }
+    // public Command raiseTheFlag(double speed) {
+    //     return runOnce(
+    //         () -> {
+    //             double clampSpeed = clamp(speed, -1, 1); 
+    //             flagMotor.set(clampSpeed);
+    //         });
+    // }
     
 
     public Command armDown() {
@@ -183,55 +183,55 @@ public class Corl extends SubsystemBase {
             });
     }
     
-    public Command moveIntakeToPosition(double desiredPosition) {
-        return runOnce(
-            () -> {
-                double positon = intakeRotator.getEncoder().getPosition();
+    // public Command moveIntakeToPosition(double desiredPosition) {
+    //     return runOnce(
+    //         () -> {
+    //             double positon = intakeRotator.getEncoder().getPosition();
 
-                double output = clamp(pidController1.calculate(positon, desiredPosition), 0.3, -0.3);
-                intakeRotator.set(output);
-            });
-    }
+    //             double output = clamp(pidController1.calculate(positon, desiredPosition), 0.3, -0.3);
+    //             intakeRotator.set(output);
+    //         });
+    // }
 
-    public Command intakeRotate(double speed) {
-        return runOnce(
-            () -> {
-                intakeRotator.set(speed);
-            });
-    }
+    // public Command intakeRotate(double speed) {
+    //     return runOnce(
+    //         () -> {
+    //             intakeRotator.set(speed);
+    //         });
+    // }
 
-    public Command runIntake(double speed){
-        return runOnce(
-        () -> {
-            intakeWheels.set(speed);
-            SmartDashboard.putNumber("Intake Bus Voltage", intakeWheels.getBusVoltage()); // last time didnt work with robot sim (maybe just because it was a sim)
-        });
-    }
+    // public Command runIntake(double speed){
+    //     return runOnce(
+    //     () -> {
+    //         intakeWheels.set(speed);
+    //         SmartDashboard.putNumber("Intake Bus Voltage", intakeWheels.getBusVoltage()); // last time didnt work with robot sim (maybe just because it was a sim)
+    //     });
+    // }
 
-    public Command runElevator(double speed){
-        return runOnce(
-        () -> {
-            // SmartDashboard.putNumber("Elevator1 Positon", elevatorMotor1.getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Elevator2 Positon", elevatorMotor2.getPosition().getValueAsDouble());
-            // elevatorMotor1.set(speed);
-            if((getRotatorPosition()<5||getRotatorPosition()>-48||speed<0)&&(getElevatorPosition()<=80||speed<0)){
-                elevatorMotor2.set(speed);
-            }
-            else{
-                elevatorMotor2.set(0);
-            }
-        });
-    }
+    // public Command runElevator(double speed){
+    //     return runOnce(
+    //     () -> {
+    //         // SmartDashboard.putNumber("Elevator1 Positon", elevatorMotor1.getPosition().getValueAsDouble());
+    //         SmartDashboard.putNumber("Elevator2 Positon", elevatorMotor2.getPosition().getValueAsDouble());
+    //         // elevatorMotor1.set(speed);
+    //         if((getRotatorPosition()<5||getRotatorPosition()>-48||speed<0)&&(getElevatorPosition()<=80||speed<0)){
+    //             elevatorMotor2.set(speed);
+    //         }
+    //         else{
+    //             elevatorMotor2.set(0);
+    //         }
+    //     });
+    // }
 
-    public Command runMotator(double desiredPosition){
-        return runOnce(
-        () -> {
-            double positon = motator.getEncoder().getPosition();
+    // public Command runMotator(double desiredPosition){
+    //     return runOnce(
+    //     () -> {
+    //         double positon = motator.getEncoder().getPosition();
 
-            double output = clamp(pidController1.calculate(positon, desiredPosition), 0.3, -0.3);
-            motator.set(output);
-        });
-    }
+    //         double output = clamp(pidController1.calculate(positon, desiredPosition), 0.3, -0.3);
+    //         motator.set(output);
+    //     });
+    // }
 
     public double getRotatorPosition(){
         return rotator_motor2.getPosition().getValueAsDouble();
