@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-public class Corl extends SubsystemBase {
+//  public class Corl extends SubsystemBase {
     private SparkMax intakeWheels;
     private SparkMaxConfig intakeWheelsConfig;
 
@@ -58,7 +58,7 @@ public class Corl extends SubsystemBase {
     private PIDController pidController2 = new PIDController(1, 0, 0);
     private PIDController pidController3 = new PIDController(1, 0, 0);
 
-    public Corl() {
+//      public Corl() {
         var slot0Configs = new Slot0Configs();
         slot0Configs.kP = 25.5; // An error of 1 rotation results in 2.4 V output
         slot0Configs.kI = 0; // no output for integrated error

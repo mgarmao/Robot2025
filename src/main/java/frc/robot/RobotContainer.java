@@ -30,8 +30,8 @@ import frc.robot.commands.subsystems.goToPosition;
 // import frc.robot.commands.subsystems.GoToSetpoint;
 import frc.robot.commands.subsystems.rotateBackToHardstop;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
-import frc.robot.subsystems.Corl;
-import frc.robot.subsystems.Algae;
+//  import frc.robot.subsystems.Corl;
+//  import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 
@@ -61,10 +61,10 @@ public class RobotContainer
   public final SwerveSubsystem     drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
 
-  public static final Corl CORL = new Corl();
-  public static final Algae ALGAE = new Algae();
+//    public static final Corl CORL = new Corl();
+//    public static final Algae ALGAE = new Algae();
 
-  private final Command algaeAutomaticIn = new rotateBackToHardstop(ALGAE);
+//    private final Command algaeAutomaticIn = new rotateBackToHardstop(ALGAE);
   
 
 
@@ -145,8 +145,8 @@ public class RobotContainer
 
   Command driveSetpointGenSim = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleSim);
 
-  // private final Command GoToHumanPlayerSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HumanRotator, Constants.Setpoints.HumanIntake);   
-  // private final Command GoToHighCorlSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HighRotator, Constants.Setpoints.HighIntake );   
+//  //    // private final Command GoToHumanPlayerSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HumanRotator, Constants.Setpoints.HumanIntake);   
+//  //    // private final Command GoToHighCorlSetpoint = new GoToSetpoint(CORL, Constants.Setpoints.HighRotator, Constants.Setpoints.HighIntake );   
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -161,36 +161,36 @@ public class RobotContainer
 
     
     DriverStation.silenceJoystickConnectionWarning(true);
-    NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
-    NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
-    NamedCommands.registerCommand("HumanPlayerPose",new GoToSetpoint(CORL, Constants.Setpoints.HumanElevator, Constants.Setpoints.HumanRotator, Constants.Setpoints.HumanIntake).withTimeout(2.0));
-    NamedCommands.registerCommand("ArmScoot",new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, Constants.Setpoints.LowIntake).withTimeout(2.0));
-    NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, 2.0).withTimeout(2.0));
-    NamedCommands.registerCommand("ArmAlgae", new GoToSetpoint(CORL, Constants.Setpoints.algaeElevatorMid, Constants.Setpoints.algaeArmMid, Constants.Setpoints.algaeIntakeMid).withTimeout(2.0));
+//      NamedCommands.registerCommand("IntakeIn",CORL.runIntake(-0.5));
+//      NamedCommands.registerCommand("IntakeOut",CORL.runIntake(0.5));
+//  //      NamedCommands.registerCommand("HumanPlayerPose",new GoToSetpoint(CORL, Constants.Setpoints.HumanElevator, Constants.Setpoints.HumanRotator, Constants.Setpoints.HumanIntake).withTimeout(2.0));
+//  //      NamedCommands.registerCommand("ArmScoot",new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, Constants.Setpoints.LowIntake).withTimeout(2.0));
+//  //      NamedCommands.registerCommand("ArmVertical", new GoToSetpoint(CORL, Constants.Setpoints.LowElevator, Constants.Setpoints.LowRotator, 2.0).withTimeout(2.0));
+//  //      NamedCommands.registerCommand("ArmAlgae", new GoToSetpoint(CORL, Constants.Setpoints.algaeElevatorMid, Constants.Setpoints.algaeArmMid, Constants.Setpoints.algaeIntakeMid).withTimeout(2.0));
     NamedCommands.registerCommand(
     "ScoreL1", 
     new GoToSetpoint(
-        CORL, 
-        Constants.Setpoints.L1Elevator, 
-        Constants.Setpoints.L1Rotator, 
-        Constants.Setpoints.L1Intake
+//          CORL, 
+//          Constants.Setpoints.L1Elevator, 
+//          Constants.Setpoints.L1Rotator, 
+//          Constants.Setpoints.L1Intake
     ).withTimeout(2.0)
 );
 
 NamedCommands.registerCommand(
     "energy efficiency mode", 
-    CORL.setturboMotorSpeed(0.5)
+//      CORL.setturboMotorSpeed(0.5)
 );
 NamedCommands.registerCommand(
   "motatorahahahaha",
-  CORL.runMotator(0.5)
+//    CORL.runMotator(0.5)
 );
 
 
-    // NamedCommands.registerCommand("SetpointHigh", new GoToSetpoint(CORL, 0, 0, 0));
-    // NamedCommands.registerCommand("SetpointDown", new GoToSetpoint(CORL, 0, 0, 0));
-    // NamedCommands.registerCommand("SetpointMid", new GoToSetpoint(CORL, 0, 0, 0));
-    // NamedCommands.registerCommand("SetpointHumanPlayer", new GoToSetpoint(CORL, 0, 0, 0));
+//      // NamedCommands.registerCommand("SetpointHigh", new GoToSetpoint(CORL, 0, 0, 0));
+//      // NamedCommands.registerCommand("SetpointDown", new GoToSetpoint(CORL, 0, 0, 0));
+//      // NamedCommands.registerCommand("SetpointMid", new GoToSetpoint(CORL, 0, 0, 0));
+//      // NamedCommands.registerCommand("SetpointHumanPlayer", new GoToSetpoint(CORL, 0, 0, 0));
 
 
 
@@ -244,62 +244,62 @@ NamedCommands.registerCommand(
     else{
       //////////////////////////////////////////////////////////
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      // driverXbox.rightBumper().whileTrue(new goToPosition(-20, ALGAE,-0.4)).onFalse(algaeAutomaticIn);
+//        // driverXbox.rightBumper().whileTrue(new goToPosition(-20, ALGAE,-0.4)).onFalse(algaeAutomaticIn);
       driverXbox.rightTrigger().whileTrue(drivebase.reverseAlignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       driverXbox.leftTrigger().whileTrue(drivebase.alignMode(()->driverXbox.getLeftX(), ()->driverXbox.getLeftY(), ()->driverXbox.getRightX()));
       
       oppXbox.a().onTrue(
-        CORL.setturboMotorSpeed(0.5))
-        .onFalse(CORL.setturboMotorSpeed(0));
+//          CORL.setturboMotorSpeed(0.5))
+//          .onFalse(CORL.setturboMotorSpeed(0));
       
       /*turning on energy efficiency mode*/
       oppXbox.b().whileTrue(
-        new GoToSetpoint(CORL,
-        Constants.Setpoints.MidElevator,
-        Constants.Setpoints.MidRotator,
-        Constants.Setpoints.MidIntake))
-        .onFalse(CORL.armStop())
-        .onFalse(CORL.runElevator(0))
-        .onFalse(CORL.intakeRotate(0));
+//          new GoToSetpoint(CORL,
+//          Constants.Setpoints.MidElevator,
+//          Constants.Setpoints.MidRotator,
+//          Constants.Setpoints.MidIntake))
+//          .onFalse(CORL.armStop())
+//          .onFalse(CORL.runElevator(0))
+//          .onFalse(CORL.intakeRotate(0));
                   
       
-      //Human corl
+//        //Human corl
       oppXbox.x().whileTrue(
-        new GoToSetpoint(CORL,
-        Constants.Setpoints.HumanElevator,
-        Constants.Setpoints.HumanRotator,
-        Constants.Setpoints.HumanIntake))
-        .onFalse(CORL.armStop())
-        .onFalse(CORL.runElevator(0))
-        .onFalse(CORL.intakeRotate(0));      
+//          new GoToSetpoint(CORL,
+//          Constants.Setpoints.HumanElevator,
+//          Constants.Setpoints.HumanRotator,
+//          Constants.Setpoints.HumanIntake))
+//          .onFalse(CORL.armStop())
+//          .onFalse(CORL.runElevator(0))
+//          .onFalse(CORL.intakeRotate(0));      
       
-      //Mid corl
+//        //Mid corl
       oppXbox.y().whileTrue( // while we are holding the y down, we are going to get a new command 
-        new GoToSetpoint(CORL, // new command 
-        Constants.Setpoints.algaeElevatorMid, // this is for the upper algae(mid)
-        Constants.Setpoints.algaeArmMid,
-        Constants.Setpoints.algaeIntakeMid))
-        .onFalse(CORL.armStop())
-        .onFalse(CORL.runElevator(0))
-        .onFalse(CORL.intakeRotate(0));      
+//          new GoToSetpoint(CORL, // new command 
+//  //          Constants.Setpoints.algaeElevatorMid, // this is for the upper algae(mid)
+//          Constants.Setpoints.algaeArmMid,
+//          Constants.Setpoints.algaeIntakeMid))
+//          .onFalse(CORL.armStop())
+//          .onFalse(CORL.runElevator(0))
+//          .onFalse(CORL.intakeRotate(0));      
 
 
-      //Human corl
+//        //Human corl
       oppXbox.povRight()
-        .whileTrue(CORL.armUp())
-        .onFalse(CORL.armStop());
+//          .whileTrue(CORL.armUp())
+//          .onFalse(CORL.armStop());
         oppXbox.povLeft()
-        .whileTrue(CORL.armDown())
-        .onFalse(CORL.armStop());
+//          .whileTrue(CORL.armDown())
+//          .onFalse(CORL.armStop());
 
-      oppXbox.povUp().whileTrue(CORL.runElevator(1)).onFalse(CORL.runElevator(0.0));
-      oppXbox.povDown().whileTrue(CORL.runElevator(-0.7)).onFalse(CORL.runElevator(0.0));
+//        oppXbox.povUp().whileTrue(CORL.runElevator(1)).onFalse(CORL.runElevator(0.0));
+//        oppXbox.povDown().whileTrue(CORL.runElevator(-0.7)).onFalse(CORL.runElevator(0.0));
 
-      oppXbox.rightBumper().whileTrue(CORL.intakeRotate(0.4)).onFalse(CORL.intakeRotate(0));
-      oppXbox.leftBumper().whileTrue(CORL.intakeRotate(-0.4)).onFalse(CORL.intakeRotate(0));
+//        oppXbox.rightBumper().whileTrue(CORL.intakeRotate(0.4)).onFalse(CORL.intakeRotate(0));
+//        oppXbox.leftBumper().whileTrue(CORL.intakeRotate(-0.4)).onFalse(CORL.intakeRotate(0));
 
-      oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.95)).onFalse(CORL.runIntake(0.0));
-      oppXbox.rightTrigger().whileTrue(CORL.runIntake(-0.85)).onFalse(CORL.runIntake(0.0));
+//        oppXbox.leftTrigger().whileTrue(CORL.runIntake(0.95)).onFalse(CORL.runIntake(0.0));
+//        oppXbox.rightTrigger().whileTrue(CORL.runIntake(-0.85)).onFalse(CORL.runIntake(0.0));
 
       // driverXbox.x().whileTrue(new AlignWithApriltag(drivebase, drivebase.bestTargetID()));
       

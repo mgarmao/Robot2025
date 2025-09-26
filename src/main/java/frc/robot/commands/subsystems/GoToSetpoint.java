@@ -5,7 +5,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Corl;
+//  import frc.robot.subsystems.Corl;
 
 
 
@@ -14,7 +14,7 @@ import frc.robot.subsystems.Corl;
  * 
  */
 public class GoToSetpoint extends Command{
-    private final Corl corlSubsystem; // defines the subsystem through the type coral 
+//      private final Corl corlSubsystem; // defines the subsystem through the type coral 
     PIDController controller1 = new PIDController(0.15, 0.04, 0.0);
     PIDController controller2 =  new PIDController(0.4, 0.02, 0);
     PIDController controller3 =  new PIDController(0.4, 0, 0);
@@ -23,7 +23,7 @@ public class GoToSetpoint extends Command{
     double desiredIntakePosition;
     double desiredElevatorPosition;
 
-    public GoToSetpoint(Corl corlSubsystem, double desiredElevatorPosition, double desiredRotatorPosition, double desiredIntakePosition){
+//      public GoToSetpoint(Corl corlSubsystem, double desiredElevatorPosition, double desiredRotatorPosition, double desiredIntakePosition){
 
 
         this.desiredIntakePosition = desiredIntakePosition;

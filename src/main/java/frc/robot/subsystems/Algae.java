@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 
-public class Algae extends SubsystemBase {
+//  public class Algae extends SubsystemBase {
     private TalonFX rotatorMotor = new TalonFX(Constants.Motors.AlGAE_ROTATOR);
     private TalonFX intakeWheels = new TalonFX(Constants.Motors.AlGAE_INTAKE);
     private PIDController pidController1 = new PIDController(0.02, 0, 0);
 
-    public Algae() {
+//      public Algae() {
         CurrentLimitsConfigs configs1 = new CurrentLimitsConfigs()
             .withStatorCurrentLimit(80)
             .withSupplyCurrentLimit(Constants.CurrentLimits.algaeRotator)
@@ -97,7 +97,7 @@ public class Algae extends SubsystemBase {
         return run(
             () -> {
                 SmartDashboard.putNumber("Rotator Position", rotatorMotor.getPosition().getValueAsDouble());
-                if(rotatorMotor.getPosition().getValueAsDouble()<=Constants.Setpoints.AlgaeIn){
+//                  if(rotatorMotor.getPosition().getValueAsDouble()<=Constants.Setpoints.AlgaeIn){
                     rotatorMotor.set(0.7);
                     intakeWheels.set(0.7);
                 }

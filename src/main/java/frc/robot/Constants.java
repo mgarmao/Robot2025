@@ -85,7 +85,7 @@ public final class Constants
     public static final double TURN_CONSTANT    = 6;
   }
 
-  public static class Setpoints{
+//    public static class Setpoints{
     public static final double HumanRotator = 10.16;
     public static final double HumanIntake = -1.02;
     public static final double HumanElevator = 25.52;
