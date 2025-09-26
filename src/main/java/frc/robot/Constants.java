@@ -34,17 +34,18 @@ public final class Constants
     public static final int WRIST_MOTOR  = 15;////
 
 
-    public static final int AlGAE_ROTATOR  = 11;
-    public static final int AlGAE_INTAKE  = 12;
-    public static final int ROTATOR_LEFT_MOTOR = 5;
-    public static final int ROTATOR_RIGHT_MOTOR = 6;
+    // public static final int AlGAE_ROTATOR  = 11;
+    // public static final int AlGAE_INTAKE  = 12;
+    // public static final int ROTATOR_LEFT_MOTOR = 5;
+    // public static final int ROTATOR_RIGHT_MOTOR = 6;
     public static final int ELEVATOR_LEFT = 9;
     public static final int ELEVATOR_RIGHT = 10;
-    public static final int flag_motor = 29; 
-    public static final int motator = 20;
-    public static final int chargeMotor = 20; 
-    public static final int turboMotor = 22; // Assigning a unique ID for the turbo motor
+    // public static final int flag_motor = 29; 
+    // public static final int motator = 20;
+    // public static final int chargeMotor = 20; 
+    // public static final int turboMotor = 22; // Assigning a unique ID for the turbo motor
 
+    public static final int SpinnyMotor = 41;
   }
 
   public static final class CurrentLimits{
@@ -85,41 +86,39 @@ public final class Constants
     public static final double TURN_CONSTANT    = 6;
   }
 
-  public static class Setpoints{
-    public static final double HumanRotator = 10.16;
-    public static final double HumanIntake = -1.02;
-    public static final double HumanElevator = 25.52;
+public static final class Setpoints {
+  public static final double HumanRotator = 10.16;
+  public static final double HumanIntake = -1.02;
+  public static final double HumanElevator = 25.52;
 
-    public static final double HighRotator = -46.5;
-    public static final double HighIntake = -6;
-    public static final double HighElevator = 120;
+  public static final double HighRotator = -46.5;
+  public static final double HighIntake = -6;
+  public static final double HighElevator = 120;
 
-    public static final double MidRotator = -18.06;
-    public static final double MidElevator = 36.8;
-    public static final double MidIntake = 7.64;
+  public static final double MidRotator = -18.06;
+  public static final double MidElevator = 36.8;
+  public static final double MidIntake = 7.64;
 
-    public static final double LowRotator = -21.92;
-    public static final double LowElevator = 0.3;
-    public static final double LowIntake = 7.85;
+  public static final double LowRotator = -21.92;
+  public static final double LowElevator = 0.3;
+  public static final double LowIntake = 7.85;
 
-    public static final double algaeIntakeMid = 0.666;
-    public static final double algaeElevatorMid = 69.52;
-    public static final double algaeArmMid = 4.46;
+  public static final double algaeIntakeMid = 0.666;
+  public static final double algaeElevatorMid = 69.52;
+  public static final double algaeArmMid = 4.46;
 
-    public static final double algaeWristProcessor = -1.166;
-    public static final double algaeElevatorProcessor = 9.22;
-    public static final double algaeArmProcessor = 57.8;    
+  public static final double algaeWristProcessor = -1.166;
+  public static final double algaeElevatorProcessor = 9.22;
+  public static final double algaeArmProcessor = 57.8;    
 
+  public static final double AlgaeIn = 0;
 
-    public static final double AlgaeIn = 0;
-
-    public static final double ArmVeritcal = -43.48;
-    public static final double WristPerpendicular = -6.9;
-     
-    public static final double L1Elevator = 0.5;
-    public static final double L1Rotator = 0.5;
-    public static final double L1Intake = 0.2;
-
-    }
+  public static final double ArmVeritcal = -43.48;
+  public static final double WristPerpendicular = -6.9;
+   
+  public static final double L1Elevator = 0.5;
+  public static final double L1Rotator = 0.5;
+  public static final double L1Intake = 0.2;
+}
   public static boolean IsInTele = false;
 }
