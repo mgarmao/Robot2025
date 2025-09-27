@@ -15,14 +15,23 @@ public class GoSetpoint extends Command {
         this.desiredRotatorPosition = desiredRotatorPosition;
         this.newIntake = newIntake;
         addRequirements(this.newIntake);
+        
     }
-
+    @Override
+    public boolean isFinished() {
+        return Math.abs(desiredRotatorPosition - newIntake.ReturnRotatorPosition()) < 0.01;
+    }
+    
     @Override
     public void execute() {
-        double intakeRotatorOut = MathUtil.clamp(controller1.calculate(newIntake.ReturnRotatorPosition()), -0.8d, 0.8d);
-    
+        double intakeRotatorOut = MathUtil.clamp(
+            controller1.calculate(newIntake.ReturnRotatorPosition(), desiredRotatorPosition),
+            -0.8d,
+            0.8d
+        );
+
         newIntake.rotatorNoCommand(intakeRotatorOut);
 
-        SmartDashboard.putNumber("Intake Rotator Pos", intakeRotatorOut);
+        SmartDashboard.putNumber("Intake Rotator Pos", newIntake.ReturnRotatorPosition());
     }
 }
