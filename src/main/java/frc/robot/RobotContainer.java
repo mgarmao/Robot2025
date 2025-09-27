@@ -266,8 +266,7 @@ public class RobotContainer {
 
       oppXbox.povLeft().onTrue(INTAKE.Intake(false)).onFalse(INTAKE.HaltIntake());
       oppXbox.povRight().onTrue(INTAKE.Intake(true)).onFalse(INTAKE.HaltIntake());
-      oppXbox.povCenter().onTrue(new SetpointMaker(INTAKE)).onFalse(Commands.no
-      ne());
+      oppXbox.povCenter().onTrue(new SetpointMaker(INTAKE)).onFalse(Commands.none());
 
 //  It works! but need to adjust values or we fuck up the chain.
     //   oppXbox.leftBumper().whileTrue(new GoSetpoint(15, INTAKE)); // Up
