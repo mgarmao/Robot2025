@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.subsystems.AlignWithApriltag;
 import frc.robot.commands.subsystems.GoSetpoint;
+import frc.robot.commands.subsystems.SetpointMaker;
 // import frc.robot.commands.subsystems.GoToSetpoint;
 // import frc.robot.commands.subsystems.GoToSetpoint;
 // import frc.robot.commands.subsystems.goToPosition;
@@ -264,9 +265,11 @@ public class RobotContainer {
 
       oppXbox.povLeft().onTrue(INTAKE.Intake(false)).onFalse(INTAKE.HaltIntake());
       oppXbox.povRight().onTrue(INTAKE.Intake(true)).onFalse(INTAKE.HaltIntake());
+      oppXbox.povCenter().onTrue(new SetpointMaker(INTAKE)).onFalse(Commands.none());
 
-      oppXbox.leftBumper().whileTrue(new GoSetpoint(15, INTAKE)); // Up
-      oppXbox.rightBumper().whileTrue(new GoSetpoint(13, INTAKE)); // Down
+//  It works! but need to adjust values or we fuck up the chain.
+    //   oppXbox.leftBumper().whileTrue(new GoSetpoint(15, INTAKE)); // Up
+    //   oppXbox.rightBumper().whileTrue(new GoSetpoint(13, INTAKE)); // Down
 
 
           // oppXbox.a().onTrue(
