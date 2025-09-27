@@ -159,7 +159,7 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public RobotContainer() {
     // Configure the trigger bindings
@@ -200,13 +200,14 @@ public class RobotContainer {
 // //      // NamedCommands.registerCommand("SetpointHumanPlayer", new GoToSetpoint(CORL,
 //     // 0, 0, 0));
 
-//     autoChooser = AutoBuilder.buildAutoChooser();
+    autoChooser = AutoBuilder.buildAutoChooser();
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
-    // SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
+    
   }
 
   /**
