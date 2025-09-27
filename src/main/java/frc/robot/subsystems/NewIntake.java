@@ -72,6 +72,11 @@ public class NewIntake extends SubsystemBase {
 
         // keep spinny in constant rotation
         Spinny.set(.04d);
+
+        if (Rotator.getPosition().getValueAsDouble() > Constants.setpoint_Rotator_Default_StartRange && Rotator.getPosition().getValueAsDouble() < Constants.setpoint_Rotator_Default_EndRange)
+            {
+                Rotator.setPosition(0d);
+            }
     }
 
     public Command Rotate(boolean up) {
@@ -88,11 +93,19 @@ public class NewIntake extends SubsystemBase {
         }
     }
 
-    public Command Rotate_Goto(double setpoint) {
+    public Command Rotate_Goto(int pos) {
+
+        // 0 = Default
+        // 1 = Floor
+        // 2 = Shoot
         return runOnce( () -> {
-            Rotator.setPosition(setpoint);
-            // ranges
-            NonRotator.setPosition(setpoint);
+            if (pos == 0) {
+
+                // do the math
+                // double result = Constants
+                
+                // Rotator.setPosition()+
+            }
         });
     }
 
