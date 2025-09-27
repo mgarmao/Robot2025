@@ -133,6 +133,15 @@ public class NewIntake extends SubsystemBase {
         });
     }
 
+    public void rotatorNoCommand(double speed) {
+        Rotator.set(speed);
+        NonRotator.set(speed);
+    }
+
+    public double ReturnRotatorPosition() {
+        return Rotator.getPosition().getValueAsDouble();
+    }
+
     public Command HaltRotator() {
         return runOnce(() -> {Rotator.stopMotor(); NonRotator.stopMotor();});
     }

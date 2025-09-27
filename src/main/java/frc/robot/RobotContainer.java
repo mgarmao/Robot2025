@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.subsystems.AlignWithApriltag;
+import frc.robot.commands.subsystems.GoSetpoint;
+// import frc.robot.commands.subsystems.GoToSetpoint;
 // import frc.robot.commands.subsystems.GoToSetpoint;
 // import frc.robot.commands.subsystems.goToPosition;
 // import frc.robot.commands.subsystems.GoToSetpoint;
@@ -263,8 +265,8 @@ public class RobotContainer {
       oppXbox.povLeft().onTrue(INTAKE.Intake(false)).onFalse(INTAKE.HaltIntake());
       oppXbox.povRight().onTrue(INTAKE.Intake(true)).onFalse(INTAKE.HaltIntake());
 
-    //   oppXbox.leftBumper().onTrue(INTAKE.Rotate_Goto(0)); // Up
-    //   oppXbox.rightBumper().onTrue(INTAKE.Rotate_Goto(0)); // Down
+      oppXbox.leftBumper().whileTrue(new GoSetpoint(15, INTAKE)); // Up
+      oppXbox.rightBumper().whileTrue(new GoSetpoint(13, INTAKE)); // Down
 
 
           // oppXbox.a().onTrue(
