@@ -112,7 +112,7 @@ public class NewIntake extends SubsystemBase {
     public Command Intake(boolean in) {
         if (in) {
             return runOnce( () -> {
-                Spinny.set(.38d);
+                Spinny.set(.47d);
                 ifSpinnyOut = false;
             });
         } else {
