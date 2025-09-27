@@ -256,11 +256,12 @@ public class RobotContainer {
       driverXbox.leftTrigger().whileTrue(
           drivebase.alignMode(() -> driverXbox.getLeftX(), () -> driverXbox.getLeftY(), () -> driverXbox.getRightX()));
 
-      oppXbox.povUp().whileTrue(INTAKE.Rotate(true)).onFalse(INTAKE.HaltRotator());
-      oppXbox.povDown().whileTrue(INTAKE.Rotate(false)).onFalse(INTAKE.HaltRotator());
+      oppXbox.povUp().onTrue(INTAKE.Rotate(true)).onFalse(INTAKE.HaltRotator());
+      oppXbox.povDown().onTrue(INTAKE.Rotate(false)).onFalse(INTAKE.HaltRotator());
 
-      oppXbox.povLeft().whileTrue(INTAKE.Intake(true)).onFalse(INTAKE.HaltIntake());
-      oppXbox.povRight().whileTrue(INTAKE.Intake(false)).onFalse(INTAKE.HaltIntake());
+
+      oppXbox.povLeft().onTrue(INTAKE.Intake(false)).onFalse(INTAKE.HaltIntake());
+      oppXbox.povRight().onTrue(INTAKE.Intake(true)).onFalse(INTAKE.HaltIntake());
 
 
           // oppXbox.a().onTrue(
