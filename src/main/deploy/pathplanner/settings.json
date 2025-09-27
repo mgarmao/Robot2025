@@ -3,10 +3,12 @@
   "robotLength": 0.69,
   "holonomicMode": true,
   "pathFolders": [
-    "New Folder"
+    "New Folder",
+    "Robocon shaurya gooning"
   ],
   "autoFolders": [
-    "New Folder"
+    "New Folder",
+    "shaurya auto goon"
   ],
   "defaultMaxVel": 2.0,
   "defaultMaxAccel": 3.0,
