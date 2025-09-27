@@ -1,19 +1,25 @@
 package frc.robot.subsystems;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // WPI Required Stuff
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.sim.SparkRelativeEncoderSim;
 // REVLib
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkRelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-
+import com.ctre.phoenix6.controls.PositionVoltage;
 // Phoenix6
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -23,9 +29,12 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public class NewIntake extends SubsystemBase {
     private SparkMax Spinny;
     private SparkMaxConfig SpinnyConf;
+    private RelativeEncoder SpinnyEnc;
     private TalonFX Rotator;
     private TalonFX NonRotator;
     private boolean ifSpinnyOut = false;
+    private Slot0Configs slot0 = new Slot0Configs();
+    private final PositionVoltage PV = new PositionVoltage(0).withSlot(0);
 
     public NewIntake() {
         Spinny = new SparkMax(Constants.Motors.SpinnyMotor, MotorType.kBrushless);
@@ -35,6 +44,11 @@ public class NewIntake extends SubsystemBase {
             .inverted(false) // change if wrong
             .idleMode(IdleMode.kBrake);
         Spinny.configure(SpinnyConf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        SpinnyEnc = Spinny.getEncoder();
+
+        slot0.kP = 2.4;
+        slot0.kI = 0.0;
+        slot0.kD = 0.1;
 
         Rotator = new TalonFX(6); // ROTATOR_RIGHT_MOTOR
         Rotator.getConfigurator().apply(
@@ -74,6 +88,13 @@ public class NewIntake extends SubsystemBase {
         }
     }
 
+    public Command Rotate_Goto(double setpoint) {
+        return runOnce( () -> {
+            Rotator.setControl(PV.withPosition(setpoint));
+            NonRotator.setControl(PV.withPosition(-setpoint));
+        });
+    }
+
     public Command Intake(boolean in) {
         if (in) {
             return runOnce( () -> {
@@ -101,4 +122,11 @@ public class NewIntake extends SubsystemBase {
     public Command HaltRotator() {
         return runOnce(() -> {Rotator.stopMotor(); NonRotator.stopMotor();});
     }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Rotator Position", Rotator.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("NonRotator Position", NonRotator.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Spinny Speed", SpinnyEnc.getVelocity());
+    }  
 }

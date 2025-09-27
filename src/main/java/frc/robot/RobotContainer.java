@@ -263,6 +263,9 @@ public class RobotContainer {
       oppXbox.povLeft().onTrue(INTAKE.Intake(false)).onFalse(INTAKE.HaltIntake());
       oppXbox.povRight().onTrue(INTAKE.Intake(true)).onFalse(INTAKE.HaltIntake());
 
+    //   oppXbox.leftBumper().onTrue(INTAKE.Rotate_Goto(0)); // Up
+    //   oppXbox.rightBumper().onTrue(INTAKE.Rotate_Goto(0)); // Down
+
 
           // oppXbox.a().onTrue(
 //                CORL.setturboMotorSpeed(0.5))
@@ -338,4 +341,6 @@ public class RobotContainer {
   public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
   }
-}
+
+  }
+
