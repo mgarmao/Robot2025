@@ -90,8 +90,9 @@ public class NewIntake extends SubsystemBase {
 
     public Command Rotate_Goto(double setpoint) {
         return runOnce( () -> {
-            Rotator.setControl(PV.withPosition(setpoint));
-            NonRotator.setControl(PV.withPosition(-setpoint));
+            Rotator.setPosition(setpoint);
+            // ranges
+            NonRotator.setPosition(setpoint);
         });
     }
 
@@ -103,7 +104,7 @@ public class NewIntake extends SubsystemBase {
             });
         } else {
             return runOnce( () -> {
-                Spinny.set(-.67d);
+                Spinny.set(-1.d);
                 ifSpinnyOut = true;
             });
         }

@@ -121,4 +121,16 @@ public static final class Setpoints {
   public static final double L1Intake = 0.2;
 }
   public static boolean IsInTele = false;
+
+
+
+
+  public static final double setpoint_Rotator_Default_StartRange = -1;
+  public static final double setpoint_Rotator_Default_EndRange = 1;
+
+  // public static final double setpoint_Rotator_Floor_StartRange = ; // TODO: DETERMINE VALUE FOR THIS
+  // public static final double setpoint_Rotator_Floor_EndRange = ;   // TODO: DETERMINE VALUE FOR THIS
+
+  // public static final double setpoint_Rotator_Shoot_StartRange =;  // TODO: DETERMINE VALUE FOR THIS
+  // public static final double setpoint_Rotator_Shoot_EndRange   =;  // TODO: DETERMINE VALUE FOR THIS
 }
