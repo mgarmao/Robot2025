@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.100499621162039,
-        "y": 3.9699482489341333
+        "x": 6.996283783783784,
+        "y": 2.947888513513513
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.00012417218543,
-        "y": 3.894246688741721
+        "x": 5.444847972972973,
+        "y": 2.819425675675675
       },
       "prevControl": {
-        "x": 6.256325116343791,
-        "y": 3.9180939228644953
+        "x": 5.889527027027026,
+        "y": 2.5130912162162153
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "Robocon shaurya gooning",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
