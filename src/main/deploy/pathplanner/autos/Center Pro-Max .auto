@@ -14,6 +14,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "shaurya auto goon",
+  "folder": null,
   "choreoAuto": false
 }

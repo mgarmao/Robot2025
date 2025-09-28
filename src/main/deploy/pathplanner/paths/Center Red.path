@@ -45,7 +45,7 @@
     "rotation": -177.08916217383228
   },
   "reversed": false,
-  "folder": "Robocon shaurya gooning",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
