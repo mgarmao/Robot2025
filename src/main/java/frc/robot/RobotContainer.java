@@ -242,9 +242,9 @@ public class RobotContainer {
       driverXbox.back()
           .whileTrue(drivebase.centerModulesCommand());
       driverXbox.leftBumper()
-          .onTrue(Commands.none());
+          .onTrue(intake.Rotate_Goto(0));
       driverXbox.rightBumper()
-          .onTrue(Commands.none());
+          .onTrue(intake.Rotate_Goto(1));
 
     } else {
       //////////////////////////////////////////////////////////

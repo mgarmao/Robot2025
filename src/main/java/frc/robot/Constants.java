@@ -86,6 +86,7 @@ public final class Constants
     public static final double TURN_CONSTANT    = 6;
   }
 
+
 public static final class Setpoints {
   public static final double HumanRotator = 10.16;
   public static final double HumanIntake = -1.02;
@@ -119,6 +120,10 @@ public static final class Setpoints {
   public static final double L1Elevator = 0.5;
   public static final double L1Rotator = 0.5;
   public static final double L1Intake = 0.2;
+
+  public static final double DEFAULT = 0.0;      
+  public static final double INTAKE = 0.0;    
+  public static final double DISPENSE = 0.0;     
 }
   public static boolean IsInTele = false;
 

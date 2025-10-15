@@ -94,18 +94,29 @@ public class NewIntake extends SubsystemBase {
     }
 
     public Command Rotate_Goto(int pos) {
-
-        // 0 = Default
-        // 1 = Floor
-        // 2 = Shoot
-        return runOnce( () -> {
-            if (pos == 0) {
-
-                // do the math
-                // double result = Constants
-                
-                // Rotator.setPosition()+
+        return runOnce(() -> {
+            double targetPosition = 0.0;
+    
+            switch (pos) {
+                case 0:
+                    targetPosition = Constants.Setpoints.DEFAULT;
+                    break;
+                case 1:
+                    targetPosition = Constants.Setpoints.INTAKE;
+                    break;
+                case 2:
+                    targetPosition = Constants.Setpoints.DISPENSE;
+                    break;
             }
+    
+            // Apply PID config
+            Rotator.getConfigurator().apply(slot0);
+    
+            // Move to target
+            Rotator.setControl(PV.withPosition(targetPosition));
+            NonRotator.setControl(PV.withPosition(targetPosition));
+    
+            SmartDashboard.putNumber("Target Rotator Pos", targetPosition);
         });
     }
 
@@ -136,6 +147,21 @@ public class NewIntake extends SubsystemBase {
     public Command HaltRotator() {
         return runOnce(() -> {Rotator.stopMotor(); NonRotator.stopMotor();});
     }
+
+    public void rotatorNoCommand (double speed) {
+        Rotator.set(speed);
+        NonRotator.set(speed);
+    }
+
+    public double getRotatorPosition() {
+        return Rotator.getPosition().getValueAsDouble();
+    }
+
+    public double getNonRotatorPosition() {
+        return NonRotator.getPosition().getValueAsDouble();
+    }
+
+    
 
     @Override
     public void periodic() {
