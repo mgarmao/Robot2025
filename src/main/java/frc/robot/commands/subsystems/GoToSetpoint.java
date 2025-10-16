@@ -42,7 +42,7 @@ public class GoToSetpoint extends Command{
 
     @Override
     public void execute(){
-        double newIntakeOutput = MathUtil.clamp(controller1.calculate(newIntakeSubsystem.getRotatorPosition(), desiredRotatorPosition), -0.8, 0.8);
+        double newIntakeOutput = MathUtil.clamp(controller1.calculate(newIntakeSubsystem.getRotatorPosition(), desiredRotatorPosition), -0.15, 0.15);
         // double corlIntakeOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getIntakePosition(), desiredIntakePosition), -0.6, 0.6);
         // double elevatorOutput = MathUtil.clamp(controller3.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.4, 0.8);
         // We defined PID controller as controller 1 
