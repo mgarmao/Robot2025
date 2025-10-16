@@ -121,9 +121,9 @@ public static final class Setpoints {
   public static final double L1Rotator = 0.5;
   public static final double L1Intake = 0.2;
 
-  public static final double DEFAULT = 0.0;      
-  public static final double INTAKE = 0.0;    
-  public static final double DISPENSE = 0.0;     
+  public static final double DEFAULT = 0.0d;      
+  public static final double INTAKE = 0.0d;    
+  public static final double DISPENSE = 0.0d;     
 }
   public static boolean IsInTele = false;
 

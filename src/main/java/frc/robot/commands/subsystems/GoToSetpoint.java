@@ -49,7 +49,7 @@ public class GoToSetpoint extends Command{
 
         // newIntakeSubsystem.intakeRotatorNoCommand(corlIntakeOutput);
         // newIntakeSubsystem.elevatorRunNoCommand(elevatorOutput);
-        newIntakeSubsystem.rotatorNoCommand(newIntakeOutput);
+        newIntakeSubsystem.rotateNoCmd(newIntakeOutput);
 
         SmartDashboard.putNumber("EL POS", newIntakeSubsystem.getRotatorPosition());
 

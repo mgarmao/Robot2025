@@ -148,11 +148,6 @@ public class NewIntake extends SubsystemBase {
         return runOnce(() -> {Rotator.stopMotor(); NonRotator.stopMotor();});
     }
 
-    public void rotatorNoCommand (double speed) {
-        Rotator.set(speed);
-        NonRotator.set(speed);
-    }
-
     public double getRotatorPosition() {
         return Rotator.getPosition().getValueAsDouble();
     }
@@ -161,6 +156,10 @@ public class NewIntake extends SubsystemBase {
         return NonRotator.getPosition().getValueAsDouble();
     }
 
+    public void rotateNoCmd(double speed) {
+        Rotator.set(speed);
+        NonRotator.set(speed);
+    }
     
 
     @Override
