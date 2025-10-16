@@ -122,8 +122,8 @@ public static final class Setpoints {
   public static final double L1Intake = 0.2;
 
   public static final double DEFAULT = 0.0d;      
-  public static final double INTAKE = 0.0d;    
-  public static final double DISPENSE = 0.0d;     
+  public static final double INTAKE = -26.538086d;    
+  public static final double DISPENSE = -68.187988d;     
 }
   public static boolean IsInTele = false;
 
