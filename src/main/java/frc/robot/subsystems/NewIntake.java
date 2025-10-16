@@ -56,7 +56,7 @@ public class NewIntake extends SubsystemBase {
                 .withMotorOutput(
                     new MotorOutputConfigs()
                         .withInverted(InvertedValue.Clockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)
+                        .withNeutralMode(NeutralModeValue.Brake)
                 )
         );
 
@@ -65,10 +65,14 @@ public class NewIntake extends SubsystemBase {
             new TalonFXConfiguration()
                 .withMotorOutput(
                     new MotorOutputConfigs()
-                        // .withInverted(null)
-                        .withNeutralMode(NeutralModeValue.Coast)
+                        .withInverted(InvertedValue.CounterClockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Brake)
                 )
         );
+
+        Rotator.getConfigurator().apply(slot0);
+        NonRotator.getConfigurator().apply(slot0);
+
 
         // keep spinny in constant rotation
         Spinny.set(.04d);
@@ -108,9 +112,6 @@ public class NewIntake extends SubsystemBase {
                     targetPosition = Constants.Setpoints.DISPENSE;
                     break;
             }
-    
-            // Apply PID config
-            Rotator.getConfigurator().apply(slot0);
     
             // Move to target
             Rotator.setControl(PV.withPosition(targetPosition));
