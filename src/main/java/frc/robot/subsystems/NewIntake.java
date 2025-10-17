@@ -58,7 +58,7 @@ public class NewIntake extends SubsystemBase {
                 .withMotorOutput(
                     new MotorOutputConfigs()
                         .withInverted(InvertedValue.Clockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)
+                        .withNeutralMode(NeutralModeValue.Brake)
                 )
         );
 
@@ -68,9 +68,13 @@ public class NewIntake extends SubsystemBase {
                 .withMotorOutput(
                     new MotorOutputConfigs()
                         .withInverted(InvertedValue.CounterClockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Coast)
+                        .withNeutralMode(NeutralModeValue.Brake)
                 )
         );
+
+        Rotator.getConfigurator().apply(slot0);
+        NonRotator.getConfigurator().apply(slot0);
+
 
         // keep spinny in constant rotation
         Spinny.set(.04d);
@@ -144,11 +148,6 @@ public class NewIntake extends SubsystemBase {
 
     public Command HaltRotator() {
         return runOnce(() -> {Rotator.stopMotor(); NonRotator.stopMotor();});
-    }
-
-    public void rotatorNoCommand (double speed) {
-        Rotator.set(speed);
-        NonRotator.set(speed);
     }
 
     public double getRotatorPosition() {
