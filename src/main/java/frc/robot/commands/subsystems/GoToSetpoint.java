@@ -18,9 +18,9 @@ public class GoToSetpoint extends Command{
     // PIDController controller2 =  new PIDController(0.4, 0.02, 0);
     // PIDController controller3 =  new PIDController(0.4, 0, 0);
 
-    double desiredRotatorPosition;
-    double desiredIntakePosition;
-    double desiredElevatorPosition;
+    // double desiredRotatorPosition;
+    // double desiredIntakePosition;
+    // double desiredElevatorPosition;
     double desiredNewIntakePosition;
 
     public GoToSetpoint(NewIntake newIntakeSubsystem, double desiredNewIntakePosition){
@@ -32,7 +32,7 @@ public class GoToSetpoint extends Command{
         this.desiredNewIntakePosition = desiredNewIntakePosition;
 
         this.newIntakeSubsystem = newIntakeSubsystem;
-        addRequirements(this.newIntakeSubsystem); // lets you use this stuff as a subsystem 
+        addRequirements(this.newIntakeSubsystem); // requires newIntakeSubsystem to be the only one running
     }
 
     @Override
@@ -42,16 +42,21 @@ public class GoToSetpoint extends Command{
 
     @Override
     public void execute(){
-        double newIntakeOutput = MathUtil.clamp(controller1.calculate(newIntakeSubsystem.getRotatorPosition(), desiredRotatorPosition), -0.8, 0.8);
+        double newIntakeOutput = MathUtil.clamp(
+            controller1.calculate(newIntakeSubsystem.getRotatorPosition(), desiredNewIntakePosition), 
+            -0.4, 0.4
+            
+        );
         // double corlIntakeOutput = MathUtil.clamp(controller2.calculate(corlSubsystem.getIntakePosition(), desiredIntakePosition), -0.6, 0.6);
         // double elevatorOutput = MathUtil.clamp(controller3.calculate(corlSubsystem.getElevatorPosition(), desiredElevatorPosition), -0.4, 0.8);
         // We defined PID controller as controller 1 
 
         // newIntakeSubsystem.intakeRotatorNoCommand(corlIntakeOutput);
         // newIntakeSubsystem.elevatorRunNoCommand(elevatorOutput);
-        newIntakeSubsystem.rotatorNoCommand(newIntakeOutput);
+        
+        // newIntakeSubsystem.rotatorNoCommand(newIntakeOutput);
 
-        SmartDashboard.putNumber("EL POS", newIntakeSubsystem.getRotatorPosition());
+        SmartDashboard.putNumber("INTAKE POS", newIntakeSubsystem.getRotatorPosition());
 
         // if(newIntakeSubsystem.getElevatorPosition()<40)
         // {
@@ -75,6 +80,8 @@ public class GoToSetpoint extends Command{
 
         // corlSubsystem.intakeRotate(corlIntakeOutput);
         // corlSubsystem.runElevator(elevatorOutput);
+
+        newIntakeSubsystem.runRotator(newIntakeOutput);
 
     }
 
