@@ -166,9 +166,4 @@ public class NewIntake extends SubsystemBase {
         SmartDashboard.putNumber("NonRotator Position", NonRotator.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("Spinny Speed", SpinnyEnc.getVelocity());
     }
-
-    public static Command GoToSetpoint() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'GoToSetpoint'");
-    }  
 }
