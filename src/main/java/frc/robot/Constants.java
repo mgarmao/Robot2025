@@ -121,9 +121,9 @@ public static final class Setpoints {
   public static final double L1Rotator = 0.5;
   public static final double L1Intake = 0.2;
 
-  public static final double NewIntakeDefault = 2.5;      
-  public static final double NewIntakeIntake = 67.0;    
-  public static final double NewIntakeDispense = 25.0;     
+  public static final double NewIntakeDefault = -2;      
+  public static final double NewIntakeIntake = -67.0;    
+  public static final double NewIntakeDispense = -25.0;     
 }
   public static boolean IsInTele = false;
 
