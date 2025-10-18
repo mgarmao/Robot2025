@@ -93,8 +93,8 @@ public class GoToSetpoint extends Command {
         return controller1.atSetpoint();
     }
 
-    // @Override
-    // public void end(boolean interrupted){
-    // newIntakeSubsystem.HaltRotator();
-    // }
+    @Override
+    public void end(boolean interrupted){
+    newIntakeSubsystem.HaltRotator();
+    }
 }

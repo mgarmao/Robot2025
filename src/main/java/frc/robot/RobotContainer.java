@@ -267,8 +267,10 @@ public class RobotContainer {
       oppXbox.povLeft().onTrue(INTAKE.Intake(false)).onFalse(INTAKE.HaltIntake());
       oppXbox.povRight().onTrue(INTAKE.Intake(true)).onFalse(INTAKE.HaltIntake());
 
-    oppXbox.leftBumper().onTrue(INTAKE.Rotate_Goto(1)).onFalse(Commands.none());
-    oppXbox.rightBumper().onTrue(INTAKE.Rotate_Goto(2)).onFalse(Commands.none());
+    oppXbox.leftBumper().onTrue(INTAKE.Rotate_Goto(-67)).onFalse(Commands.none());
+
+    
+    oppXbox.rightBumper().onTrue(INTAKE.Rotate_Goto(-17)).onFalse(Commands.none());
 
 
           // oppXbox.a().onTrue(

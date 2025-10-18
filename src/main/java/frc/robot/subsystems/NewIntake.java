@@ -32,7 +32,7 @@ public class NewIntake extends SubsystemBase {
     private SparkMax Spinny;
     private SparkMaxConfig SpinnyConf;
     private RelativeEncoder SpinnyEnc;
-    private TalonFX Rotator;
+    // private TalonFX Rotator;
     private TalonFX NonRotator;
     private boolean ifSpinnyOut = false;
     private Slot0Configs slot0 = new Slot0Configs();
@@ -48,19 +48,19 @@ public class NewIntake extends SubsystemBase {
         Spinny.configure(SpinnyConf, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         SpinnyEnc = Spinny.getEncoder();
 
-        slot0.kP = 2.4;
+        slot0.kP = 1.0;
         slot0.kI = 0.0;
-        slot0.kD = 0.1;
+        slot0.kD = 0.0;
 
-        Rotator = new TalonFX(6); // ROTATOR_RIGHT_MOTOR
-        Rotator.getConfigurator().apply(
-            new TalonFXConfiguration()
-                .withMotorOutput(
-                    new MotorOutputConfigs()
-                        .withInverted(InvertedValue.Clockwise_Positive)
-                        .withNeutralMode(NeutralModeValue.Brake)
-                )
-        );
+        // Rotator = new TalonFX(6); // ROTATOR_RIGHT_MOTOR
+        // Rotator.getConfigurator().apply(
+        //     new TalonFXConfiguration()
+        //         .withMotorOutput(
+        //             new MotorOutputConfigs()
+        //                 .withInverted(InvertedValue.Clockwise_Positive)
+        //                 .withNeutralMode(NeutralModeValue.Brake)
+        //         )
+        // );
 
         NonRotator = new TalonFX(5); // ROTATOR_LEFT_MOTOR
         NonRotator.getConfigurator().apply(
@@ -72,17 +72,17 @@ public class NewIntake extends SubsystemBase {
                 )
         );
 
-        Rotator.getConfigurator().apply(slot0);
+        // Rotator.getConfigurator().apply(slot0);
         NonRotator.getConfigurator().apply(slot0);
 
 
         // keep spinny in constant rotation
         Spinny.set(.04d);
 
-        if (Rotator.getPosition().getValueAsDouble() > Constants.setpoint_Rotator_Default_StartRange && Rotator.getPosition().getValueAsDouble() < Constants.setpoint_Rotator_Default_EndRange)
-            {
-                Rotator.setPosition(0d);
-            }
+        // if (Rotator.getPosition().getValueAsDouble() > Constants.setpoint_Rotator_Default_StartRange && Rotator.getPosition().getValueAsDouble() < Constants.setpoint_Rotator_Default_EndRange)
+        //     {
+        //         Rotator.setPosition(0d);
+        //     }
     }
 
          private PIDController pidController3 = new PIDController(1, 0, 0);
@@ -90,12 +90,12 @@ public class NewIntake extends SubsystemBase {
     public Command Rotate(boolean up) {
         if (up) {
             return runOnce( () -> {
-                Rotator.set(.35d);
+                // Rotator.set(.35d);
                 NonRotator.set(.35d);
             });
         } else {
             return runOnce( () -> {
-                Rotator.set(-.35d);
+                // Rotator.set(-.35d);
                 NonRotator.set(-.35d);
             });
         }
@@ -104,19 +104,19 @@ public class NewIntake extends SubsystemBase {
     public Command runRotator(double speed) {
         return runOnce(
             () -> {
-                Rotator.set(speed);
+                // Rotator.set(speed);
                 NonRotator.set(speed);
             });
     }
 
     public Command Rotate_Goto(double desiredPosition) {
         return runOnce(() -> {
-                double output1 = MathUtil.clamp(pidController3.calculate(Rotator.getPosition().getValueAsDouble(), desiredPosition), -0.4,0.4); 
+                // double output1 = MathUtil.clamp(pidController3.calculate(Rotator.getPosition().getValueAsDouble(), desiredPosition), -0.4,0.4); 
         
                 double output2 = MathUtil.clamp(pidController3.calculate(NonRotator.getPosition().getValueAsDouble(), desiredPosition),-0.4,0.4);
                  //  Double data type for 0.4 and 0.4, clamp means that the speed doesn't go over 40% or under 40% (backwards). 
                 
-                 Rotator.set(output1);
+                //  Rotator.set(output1);
                  NonRotator.set(output2);
 
         });
@@ -147,22 +147,16 @@ public class NewIntake extends SubsystemBase {
     }
 
     public Command HaltRotator() {
-        return runOnce(() -> {Rotator.stopMotor(); NonRotator.stopMotor();});
+        return runOnce(() -> {/*Rotator.stopMotor();*/ NonRotator.stopMotor();});
     }
 
     public double getRotatorPosition() {
-        return Rotator.getPosition().getValueAsDouble();
-    }
-
-    public double getNonRotatorPosition() {
-        return NonRotator.getPosition().getValueAsDouble();
-    }
-
+        return NonRotator.getPosition().getValueAsDouble();}
 
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Rotator Position", Rotator.getPosition().getValueAsDouble());
+        // SmartDashboard.putNumber("Rotator Position", Rotator.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("NonRotator Position", NonRotator.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("Spinny Speed", SpinnyEnc.getVelocity());
     }
