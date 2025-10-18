@@ -23,8 +23,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.Setpoints;
 import frc.robot.commands.subsystems.AlignWithApriltag;
-// import frc.robot.commands.subsystems.GoToSetpoint;
+import frc.robot.commands.subsystems.GoToSetpoint;
 // import frc.robot.commands.subsystems.goToPosition;
 // import frc.robot.commands.subsystems.GoToSetpoint;
 // import frc.robot.commands.subsystems.rotateBackToHardstop;
@@ -32,6 +33,7 @@ import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 //  // import frc.robot.subsystems.Corl;
 import frc.robot.subsystems.NewIntake;
 //  // import frc.robot.subsystems.Algae;
+
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 
@@ -55,6 +57,8 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(0);
   final CommandXboxController oppXbox = new CommandXboxController(1);
+
+  public final NewIntake newIntakeSubsystem = new NewIntake();
 
   // The robot's subsystems and commands are defined here...
   public final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
@@ -241,10 +245,10 @@ public class RobotContainer {
           .onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.back()
           .whileTrue(drivebase.centerModulesCommand());
-      driverXbox.leftBumper()
-          .onTrue(INTAKE.Rotate_Goto(0));
-      driverXbox.rightBumper()
-          .onTrue(INTAKE.Rotate_Goto(1));
+    //   driverXbox.leftBumper()
+    //       .onTrue(intake.Rotate_Goto(0));
+    //   driverXbox.rightBumper()
+    //       .onTrue(intake.Rotate_Goto(1));
 
     } else {
       //////////////////////////////////////////////////////////
@@ -302,15 +306,10 @@ public class RobotContainer {
 // //            .onFalse(CORL.intakeRotate(0));
 
 // //        // Human corl
-//       oppXbox.povRight()
-// //            .whileTrue(CORL.armUp())
-// //            .onFalse(CORL.armStop());
-//       oppXbox.povLeft()
-//            .whileTrue(CORL.armDown())
-//            .onFalse(CORL.armStop());
-
-//        oppXbox.povUp().whileTrue(CORL.runElevator(1)).onFalse(CORL.runElevator(0.0));
-//        oppXbox.povDown().whileTrue(CORL.runElevator(-0.7)).onFalse(CORL.runElevator(0.0));
+      oppXbox.y().onTrue(new GoToSetpoint(newIntakeSubsystem, Constants.Setpoints.NewIntakeDispense)); //dispense
+      oppXbox.b().onTrue(new GoToSetpoint(newIntakeSubsystem, Constants.Setpoints.NewIntakeDefault));
+       oppXbox.a().onTrue(new GoToSetpoint(newIntakeSubsystem, Constants.Setpoints.NewIntakeIntake)); // intake
+       oppXbox.x().onTrue(new GoToSetpoint(newIntakeSubsystem, Constants.Setpoints.NewIntakeDefault));
 
 //        oppXbox.rightBumper().whileTrue(CORL.intakeRotate(0.4)).onFalse(CORL.intakeRotate(0));
 //        oppXbox.leftBumper().whileTrue(CORL.intakeRotate(-0.4)).onFalse(CORL.intakeRotate(0));

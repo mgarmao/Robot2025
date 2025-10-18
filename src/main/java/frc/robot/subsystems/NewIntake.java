@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // WPI Required Stuff
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants;
 
 import com.revrobotics.RelativeEncoder;
@@ -83,6 +85,8 @@ public class NewIntake extends SubsystemBase {
             }
     }
 
+         private PIDController pidController3 = new PIDController(1, 0, 0);
+
     public Command Rotate(boolean up) {
         if (up) {
             return runOnce( () -> {
@@ -97,27 +101,24 @@ public class NewIntake extends SubsystemBase {
         }
     }
 
-    public Command Rotate_Goto(int pos) {
+    public Command runRotator(double speed) {
+        return runOnce(
+            () -> {
+                Rotator.set(speed);
+                NonRotator.set(speed);
+            });
+    }
+
+    public Command Rotate_Goto(double desiredPosition) {
         return runOnce(() -> {
-            double targetPosition = 0.0;
-    
-            switch (pos) {
-                case 0:
-                    targetPosition = Constants.Setpoints.DEFAULT;
-                    break;
-                case 1:
-                    targetPosition = Constants.Setpoints.INTAKE;
-                    break;
-                case 2:
-                    targetPosition = Constants.Setpoints.DISPENSE;
-                    break;
-            }
-    
-            // Move to target
-            Rotator.setControl(PV.withPosition(targetPosition));
-            NonRotator.setControl(PV.withPosition(targetPosition));
-    
-            SmartDashboard.putNumber("Target Rotator Pos", targetPosition);
+                double output1 = MathUtil.clamp(pidController3.calculate(Rotator.getPosition().getValueAsDouble(), desiredPosition), -0.4,0.4); 
+        
+                double output2 = MathUtil.clamp(pidController3.calculate(NonRotator.getPosition().getValueAsDouble(), desiredPosition),-0.4,0.4);
+                 //  Double data type for 0.4 and 0.4, clamp means that the speed doesn't go over 40% or under 40% (backwards). 
+                
+                 Rotator.set(output1);
+                 NonRotator.set(output2);
+
         });
     }
 
@@ -157,16 +158,12 @@ public class NewIntake extends SubsystemBase {
         return NonRotator.getPosition().getValueAsDouble();
     }
 
-    public void rotateNoCmd(double speed) {
-        Rotator.set(speed);
-        NonRotator.set(speed);
-    }
-    
+
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Rotator Position", Rotator.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("NonRotator Position", NonRotator.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("Spinny Speed", SpinnyEnc.getVelocity());
-    }  
+    }
 }
