@@ -16,6 +16,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -57,6 +58,8 @@ public class NewIntake extends SubsystemBase {
                     new MotorOutputConfigs()
                         .withInverted(InvertedValue.Clockwise_Positive)
                         .withNeutralMode(NeutralModeValue.Coast)
+                ).withCurrentLimits(
+                    new CurrentLimitsConfigs().withStatorCurrentLimit(null)
                 )
         );
 
@@ -101,7 +104,7 @@ public class NewIntake extends SubsystemBase {
         return runOnce( () -> {
             if (pos == 0) {
 
-                // do the math
+                // do that math
                 // double result = Constants
                 
                 // Rotator.setPosition()+
